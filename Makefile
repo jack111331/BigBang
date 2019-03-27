@@ -1,5 +1,5 @@
 BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o 
-	g++ -Wall -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o
+	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o
 Socket.o: Socket.cpp
 	g++ -Wall -c Socket.cpp
 ListenSocket.o: ListenSocket.cpp

@@ -1,15 +1,26 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <thread>
 #include "Socket.h"
 #include "ListenSocket.h"
 #include "HandleClientSocket.h"
 #include "SocketIO.h"
 #include <sys/types.h>
-#include <errno.h>
 
 static constexpr int port = 27743;
 static timeval timeout = {0, 5};//second, usecond
+
+void ListenThreadFunc(int ListenSocketFD, std::vector<Socket *> & SocketSet)
+{
+  while(1)
+  {
+    HandleClientSocket * HCS = new HandleClientSocket;
+    HCS->InitSocket(ListenSocketFD, 0);
+    SocketSet.push_back(HCS);
+    std::cout << __FILE__ << ": Got one client" << std::endl;
+  }
+}
 
 int main()
 {
@@ -20,6 +31,7 @@ int main()
 
   std::map<int, ISocketIO *> SocketIOSet;
   //TODO: create thread for listen socket to accept
+  std::thread ListenThread(ListenThreadFunc, SocketSet[0]->GetSocketFD(), std::ref(SocketSet));
   fd_set ReadFDSet;
   fd_set WriteFDSet;
   while(1)
