@@ -1,11 +1,20 @@
 #include "HandleClientSocket.h"
+#include "SocketIO.h"
 #include <string.h>
-
-bool HandleClientSocket::AcceptConnect(int ServerSocketFD)
+bool HandleClientSocket::InitSocket(int SocketFD, int port)
+{
+  if(!AcceptConnect(SocketFD))
+  {
+    return false;
+  }
+  SetSocketID(CurrentID++);
+  return true;
+}
+bool HandleClientSocket::AcceptConnect(int ListenSocketFD)
 {
   //Set up handle client socket
   socklen_t AddressLength = sizeof(ClientAddress);
-  int ClientSocketFD = accept(ServerSocketFD, (sockaddr *)&ClientAddress, &AddressLength);
+  int ClientSocketFD = accept(ListenSocketFD, (sockaddr *)&ClientAddress, &AddressLength);
   if(ClientSocketFD != -1)
   {
     SetSocketFD(ClientSocketFD);
@@ -20,6 +29,10 @@ bool HandleClientSocket::Receive()
 {
   // true if there is some data need to be receive, otherwise the other side's socket has closed
   return recv(GetSocketFD(), ReceiveBuffer, BufferSize, 0) > 0;
+}
+const char * HandleClientSocket::GetReceiveBuffer() const
+{
+  return ReceiveBuffer;
 }
 bool HandleClientSocket::Send(const char * Buffer)
 {

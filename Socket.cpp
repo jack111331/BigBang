@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 
+int Socket::CurrentID = 0;
 void Socket::InitServerAddress(int port)
 {
   memset(&ServerAddress, 0, sizeof(ServerAddress));
@@ -35,6 +36,14 @@ int Socket::GetSocketFD() const
 void Socket::SetSocketFD(int SocketFD)
 {
   this->SocketFD = SocketFD;
+}
+int Socket::GetSocketID() const
+{
+  return this->ID;
+}
+void Socket::SetSocketID(int ID)
+{
+  this->ID = ID;
 }
 Socket::~Socket()
 {

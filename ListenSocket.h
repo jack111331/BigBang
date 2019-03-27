@@ -6,6 +6,7 @@
   class ListenSocket : public Socket
   {
   public:
+    bool InitSocket(int SocketFD, int port);
     bool StartListening();
     ~ListenSocket();
   private:
