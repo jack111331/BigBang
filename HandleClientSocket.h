@@ -4,7 +4,7 @@
   #include "Socket.h"
   #include "SocketIO.h"
 
-  class HandleClientSocket : public Socket, ISocketIO
+  class HandleClientSocket : public Socket, public ISocketIO
   {
   public:
     bool InitSocket(int SocketFD, int port);
