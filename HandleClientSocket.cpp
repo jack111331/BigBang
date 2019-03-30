@@ -1,7 +1,7 @@
 #include "HandleClientSocket.h"
 #include "SocketIO.h"
 #include <string.h>
-bool HandleClientSocket::InitSocket(int SocketFD, int port)
+bool CHandleClientSocket::InitSocket(int SocketFD, int port)
 {
   if(!AcceptConnect(SocketFD))
   {
@@ -10,7 +10,7 @@ bool HandleClientSocket::InitSocket(int SocketFD, int port)
   SetSocketID(CurrentID++);
   return true;
 }
-bool HandleClientSocket::AcceptConnect(int ListenSocketFD)
+bool CHandleClientSocket::AcceptConnect(int ListenSocketFD)
 {
   //Set up handle client socket
   socklen_t AddressLength = sizeof(ClientAddress);
@@ -25,21 +25,21 @@ bool HandleClientSocket::AcceptConnect(int ListenSocketFD)
     return false;
   }
 }
-bool HandleClientSocket::Receive()
+const char * CHandleClientSocket::Receive()
 {
   // true if there is some data need to be receive, otherwise the other side's socket has closed
-  return recv(GetSocketFD(), ReceiveBuffer, BufferSize, 0) > 0;
-}
-const char * HandleClientSocket::GetReceiveBuffer() const
-{
+  if(recv(GetSocketFD(), ReceiveBuffer, BufferSize, 0) <= 0)
+  {
+    return nullptr;
+  }
   return ReceiveBuffer;
 }
-bool HandleClientSocket::Send(const char * Buffer)
+bool CHandleClientSocket::Send(const char * Buffer)
 {
   // true if successfully send data, otherwise failed
   return send(GetSocketFD(), Buffer, strlen(Buffer)+1, 0) != -1;
 }
-HandleClientSocket::~HandleClientSocket()
+CHandleClientSocket::~CHandleClientSocket()
 {
   shutdown(GetSocketFD(), SHUT_RDWR);
 }

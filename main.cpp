@@ -11,11 +11,11 @@
 static constexpr int port = 27743;
 static timeval timeout = {0, 5};//second, usecond
 
-void ListenThreadFunc(int ListenSocketFD, std::vector<Socket *> & SocketSet, std::map<int, ISocketIO *> & SocketIOSet)
+void ListenThreadFunc(int ListenSocketFD, std::vector<CSocket *> & SocketSet, std::map<int, ISocketIO *> & SocketIOSet)
 {
   while(1)
   {
-    HandleClientSocket * HCS = new HandleClientSocket;
+    CHandleClientSocket * HCS = new CHandleClientSocket;
     HCS->InitSocket(ListenSocketFD, 0);
     SocketIOSet.insert(std::pair<int, ISocketIO *>(HCS->GetSocketID(), HCS));
     SocketSet.push_back(HCS);
@@ -25,8 +25,8 @@ void ListenThreadFunc(int ListenSocketFD, std::vector<Socket *> & SocketSet, std
 
 int main()
 {
-  std::vector<Socket *> SocketSet;
-  SocketSet.push_back(new ListenSocket);
+  std::vector<CSocket *> SocketSet;
+  SocketSet.push_back(new CListenSocket);
   //Setup Listen Server
   SocketSet[0]->InitSocket(0, port);
 
@@ -55,9 +55,10 @@ int main()
       if(FD_ISSET(SocketSet[i]->GetSocketFD(), &ReadFDSet))
       {
         int ClientSocketID = SocketSet[i]->GetSocketID();
-        if(SocketIOSet[ClientSocketID]->Receive())
+        const char * ReceivedData = SocketIOSet[ClientSocketID]->Receive();
+        if(ReceivedData != nullptr)
         {
-          std::cout << __FILE__ << " Receive from client " << SocketSet[i]->GetSocketFD() << ": " << SocketIOSet[ClientSocketID]->GetReceiveBuffer() << std::endl;
+          std::cout << __FILE__ << " Receive from client " << SocketSet[i]->GetSocketFD() << ": " << ReceivedData << std::endl;
         }
         else
         {

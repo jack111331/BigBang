@@ -1,5 +1,5 @@
 #include "ListenSocket.h"
-bool ListenSocket::InitSocket(int SocketFD, int port)
+bool CListenSocket::InitSocket(int SocketFD, int port)
 {
   InitServerAddress(port);
   SetSocketID(CurrentID++);
@@ -20,13 +20,13 @@ bool ListenSocket::InitSocket(int SocketFD, int port)
   }
   return 1;
 }
-bool ListenSocket::StartListening()
+bool CListenSocket::StartListening()
 {
   //Listening to possible client connect
   //true if success, otherwise failed
   return listen(GetSocketFD(), MaxListenAmount) != -1;
 }
-ListenSocket::~ListenSocket()
+CListenSocket::~CListenSocket()
 {
   shutdown(GetSocketFD(), SHUT_RDWR);
 }

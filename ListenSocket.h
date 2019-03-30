@@ -1,15 +1,13 @@
-#ifndef LISTENSOCKET_H
-  #define LISTENSOCKET_H
+#pragma once
 
-  #include "Socket.h"
+#include "Socket.h"
 
-  class ListenSocket : public Socket
-  {
-  public:
-    bool InitSocket(int SocketFD, int port);
-    bool StartListening();
-    ~ListenSocket();
-  private:
-    static constexpr int MaxListenAmount = 14;
-  };
-#endif
+class CListenSocket : public CSocket
+{
+public:
+  bool InitSocket(int SocketFD, int port);
+  bool StartListening();
+  ~CListenSocket();
+private:
+  static constexpr int MaxListenAmount = 14;
+};

@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdint.h>
 
-int Socket::CurrentID = 0;
-void Socket::InitServerAddress(int port)
+int CSocket::CurrentID = 0;
+void CSocket::InitServerAddress(int port)
 {
   memset(&ServerAddress, 0, sizeof(ServerAddress));
 
@@ -14,7 +14,7 @@ void Socket::InitServerAddress(int port)
   //Unified endian
   ServerAddress.sin_port = htons(port);
 }
-bool Socket::CreateSocket()
+bool CSocket::CreateSocket()
 {
   SocketFD = socket(IPV4, TCP, 0);
   if(SocketFD == -1)
@@ -23,29 +23,29 @@ bool Socket::CreateSocket()
   }
   return true;
 }
-bool Socket::BindSocket()
+bool CSocket::BindSocket()
 {
   //bind socket address and port
   //true if success, otherwise failed
   return bind(SocketFD, (sockaddr *)&ServerAddress, sizeof(ServerAddress)) != -1;
 }
-int Socket::GetSocketFD() const
+int CSocket::GetSocketFD() const
 {
   return SocketFD;
 }
-void Socket::SetSocketFD(int SocketFD)
+void CSocket::SetSocketFD(int SocketFD)
 {
   this->SocketFD = SocketFD;
 }
-int Socket::GetSocketID() const
+int CSocket::GetSocketID() const
 {
   return this->ID;
 }
-void Socket::SetSocketID(int ID)
+void CSocket::SetSocketID(int ID)
 {
   this->ID = ID;
 }
-Socket::~Socket()
+CSocket::~CSocket()
 {
   shutdown(SocketFD, SHUT_RDWR);
 }
