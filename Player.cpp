@@ -1,12 +1,16 @@
 #include "Player.h"
 #include "Plague.h"
 
-bool CPlayer::DrawCard()
+bool CPlayer::DrawCard(CPlague & plague, std::vector<CPlayer *> & allPlayer)
+{
+  Character->DrawCard(plague, *this, allPlayer);
+}
+bool CPlayer::Attack(std::vector<CPlayer *> & allPlayer)
 {
 }
-bool CPlayer::Attack()
+bool CPlayer::BeAttacked()
 {
-
+  Character->BeAttacked();
 }
 bool CPlayer::UseCard(CCard & card, std::vector<CPlayer *> & allPlayer)
 {
@@ -20,14 +24,14 @@ bool CPlayer::UseCard(CCard & card, std::vector<CPlayer *> & allPlayer)
 }
 bool CPlayer::TossCard()
 {
-
+  Character->TossCard();
 }
 
 const std::string & CPlayer::GetName() const
 {
   return this->Name;
 }
-const CCharacter * CPlayer::GetCharacter() const
+const ICharacter * CPlayer::GetCharacter() const
 {
   return this->Character;
 }

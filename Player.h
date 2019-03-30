@@ -16,13 +16,14 @@ enum class Team
 class CPlayer
 {
 public:
-  bool DrawCard();
-  bool Attack();
+  bool DrawCard(CPlague & plague, std::vector<CPlayer *> & allPlayer);
+  bool Attack(std::vector<CPlayer *> & allPlayer);
+  bool BeAttacked();
   bool UseCard(CCard & card, std::vector<CPlayer *> & allPlayer);
   bool TossCard();
 
   const std::string & GetName() const;
-  const CCharacter * GetCharacter() const;
+  const ICharacter * GetCharacter() const;
   Team GetIdentity() const;
   int GetHP() const;
   int GetMaxHP() const;
@@ -51,16 +52,18 @@ public:
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
   void SetCanBombo(bool canCombo);
+protected:
+  ICharacter * Character;
 
 private:
   std::string Name;
-  CCharacter * Character;
   Team Identity;
   int HP;
   int MaxHP;
   std::vector<CCard *> Holding;
   std::vector<CCard *> Equipment;
   int Position;
+  int DrawPerRound;
   //Weapon??
   bool Dead;
   int AttackRange;

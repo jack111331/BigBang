@@ -1,5 +1,6 @@
 #include "Character.h"
 
+int CCharacter::CurrentID = 0;
 const std::string & CCharacter::GetName() const
 {
   return this->Name;
@@ -27,7 +28,7 @@ void CCharacter::SetFeature(const std::string & feature)
 }
 void CCharacter::SetID(int id)
 {
-  this->ID = id;
+  this->ID = CurrentID++;
 }
 void CCharacter::SetMaxHP(int maxHP)
 {
