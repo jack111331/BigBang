@@ -4,10 +4,13 @@
 class CCharacterBart : public CCharacter
 {
   void InitCharacter();
-  bool DrawCard(CPlague & plague, CPlayer & myself, std::vector<CPlayer *> & allPlayer) = 0;
-  bool Attack() = 0;
-  bool BeAttacked() = 0;
-  bool TossCard() = 0;
+//  bool DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+// 代表用原本的DrawCard
+//  bool Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+// 代表用原本的Attack
+  bool BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+//  bool TossCard();
+// 代表用原本的TossCard
 };
 void CCharacterBart::InitCharacter()
 {
@@ -19,19 +22,7 @@ void CCharacterBart::InitCharacter()
   SetID();
   SetMaxHP(MaxHP);
 }
-bool CCharacterBart::DrawCard(CPlague & plague, CPlayer & myself, std::vector<CPlayer *> & allPlayer)
-{
-
-}
-bool CCharacterBart::Attack()
-{
-
-}
-bool CCharacterBart::BeAttacked()
-{
-
-}
-bool CCharacterBart::TossCard()
+bool CCharacterBart::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
 
 }

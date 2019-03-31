@@ -7,34 +7,34 @@
 
 enum class Team
 {
-  Sergeant,
-  ChiefSergeant,
-  BadAss,
-  Traitor
+  Sergeant, //警長
+  ChiefSergeant, //副警長
+  BadAss, //歹徒
+  Traitor //叛徒
 };
 
 class CPlayer
 {
 public:
-  bool DrawCard(CPlague & plague, std::vector<CPlayer *> & allPlayer);
-  bool Attack(std::vector<CPlayer *> & allPlayer);
-  bool BeAttacked();
+  bool DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  bool Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  bool BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
   bool UseCard(CCard & card, std::vector<CPlayer *> & allPlayer);
   bool TossCard();
 
   const std::string & GetName() const;
-  const ICharacter * GetCharacter() const;
+  ICharacter * GetCharacter();
   Team GetIdentity() const;
   int GetHP() const;
   int GetMaxHP() const;
   const std::vector<CCard *> & GetHolding() const;
   const std::vector<CCard *> & GetEquipment() const;
   int GetPosition() const;
+  bool isAttacked() const;
   bool isDead() const;
   int GetAttackRange() const;
   int GetAddRange() const;
   int GetMinusRange() const;
-  bool GetCanBombo() const;
 
   void SetName(const std::string & name);
   void SetCharacter(CCharacter * character);
@@ -47,11 +47,11 @@ public:
   void RemoveHolding(const CCard & card);
   void RemoveEquipment(const CCard & card);
   void SetPosition(int position);
-  void isDead(bool dead);
+  void SetAttacked(bool attacked);
+  void SetDead(bool dead);
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
-  void SetCanBombo(bool canCombo);
 protected:
   ICharacter * Character;
 
@@ -65,9 +65,9 @@ private:
   int Position;
   int DrawPerRound;
   //Weapon??
-  bool Dead;
+  bool Attacked; //是否已攻擊
+  bool Dead; //是否處於死亡狀態
   int AttackRange;
-  int AddRange;
-  int MinusRange;
-  bool CanCombo;
+  int AddRange; //別人看自己的距離
+  int MinusRange; //自己看別人的距離
 };

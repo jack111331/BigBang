@@ -1,16 +1,17 @@
 #include "Player.h"
 #include "Plague.h"
 
-bool CPlayer::DrawCard(CPlague & plague, std::vector<CPlayer *> & allPlayer)
+bool CPlayer::DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  Character->DrawCard(plague, *this, allPlayer);
+  return Character->DrawCard(plague, *this, target, allPlayer);
 }
-bool CPlayer::Attack(std::vector<CPlayer *> & allPlayer)
+bool CPlayer::Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
+  return Character->Attack(plague, *this, target, allPlayer);
 }
-bool CPlayer::BeAttacked()
+bool CPlayer::BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  Character->BeAttacked();
+  return Character->BeAttacked(plague, *this, target, allPlayer);
 }
 bool CPlayer::UseCard(CCard & card, std::vector<CPlayer *> & allPlayer)
 {
@@ -24,14 +25,14 @@ bool CPlayer::UseCard(CCard & card, std::vector<CPlayer *> & allPlayer)
 }
 bool CPlayer::TossCard()
 {
-  Character->TossCard();
+  return Character->TossCard();
 }
 
 const std::string & CPlayer::GetName() const
 {
   return this->Name;
 }
-const ICharacter * CPlayer::GetCharacter() const
+ICharacter * CPlayer::GetCharacter()
 {
   return this->Character;
 }
@@ -59,6 +60,10 @@ int CPlayer::GetPosition() const
 {
   return this->Position;
 }
+bool CPlayer::isAttacked() const
+{
+  return this->Attacked;
+}
 bool CPlayer::isDead() const
 {
   return this->Dead;
@@ -74,10 +79,6 @@ int CPlayer::GetAddRange() const
 int CPlayer::GetMinusRange() const
 {
   return this->MinusRange;
-}
-bool CPlayer::GetCanBombo() const
-{
-  return this->CanCombo;
 }
 
 void CPlayer::SetName(const std::string & name)
@@ -146,7 +147,11 @@ void CPlayer::SetPosition(int position)
 {
   this->Position = position;
 }
-void CPlayer::isDead(bool dead)
+void CPlayer::SetAttacked(bool attacked)
+{
+  this->Attacked = attacked;
+}
+void CPlayer::SetDead(bool dead)
 {
   this->Dead = dead;
 }
@@ -161,8 +166,4 @@ void CPlayer::SetAddRange(int addRange)
 void CPlayer::SetMinusRange(int minusRange)
 {
   this->MinusRange = minusRange;
-}
-void CPlayer::SetCanBombo(bool canCombo)
-{
-  this->CanCombo = canCombo;
 }

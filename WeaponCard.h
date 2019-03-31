@@ -6,10 +6,10 @@ class CWeaponCard : public CCard
 {
 public:
   int GetAttackRange() const;
-  bool isMultiBang() const;
+  bool isMultiAttack() const;
   void SetAttackRange(int attackRange);
-  void SetMultiBang(bool multiBang);
+  void SetMultiAttack(bool multiAttack);
 private:
   int AttackRange;
-  bool MultiBang;
+  bool MultiAttack;
 };

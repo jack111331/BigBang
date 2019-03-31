@@ -8,7 +8,8 @@ class CPlague
 public:
   void InitPlague();
   int GetPlagueCardAmount() const;
-  const CCard * RandomChooseCard();
+  CCard * RandomChooseCard();
+  void RemoveCardFromPlague(const CCard * card);
 private:
   std::vector<CCard *> Plague;
 };

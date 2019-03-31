@@ -1,4 +1,5 @@
 #include "Card.h"
+int CCard::CurrentID = 0;
 bool CCard::UseCard(CPlayer & myself, std::vector<CPlayer *> & allPlayer)
 {
   if(CardType != nullptr)
@@ -19,9 +20,9 @@ int CCard::GetNumber() const
 {
   return this->Number;
 }
-int CCard::GetSuit() const
+Suit CCard::GetSuit() const
 {
-  return this->Suit;
+  return this->CardSuit;
 }
 int CCard::GetID() const
 {
@@ -35,13 +36,13 @@ void CCard::SetNumber(int number)
 {
   this->Number = number;
 }
-void CCard::SetSuit(int suit)
+void CCard::SetSuit(Suit suit)
 {
-  this->Suit = suit;
+  this->CardSuit = suit;
 }
 void CCard::SetID(int id)
 {
-  this->ID = id;
+  this->ID = CurrentID++;
 }
 void CCard::SetFeature(std::string feature)
 {

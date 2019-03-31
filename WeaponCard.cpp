@@ -4,15 +4,15 @@ int CWeaponCard::GetAttackRange() const
 {
   return this->AttackRange;
 }
-bool CWeaponCard::isMultiBang() const
+bool CWeaponCard::isMultiAttack() const
 {
-  return this->MultiBang;
+  return this->MultiAttack;
 }
 void CWeaponCard::SetAttackRange(int attackRange)
 {
   this->AttackRange = attackRange;
 }
-void CWeaponCard::SetMultiBang(bool multiBang)
+void CWeaponCard::SetMultiAttack(bool multiAttack)
 {
-  this->MultiBang = multiBang;
+  this->MultiAttack = multiAttack;
 }

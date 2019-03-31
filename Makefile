@@ -28,3 +28,5 @@ Winchester.o: ./Card/Winchester.cpp
 
 Character.o: Character.cpp
 	g++ -Wall -c Character.cpp
+BartCassidy.o: ./Character/BartCassidy.cpp
+	g++ -Wall -c ./Character/BartCassidy.cpp
