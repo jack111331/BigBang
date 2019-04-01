@@ -4,7 +4,7 @@
 #include "Player.h"
 int CCharacter::CurrentID = 0;
 
-bool CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
   //Define Normal active
   constexpr int DrawCardAmount = 2;
@@ -16,28 +16,30 @@ bool CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, 
       myself.AddHolding(DrawedCard);
       plague.RemoveCardFromPlague(DrawedCard);
     }
-    else
-    {
-      return false;
-    }
   }
-  return true;
 }
-bool CCharacter::Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacter::Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  // 先不考慮連發槍卡的連擊
-  if(!myself.isAttacked())
+  if(!myself.isAttacked() || myself.isCardInHolding(CCard::GetTypeID(std::string("Volcanic"))))
   {
     target.GetCharacter()->BeAttacked(plague, target, myself, allPlayer);
     myself.SetAttacked(true);
   }
-  return true;
 }
-bool CCharacter::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacter::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  return true;
+  if(myself.isCardInHolding(CCard::GetTypeID(std::string("Miss!"))))
+  {
+//    myself.RemoveHolding()
+  }
+  else
+  {
+    myself.SetHP(myself.GetHP()-1);
+  }
 }
-
+void CCharacter::TossCard()
+{
+}
 const std::string & CCharacter::GetName() const
 {
   return this->Name;
@@ -63,7 +65,7 @@ void CCharacter::SetFeature(const std::string & feature)
 {
   this->Feature = feature;
 }
-void CCharacter::SetID(int id)
+void CCharacter::SetID()
 {
   this->ID = CurrentID++;
 }

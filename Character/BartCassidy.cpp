@@ -1,21 +1,12 @@
-#include "../Character.h"
+#include "BartCassidy.h"
 #include <string>
+#include "../Player.h"
 
-class CCharacterBart : public CCharacter
-{
-  void InitCharacter();
-//  bool DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-// 代表用原本的DrawCard
-//  bool Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-// 代表用原本的Attack
-  bool BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-//  bool TossCard();
-// 代表用原本的TossCard
-};
+
 void CCharacterBart::InitCharacter()
 {
   const std::string Name("Bart Cassidy");
-  const std::string Feature("Draw one card while HP decrease one point.");
+  const std::string Feature("Draw one card from plague while HP decrease one point.");
   const int MaxHP = 4;
   SetName(Name);
   SetFeature(Feature);
@@ -24,5 +15,13 @@ void CCharacterBart::InitCharacter()
 }
 bool CCharacterBart::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-
+  if(myself.isCardInHolding(CCard::GetTypeID(std::string("Miss!"))))
+  {
+  }
+  else
+  {
+    myself.SetHP(myself.GetHP()-1);
+    myself.DrawCard(plague, target, allPlayer);
+  }
+  return true;
 }

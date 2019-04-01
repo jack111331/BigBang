@@ -1,10 +1,11 @@
 #include "Plague.h"
 #include <time.h>
+#include "../Card/Winchester.h"
 
 
 void CPlague::InitPlague()
 {
-
+  Plague.push_back(new CWinchester);
 }
 int CPlague::GetPlagueCardAmount() const
 {

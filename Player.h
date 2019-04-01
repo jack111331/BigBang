@@ -16,11 +16,11 @@ enum class Team
 class CPlayer
 {
 public:
-  bool DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  bool Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  bool BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  bool UseCard(CCard & card, std::vector<CPlayer *> & allPlayer);
-  bool TossCard();
+  void DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  void Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  void BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  void UseCard(CCard & card, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  void TossCard();
 
   const std::string & GetName() const;
   ICharacter * GetCharacter();
@@ -43,7 +43,7 @@ public:
   void SetMaxHP(int maxHP);
   void AddHolding(CCard * card);
   void AddEquipment(CCard * card);
-  bool isCardInHolding(const CCard & card);
+  bool isCardInHolding(int TypeID);
   void RemoveHolding(const CCard & card);
   void RemoveEquipment(const CCard & card);
   void SetPosition(int position);
@@ -53,15 +53,15 @@ public:
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
 protected:
-  ICharacter * Character;
-
+  //不是interface的原因: 因為我有可能用到Class的東西
+  CCharacter * Character = nullptr;
+  std::vector<CCard *> Holding;
+  std::vector<CCard *> Equipment;
 private:
   std::string Name;
   Team Identity;
   int HP;
   int MaxHP;
-  std::vector<CCard *> Holding;
-  std::vector<CCard *> Equipment;
   int Position;
   int DrawPerRound;
   //Weapon??

@@ -1,5 +1,5 @@
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o
-	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
+	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
 	
 	
 Socket.o: Socket.cpp

@@ -1,38 +1,48 @@
 #include "Player.h"
 #include "Plague.h"
 
-bool CPlayer::DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CPlayer::DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  return Character->DrawCard(plague, *this, target, allPlayer);
-}
-bool CPlayer::Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
-{
-  return Character->Attack(plague, *this, target, allPlayer);
-}
-bool CPlayer::BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
-{
-  return Character->BeAttacked(plague, *this, target, allPlayer);
-}
-bool CPlayer::UseCard(CCard & card, std::vector<CPlayer *> & allPlayer)
-{
-  if(isCardInHolding(card))
+  if(Character != nullptr)
   {
-    card.UseCard(*this, allPlayer);
-    RemoveHolding(card);
-    return true;
+    Character->DrawCard(plague, *this, target, allPlayer);
   }
-  return false;
 }
-bool CPlayer::TossCard()
+void CPlayer::Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  return Character->TossCard();
+  if(Character != nullptr)
+  {
+    Character->Attack(plague, *this, target, allPlayer);
+  }
+}
+void CPlayer::BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+{
+  if(Character != nullptr)
+  {
+    Character->BeAttacked(plague, *this, target, allPlayer);
+  }
+}
+void CPlayer::UseCard(CCard & card, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+{
+  if(isCardInHolding(card.GetTypeID()))
+  {
+    card.UseCard(*this, target, allPlayer);
+    RemoveHolding(card);
+  }
+}
+void CPlayer::TossCard()
+{
+  if(Character != nullptr)
+  {
+    return Character->TossCard();
+  }
 }
 
 const std::string & CPlayer::GetName() const
 {
   return this->Name;
 }
-ICharacter * CPlayer::GetCharacter()
+CCharacter * CPlayer::GetCharacter()
 {
   return this->Character;
 }
@@ -96,6 +106,10 @@ void CPlayer::SetIdentity(Team identity)
 }
 void CPlayer::SetHP(int HP)
 {
+  if(HP == 0)
+  {
+    this->Dead = true;
+  }
   this->HP = HP;
 }
 void CPlayer::SetMaxHP(int maxHP)
@@ -110,11 +124,11 @@ void CPlayer::AddEquipment(CCard * card)
 {
   Equipment.push_back(card);
 }
-bool CPlayer::isCardInHolding(const CCard & card)
+bool CPlayer::isCardInHolding(int TypeID)
 {
   for(int i = 0;i < static_cast<int>(Holding.size());i++)
   {
-    if(Holding[i]->GetID() == card.GetID())
+    if(Holding[i]->GetTypeID() == TypeID)
     {
       return true;
     }

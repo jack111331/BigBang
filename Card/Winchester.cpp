@@ -5,13 +5,18 @@
 class CWinchester : public CWeaponCard
 {
 public:
+  CWinchester();
   void InitCard();
-  bool UseCardEffect(CPlayer & myself, std::vector<CPlayer> & allPlayer);
+  bool UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer> & allPlayer);
 };
+CWinchester::CWinchester()
+{
+  InitCard();
+}
 void CWinchester::InitCard()
 {
-  const std::string Name("Bart Cassidy");
-  const std::string Feature("Draw one card while HP decrease one point.");
+  const std::string Name("Winchester");
+  const std::string Feature("Attack range increased to 5.");
   constexpr int Number = 8;
   constexpr Suit suit = Suit::Spade;
   SetName(Name);
@@ -24,7 +29,7 @@ void CWinchester::InitCard()
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
 }
-bool CWinchester::UseCardEffect(CPlayer & myself, std::vector<CPlayer> & allPlayer)
+bool CWinchester::UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer> & allPlayer)
 {
   //No any effect
 }

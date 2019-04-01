@@ -8,6 +8,11 @@
 #include "SocketIO.h"
 #include <sys/types.h>
 
+#include "Player.h"
+#include "Character.h"
+#include "./Character/BartCassidy.h"
+#include "Plague.h"
+
 static constexpr int port = 27743;
 static timeval timeout = {0, 5};//second, usecond
 
@@ -25,6 +30,20 @@ void ListenThreadFunc(int ListenSocketFD, std::vector<CSocket *> & SocketSet, st
 
 int main()
 {
+  CPlague * plague = new CPlague;
+  plague->InitPlague();
+  std::vector<CPlayer *> PlayerList;
+  PlayerList.push_back(new CPlayer);
+  PlayerList[0]->SetCharacter(new CCharacterBart);
+//  std::cout << PlayerList[0]->GetCharacter()->GetName() << std::endl;
+  /*
+  PlayerList[0]->DrawCard(*plague, *PlayerList[0], PlayerList);
+  std::vector<CCard *> Holding = PlayerList[0]->GetHolding();
+  PlayerList[0]->UseCard(*Holding[0], *PlayerList[0], PlayerList);
+  */
+/*
+
+*/
   std::vector<CSocket *> SocketSet;
   SocketSet.push_back(new CListenSocket);
   //Setup Listen Server

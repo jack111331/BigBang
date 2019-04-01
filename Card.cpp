@@ -1,12 +1,16 @@
 #include "Card.h"
 int CCard::CurrentID = 0;
-bool CCard::UseCard(CPlayer & myself, std::vector<CPlayer *> & allPlayer)
+std::map<std::string, int> CCard::TypeMap;
+CCard::CCard()
+{
+  InitCard();
+}
+void CCard::UseCard(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
   if(CardType != nullptr)
   {
-    return CardType->UseCardEffect(myself, allPlayer);
+    CardType->UseCardEffect(myself, target, allPlayer);
   }
-  return false;
 }
 std::string CCard::GetName() const
 {
@@ -28,6 +32,19 @@ int CCard::GetID() const
 {
   return this->ID;
 }
+int CCard::GetTypeID() const
+{
+  return TypeMap[Name];
+}
+int CCard::GetTypeID(std::string cardname)
+{
+  if(TypeMap.find(cardname) != TypeMap.end())
+  {
+    return TypeMap[cardname];
+  }
+  return -1;
+}
+
 void CCard::SetName(std::string name)
 {
   this->Name = name;
@@ -47,4 +64,8 @@ void CCard::SetID(int id)
 void CCard::SetFeature(std::string feature)
 {
   this->Feature = feature;
+}
+void CCard::SetTypeID(std::string Cardname)
+{
+  TypeMap[Cardname] = TypeMap.size();
 }
