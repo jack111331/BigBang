@@ -17,8 +17,9 @@ class CSocketFacade
   private:
     CListenSocket * ListenSocket;
     static void ListenThreadFunc(int ListenSocketFD);
-    static void SocketProcess();
+    static void SocketProcessFunc();
     static std::map<int, CHandleClientSocket *> SocketSet;
     static timeval timeout;//second, usecond
     std::thread ListenThread;
+    std::thread ProcessThread;
 };

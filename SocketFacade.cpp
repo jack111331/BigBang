@@ -13,6 +13,7 @@ void CSocketFacade::createListenSocket(int port)
   this->ListenSocket = new CListenSocket();
   this->ListenSocket->InitSocket(0, port);
   ListenThread = std::thread(ListenThreadFunc, ListenSocket->GetSocketFD());
+  ProcessThread = std::thread(SocketProcessFunc);
 }
 const std::string CSocketFacade::receive(int ID)
 {
@@ -39,7 +40,7 @@ void CSocketFacade::ListenThreadFunc(int ListenSocketFD)
     SocketSet.insert(std::pair<int, CHandleClientSocket *>(HCS->GetSocketID(), HCS));
   }
 }
-void CSocketFacade::SocketProcess()
+void CSocketFacade::SocketProcessFunc()
 {
   fd_set ReadFDSet;
   fd_set WriteFDSet;
