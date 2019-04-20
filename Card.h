@@ -13,18 +13,12 @@ enum class Suit
   Club //梅花
 };
 
-class ICard
-{
-public:
-  virtual void InitCard() = 0;
-  virtual void UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer) = 0;
-};
-
 class CCard
 {
 public:
   CCard();
-  void UseCard(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
+  virtual ~CCard();
+  virtual void UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer) = 0;
   std::string GetName() const;
   std::string GetFeature() const;
   int GetNumber() const;
@@ -40,7 +34,6 @@ public:
   void SetID(int id);
   static void SetTypeID(std::string cardname);
 protected:
-  ICard * CardType = nullptr;
   static int CurrentID;
 private:
   std::string Name;

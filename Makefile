@@ -1,5 +1,6 @@
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
-	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketIO.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o ClientEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
+	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
+	rm *.o
 	
 	
 Socket.o: Socket.cpp
@@ -8,13 +9,12 @@ ListenSocket.o: ListenSocket.cpp
 	g++ -Wall -c ListenSocket.cpp
 HandleClientSocket.o: HandleClientSocket.cpp
 	g++ -Wall -c HandleClientSocket.cpp
-SocketIO.o: SocketIO.cpp
-	g++ -Wall -c SocketIO.cpp
+	
+SocketFacade.o: SocketFacade.cpp
+	g++ -Wall -c SocketFacade.cpp
 
 Player.o: Player.cpp
 	g++ -Wall -c Player.cpp
-	
-	
 Plague.o: Plague.cpp
 	g++ -Wall -c Plague.cpp
 Card.o: Card.cpp
@@ -30,3 +30,6 @@ Character.o: Character.cpp
 	g++ -Wall -c Character.cpp
 BartCassidy.o: ./Character/BartCassidy.cpp
 	g++ -Wall -c ./Character/BartCassidy.cpp
+	
+ClientEventObserver.o: ClientEventObserver.cpp
+	g++ -Wall -c ClientEventObserver.cpp

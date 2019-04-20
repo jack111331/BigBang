@@ -1,11 +1,11 @@
 #include "Plague.h"
+#include "CardGenFactory.h"
 #include <time.h>
-#include "../Card/Winchester.h"
 
 
 void CPlague::InitPlague()
 {
-  Plague.push_back(new CWinchester);
+//  Plague.push_back(NSCardGenFactory::createCard("Winchester"));
 }
 int CPlague::GetPlagueCardAmount() const
 {

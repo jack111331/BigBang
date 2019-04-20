@@ -5,6 +5,7 @@
 class CListenSocket : public CSocket
 {
 public:
+  CListenSocket();
   bool InitSocket(int SocketFD, int port);
   bool StartListening();
   ~CListenSocket();

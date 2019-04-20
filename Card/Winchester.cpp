@@ -1,14 +1,6 @@
-#include "../WeaponCard.h"
-#include "../Player.h"
+#include "Winchester.h"
 #include <string>
 
-class CWinchester : public CWeaponCard
-{
-public:
-  CWinchester();
-  void InitCard();
-  bool UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer> & allPlayer);
-};
 CWinchester::CWinchester()
 {
   InitCard();
@@ -29,7 +21,7 @@ void CWinchester::InitCard()
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
 }
-bool CWinchester::UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer> & allPlayer)
+void CWinchester::UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
   //No any effect
 }

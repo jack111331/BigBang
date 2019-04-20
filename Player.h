@@ -23,7 +23,7 @@ public:
   void TossCard();
 
   const std::string & GetName() const;
-  ICharacter * GetCharacter();
+  CCharacter * GetCharacter();
   Team GetIdentity() const;
   int GetHP() const;
   int GetMaxHP() const;

@@ -1,4 +1,7 @@
 #include "ListenSocket.h"
+CListenSocket::CListenSocket()
+{
+}
 bool CListenSocket::InitSocket(int SocketFD, int port)
 {
   InitServerAddress(port);

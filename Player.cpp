@@ -26,7 +26,7 @@ void CPlayer::UseCard(CCard & card, CPlayer & target, std::vector<CPlayer *> & a
 {
   if(isCardInHolding(card.GetTypeID()))
   {
-    card.UseCard(*this, target, allPlayer);
+    card.UseCardEffect(*this, target, allPlayer);
     RemoveHolding(card);
   }
 }

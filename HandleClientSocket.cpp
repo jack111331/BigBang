@@ -1,6 +1,5 @@
 #include "HandleClientSocket.h"
-#include "SocketIO.h"
-#include <string.h>
+#include <string>
 bool CHandleClientSocket::InitSocket(int SocketFD, int port)
 {
   if(!AcceptConnect(SocketFD))
@@ -25,19 +24,19 @@ bool CHandleClientSocket::AcceptConnect(int ListenSocketFD)
     return false;
   }
 }
-const char * CHandleClientSocket::Receive()
+const std::string & CHandleClientSocket::receiveMessage()
 {
   // true if there is some data need to be receive, otherwise the other side's socket has closed
-  if(recv(GetSocketFD(), ReceiveBuffer, BufferSize, 0) <= 0)
+  if(recv(GetSocketFD(), &ReceiveBuffer[0], BufferSize, 0) <= 0)
   {
-    return nullptr;
+    ReceiveBuffer = std::string("");
   }
   return ReceiveBuffer;
 }
-bool CHandleClientSocket::Send(const char * Buffer)
+bool CHandleClientSocket::sendMessage(const std::string & Buffer)
 {
   // true if successfully send data, otherwise failed
-  return send(GetSocketFD(), Buffer, strlen(Buffer)+1, 0) != -1;
+  return send(GetSocketFD(), Buffer.c_str(), Buffer.size()+1, 0) != -1;
 }
 CHandleClientSocket::~CHandleClientSocket()
 {

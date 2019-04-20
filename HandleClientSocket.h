@@ -1,18 +1,19 @@
 #pragma once
 
 #include "Socket.h"
-#include "SocketIO.h"
-
-class CHandleClientSocket : public CSocket, public ISocketIO
+#include <string>
+#include <queue>
+class CHandleClientSocket : public CSocket
 {
 public:
   bool InitSocket(int SocketFD, int port);
   bool AcceptConnect(int ServerSocketFD);
-  const char * Receive();
-  bool Send(const char * Buffer);
+  const std::string & receiveMessage();
+  bool sendMessage(const std::string & Buffer);
   ~CHandleClientSocket();
 private:
+  int BufferSize = 4096;
   sockaddr_in ClientAddress;
-  static constexpr int BufferSize = 4096;
-  char ReceiveBuffer[BufferSize];
+  std::string ReceiveBuffer;
+  std::queue<std::string> sendBufferQueue;
 };

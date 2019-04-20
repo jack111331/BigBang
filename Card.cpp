@@ -3,14 +3,11 @@ int CCard::CurrentID = 0;
 std::map<std::string, int> CCard::TypeMap;
 CCard::CCard()
 {
-  InitCard();
+
 }
-void CCard::UseCard(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+CCard::~CCard()
 {
-  if(CardType != nullptr)
-  {
-    CardType->UseCardEffect(myself, target, allPlayer);
-  }
+
 }
 std::string CCard::GetName() const
 {

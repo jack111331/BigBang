@@ -13,7 +13,7 @@ void CCharacterBart::InitCharacter()
   SetID();
   SetMaxHP(MaxHP);
 }
-bool CCharacterBart::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacterBart::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
   if(myself.isCardInHolding(CCard::GetTypeID(std::string("Miss!"))))
   {
@@ -23,5 +23,4 @@ bool CCharacterBart::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & ta
     myself.SetHP(myself.GetHP()-1);
     myself.DrawCard(plague, target, allPlayer);
   }
-  return true;
 }
