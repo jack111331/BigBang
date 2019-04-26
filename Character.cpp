@@ -2,6 +2,7 @@
 #include "Card.h"
 #include "Plague.h"
 #include "Player.h"
+#include "Action.h"
 int CCharacter::CurrentID = 0;
 
 void CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
@@ -10,31 +11,15 @@ void CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, 
   constexpr int DrawCardAmount = 2;
   for(int i = 0;i < DrawCardAmount;i++)
   {
-    CCard * DrawedCard = plague.RandomChooseCard();
-    if(DrawedCard != nullptr)
-    {
-      myself.AddHolding(DrawedCard);
-      plague.RemoveCardFromPlague(DrawedCard);
-    }
+    NSAction::DrawCardFromPlague(plague, myself);
   }
 }
 void CCharacter::Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  if(!myself.isAttacked() || myself.isCardInHolding(CCard::GetTypeID(std::string("Volcanic"))))
+  if(!myself.isAttacked() || myself.isCardInHolding(std::string("Volcanic")))
   {
-    target.GetCharacter()->BeAttacked(plague, target, myself, allPlayer);
+    NSAction::Attack(myself, target, std::string("missed!"));
     myself.SetAttacked(true);
-  }
-}
-void CCharacter::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
-{
-  if(myself.isCardInHolding(CCard::GetTypeID(std::string("Miss!"))))
-  {
-//    myself.RemoveHolding()
-  }
-  else
-  {
-    myself.SetHP(myself.GetHP()-1);
   }
 }
 void CCharacter::TossCard()

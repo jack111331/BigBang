@@ -1,6 +1,8 @@
 #include "BartCassidy.h"
 #include <string>
 #include "../Player.h"
+#include "../GameEventObserver.h"
+#include "../Action.h"
 
 
 void CCharacterBart::InitCharacter()
@@ -12,15 +14,13 @@ void CCharacterBart::InitCharacter()
   SetFeature(Feature);
   SetID();
   SetMaxHP(MaxHP);
+  CGameEventObserver::registerOnAttack(OnAttacked);
 }
-void CCharacterBart::BeAttacked(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacterBart::OnAttacked(CPlayer * attacker, CPlayer * attackee)
 {
-  if(myself.isCardInHolding(CCard::GetTypeID(std::string("Miss!"))))
+  //if attackee is me, how to implement..???
+  if()
   {
-  }
-  else
-  {
-    myself.SetHP(myself.GetHP()-1);
-    myself.DrawCard(plague, target, allPlayer);
+    NSAction::DrawCardFromPlague(CPlague * plague, attackee);
   }
 }

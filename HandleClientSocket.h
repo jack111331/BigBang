@@ -15,5 +15,4 @@ private:
   int BufferSize = 4096;
   sockaddr_in ClientAddress;
   std::string ReceiveBuffer;
-  std::queue<std::string> sendBufferQueue;
 };

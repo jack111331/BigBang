@@ -43,17 +43,14 @@ void CSocketFacade::ListenThreadFunc(int ListenSocketFD)
 void CSocketFacade::SocketProcessFunc()
 {
   fd_set ReadFDSet;
-  fd_set WriteFDSet;
   while(1)
   {
     FD_ZERO(&ReadFDSet);
-    FD_ZERO(&WriteFDSet);
     for(std::map<int, CHandleClientSocket *>::iterator i = SocketSet.begin();i != SocketSet.end();++i)
     {
       FD_SET(i->second->GetSocketFD(), &ReadFDSet);
-      FD_SET(i->second->GetSocketFD(), &WriteFDSet);
     }
-    if(select((--SocketSet.end())->second->GetSocketFD() + 1, &ReadFDSet, &WriteFDSet, NULL, &timeout) < 0)
+    if(select((--SocketSet.end())->second->GetSocketFD() + 1, &ReadFDSet, NULL, NULL, &timeout) < 0)
     {
       //select fail message
       break;

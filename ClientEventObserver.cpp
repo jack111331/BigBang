@@ -1,28 +1,28 @@
 #include "ClientEventObserver.h"
-
-void CClientEventObserver::registerOnConnect(void (*ConnectFunction)())
+#include "User.h"
+void CClientEventObserver::registerOnConnect(void (*ConnectFunction)(CUser * user))
 {
   ConnectListener.push_back(ConnectFunction);
 }
-void CClientEventObserver::registerOnDisconnect(void (*DisconnectFunction)())
+void CClientEventObserver::registerOnDisconnect(void (*DisconnectFunction)(CUser * user))
 {
   DisconnectListener.push_back(DisconnectFunction);
 }
-void CClientEventObserver::CallConnect()
+void CClientEventObserver::CallConnect(CUser * user)
 {
   for(auto i = ConnectListener.begin();i != ConnectListener.end();++i)
   {
-    (*i)();
+    (*i)(user);
   }
 }
-void CClientEventObserver::CallDisconnect()
+void CClientEventObserver::CallDisconnect(CUser * user)
 {
   for(auto i = ConnectListener.begin();i != ConnectListener.end();++i)
   {
-    (*i)();
+    (*i)(user);
   }
 }
-void CClientEventObserver::unregisterOnConnect(void (*ConnectFunction)())
+void CClientEventObserver::unregisterOnConnect(void (*ConnectFunction)(CUser * user))
 {
   for(auto i = ConnectListener.begin();i != ConnectListener.end();++i)
   {
@@ -32,7 +32,7 @@ void CClientEventObserver::unregisterOnConnect(void (*ConnectFunction)())
     }
   }
 }
-void CClientEventObserver::unregisterOnDisconnect(void (*DisconnectFunction)())
+void CClientEventObserver::unregisterOnDisconnect(void (*DisconnectFunction)(CUser * user))
 {
   for(auto i = DisconnectListener.begin();i != DisconnectListener.end();++i)
   {

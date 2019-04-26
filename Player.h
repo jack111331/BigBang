@@ -43,7 +43,7 @@ public:
   void SetMaxHP(int maxHP);
   void AddHolding(CCard * card);
   void AddEquipment(CCard * card);
-  bool isCardInHolding(int TypeID);
+  bool isCardInHolding(std::string cardname);
   void RemoveHolding(const CCard & card);
   void RemoveEquipment(const CCard & card);
   void SetPosition(int position);

@@ -24,7 +24,7 @@ void CPlayer::BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer
 }
 void CPlayer::UseCard(CCard & card, CPlayer & target, std::vector<CPlayer *> & allPlayer)
 {
-  if(isCardInHolding(card.GetTypeID()))
+  if(isCardInHolding(card.GetName()))
   {
     card.UseCardEffect(*this, target, allPlayer);
     RemoveHolding(card);
@@ -124,11 +124,11 @@ void CPlayer::AddEquipment(CCard * card)
 {
   Equipment.push_back(card);
 }
-bool CPlayer::isCardInHolding(int TypeID)
+bool CPlayer::isCardInHolding(std::string cardname)
 {
   for(int i = 0;i < static_cast<int>(Holding.size());i++)
   {
-    if(Holding[i]->GetTypeID() == TypeID)
+    if(Holding[i]->GetName() == cardname)
     {
       return true;
     }
