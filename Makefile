@@ -1,5 +1,5 @@
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Room.o User.o ClientEventObserver.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
-	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Room.o User.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o ClientEventObserver.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
+	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o
 	rm *.o
 	
 	
@@ -39,3 +39,5 @@ ClientEventObserver.o: ClientEventObserver.cpp
 	g++ -Wall -c ClientEventObserver.cpp
 GameEventObserver.o: GameEventObserver.cpp
 	g++ -Wall -c GameEventObserver.cpp
+Action.o: Action.cpp
+	g++ -Wall -c Action.cpp

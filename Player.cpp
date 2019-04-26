@@ -1,41 +1,33 @@
 #include "Player.h"
-#include "Plague.h"
+#include "Action.h"
+#include "Room.h"
 
-void CPlayer::DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CPlayer::DrawCard(CRoom * room, CPlayer * target)
 {
   if(Character != nullptr)
   {
-    Character->DrawCard(plague, *this, target, allPlayer);
+    Character->DrawCard(room, this, target);
   }
 }
-void CPlayer::Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+
+void CPlayer::Attack(CRoom * room, CPlayer * target)
 {
   if(Character != nullptr)
   {
-    Character->Attack(plague, *this, target, allPlayer);
+    Character->Attack(room, this, target);
   }
 }
-void CPlayer::BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CPlayer::UseCard(CRoom * room, CCard * card, CPlayer * target)
 {
-  if(Character != nullptr)
+  if(isCardInHolding(card->GetName()))
   {
-    Character->BeAttacked(plague, *this, target, allPlayer);
-  }
-}
-void CPlayer::UseCard(CCard & card, CPlayer & target, std::vector<CPlayer *> & allPlayer)
-{
-  if(isCardInHolding(card.GetName()))
-  {
-    card.UseCardEffect(*this, target, allPlayer);
+    card->UseCardEffect(room, this, target);
     RemoveHolding(card);
   }
 }
-void CPlayer::TossCard()
+void CPlayer::FoldCard(CRoom * room, CCard * card)
 {
-  if(Character != nullptr)
-  {
-    return Character->TossCard();
-  }
+  NSAction::FoldCard(this, card, room->GetDiscardPlague());
 }
 
 const std::string & CPlayer::GetName() const
@@ -135,22 +127,22 @@ bool CPlayer::isCardInHolding(std::string cardname)
   }
   return false;
 }
-void CPlayer::RemoveHolding(const CCard & card)
+void CPlayer::RemoveHolding(const CCard * card)
 {
   for(int i = 0;i < static_cast<int>(Holding.size());i++)
   {
-    if(Holding[i]->GetID() == card.GetID())
+    if(Holding[i]->GetID() == card->GetID())
     {
       Holding.erase(Holding.begin() + i);
       break;
     }
   }
 }
-void CPlayer::RemoveEquipment(const CCard & card)
+void CPlayer::RemoveEquipment(const CCard * card)
 {
   for(int i = 0;i < static_cast<int>(Equipment.size());i++)
   {
-    if(Equipment[i]->GetID() == card.GetID())
+    if(Equipment[i]->GetID() == card->GetID())
     {
       Equipment.erase(Equipment.begin() + i);
       break;

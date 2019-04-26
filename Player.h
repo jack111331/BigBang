@@ -13,14 +13,15 @@ enum class Team
   Traitor //叛徒
 };
 
+class CRoom;
+
 class CPlayer
 {
 public:
-  void DrawCard(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  void Attack(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  void BeAttacked(CPlague & plague, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  void UseCard(CCard & card, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  void TossCard();
+  void DrawCard(CRoom * room, CPlayer * target);
+  void Attack(CRoom * room, CPlayer * target);
+  void UseCard(CRoom * room, CCard * card, CPlayer * target);
+  void FoldCard(CRoom * room, CCard * card);
 
   const std::string & GetName() const;
   CCharacter * GetCharacter();
@@ -44,8 +45,8 @@ public:
   void AddHolding(CCard * card);
   void AddEquipment(CCard * card);
   bool isCardInHolding(std::string cardname);
-  void RemoveHolding(const CCard & card);
-  void RemoveEquipment(const CCard & card);
+  void RemoveHolding(const CCard * card);
+  void RemoveEquipment(const CCard * card);
   void SetPosition(int position);
   void SetAttacked(bool attacked);
   void SetDead(bool dead);

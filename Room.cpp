@@ -2,14 +2,20 @@
 
 CRoom::CRoom()
 {
+  this->plague = new CPlague;
+  this->discardPlague = new CPlague;
 }
 void CRoom::PlayerJoin(CPlayer * player)
 {
   playerList.push_back(player);
 }
-CPlague & CRoom::GetPlague()
+CPlague * CRoom::GetPlague()
 {
   return this->plague;
+}
+CPlague * CRoom::GetDiscardPlague()
+{
+  return this->discardPlague;
 }
 std::vector<CPlayer *> & CRoom::GetPlayerList()
 {

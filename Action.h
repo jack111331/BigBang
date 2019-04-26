@@ -3,6 +3,7 @@
 
 class CPlayer;
 class CPlague;
+class CCard;
 
 namespace NSAction
 {
@@ -11,5 +12,5 @@ namespace NSAction
   void DrawCardFromPlague(CPlague * plague, CPlayer * drawer);
   void ChooseCardFromPlayer(CPlayer * chooser, CPlayer * choosee);
   void DrawCardFromPlayer(CPlayer * drawer, CPlayer * drawee);
-  void FoldCard(CPlayer * folder, CCard * card);
+  void FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague);
 }

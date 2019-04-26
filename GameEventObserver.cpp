@@ -1,44 +1,45 @@
 #include "GameEventObserver.h"
 #include "Player.h"
+#include "Room.h"
 
-std::vector<void (*)(CPlayer * attacker, CPlayer * attackee)> AttackListener;
-std::vector<void (*)(CPlayer * deadPerson, CPlayer * attacker)> DeathListener;
-std::vector<void (*)(CPlayer * Drawer)> DrawCardListener;
+std::vector<void (*)(CRoom * room, CPlayer * attacker, CPlayer * attackee)> CGameEventObserver::AttackListener;
+std::vector<void (*)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)> CGameEventObserver::DeathListener;
+std::vector<void (*)(CRoom * room, CPlayer * Drawer)> CGameEventObserver::DrawCardListener;
 
-void CGameEventObserver::registerOnAttack(void (*AttackFunction)(CPlayer * attacker, CPlayer * attackee))
+void CGameEventObserver::registerOnAttack(void (*AttackFunction)(CRoom * room, CPlayer * attacker, CPlayer * attackee))
 {
   AttackListener.push_back(AttackFunction);
 }
-void CGameEventObserver::registerOnDeath(void (*DeathFunction)(CPlayer * deadPerson, CPlayer * attacker))
+void CGameEventObserver::registerOnDeath(void (*DeathFunction)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker))
 {
   DeathListener.push_back(DeathFunction);
 }
-void CGameEventObserver::registerOnDrawCard(void (*DrawCardFunction)(CPlayer * Drawer))
+void CGameEventObserver::registerOnDrawCard(void (*DrawCardFunction)(CRoom * room, CPlayer * Drawer))
 {
   DrawCardListener.push_back(DrawCardFunction);
 }
-void CGameEventObserver::CallAttack(CPlayer * attacker, CPlayer * attackee)
+void CGameEventObserver::callAttack(CRoom * room, CPlayer * attacker, CPlayer * attackee)
 {
   for(auto i = AttackListener.begin();i != AttackListener.end();++i)
   {
-    (*i)(attacker, attackee);
+    (*i)(room, attacker, attackee);
   }
 }
-void CGameEventObserver::CallDeath(CPlayer * deadPerson, CPlayer * attacker)
+void CGameEventObserver::callDeath(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)
 {
   for(auto i = DeathListener.begin();i != DeathListener.end();++i)
   {
-    (*i)(deadPerson, attacker);
+    (*i)(room, deadPerson, attacker);
   }
 }
-void CGameEventObserver::CallDrawCard(CPlayer * Drawer)
+void CGameEventObserver::callDrawCard(CRoom * room, CPlayer * Drawer)
 {
   for(auto i = DrawCardListener.begin();i != DrawCardListener.end();++i)
   {
-    (*i)(Drawer);
+    (*i)(room, Drawer);
   }
 }
-void CGameEventObserver::unregisterOnAttack(void (*AttackFunction)(CPlayer * attacker, CPlayer * attackee))
+void CGameEventObserver::unregisterOnAttack(void (*AttackFunction)(CRoom * room, CPlayer * attacker, CPlayer * attackee))
 {
   for(auto i = AttackListener.begin();i != AttackListener.end();++i)
   {
@@ -48,7 +49,7 @@ void CGameEventObserver::unregisterOnAttack(void (*AttackFunction)(CPlayer * att
     }
   }
 }
-void CGameEventObserver::unregisterOnDeath(void (*DeathFunction)(CPlayer * deadPerson, CPlayer * attacker))
+void CGameEventObserver::unregisterOnDeath(void (*DeathFunction)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker))
 {
   for(auto i = DeathListener.begin();i != DeathListener.end();++i)
   {
@@ -58,7 +59,7 @@ void CGameEventObserver::unregisterOnDeath(void (*DeathFunction)(CPlayer * deadP
     }
   }
 }
-void CGameEventObserver::unregisterOnDeath(void (*DrawCardFunction)(CPlayer * Drawer))
+void CGameEventObserver::unregisterOnDeath(void (*DrawCardFunction)(CRoom * room, CPlayer * Drawer))
 {
   for(auto i = DrawCardListener.begin();i != DrawCardListener.end();++i)
   {

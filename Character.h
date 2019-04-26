@@ -6,21 +6,21 @@
 class CPlayer;
 class CPlague;
 
+class CRoom;
+
 class ICharacter
 {
 public:
   virtual void InitCharacter() = 0;
-  virtual void DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer) = 0;
-  virtual void Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer) = 0;
-  virtual void TossCard() = 0;
+  virtual void DrawCard(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
+  virtual void Attack(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
 };
 
 class CCharacter : public ICharacter
 {
 public:
-  void DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  void Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer);
-  void TossCard();
+  void DrawCard(CRoom * room, CPlayer * myself, CPlayer * target);
+  void Attack(CRoom * room, CPlayer * myself, CPlayer * target);
 
   const std::string & GetName() const;
   const std::string & GetFeature() const;

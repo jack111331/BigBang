@@ -11,7 +11,7 @@ int CPlague::GetPlagueCardAmount() const
 {
   return static_cast<int>(Plague.size());
 }
-CCard * CPlague::RandomChooseCard()
+CCard * CPlague::ChooseRandomCard()
 {
   srand(time(0));
   int PlagueCardAmount = GetPlagueCardAmount();
@@ -24,6 +24,26 @@ CCard * CPlague::RandomChooseCard()
   {
     return nullptr;
   }
+}
+CCard * CPlague::ChooseTopCard()
+{
+  //change imple
+  srand(time(0));
+  int PlagueCardAmount = GetPlagueCardAmount();
+  if(PlagueCardAmount)
+  {
+    int random = rand() % PlagueCardAmount;
+    return Plague[random];
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
+void CPlague::InsertCardToPlague(CCard * card)
+{
+  Plague.push_back(card);
 }
 void CPlague::RemoveCardFromPlague(const CCard * card)
 {

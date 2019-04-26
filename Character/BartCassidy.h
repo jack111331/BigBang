@@ -3,5 +3,5 @@
 class CCharacterBart : public CCharacter
 {
   void InitCharacter();
-  void OnAttacked(CPlayer * attacker, CPlayer * attackee);
+  static void OnAttacked(CRoom * room, CPlayer * attacker, CPlayer * attackee);
 };

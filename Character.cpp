@@ -3,27 +3,25 @@
 #include "Plague.h"
 #include "Player.h"
 #include "Action.h"
+#include "Room.h"
 int CCharacter::CurrentID = 0;
 
-void CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacter::DrawCard(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   //Define Normal active
   constexpr int DrawCardAmount = 2;
   for(int i = 0;i < DrawCardAmount;i++)
   {
-    NSAction::DrawCardFromPlague(plague, myself);
+    NSAction::DrawCardFromPlague(room->GetPlague(), myself);
   }
 }
-void CCharacter::Attack(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacter::Attack(CRoom * room, CPlayer * myself, CPlayer * target)
 {
-  if(!myself.isAttacked() || myself.isCardInHolding(std::string("Volcanic")))
+  if(!myself->isAttacked() || myself->isCardInHolding(std::string("Volcanic")))
   {
     NSAction::Attack(myself, target, std::string("missed!"));
-    myself.SetAttacked(true);
+    myself->SetAttacked(true);
   }
-}
-void CCharacter::TossCard()
-{
 }
 const std::string & CCharacter::GetName() const
 {

@@ -1,6 +1,7 @@
 #include "BartCassidy.h"
 #include <string>
 #include "../Player.h"
+#include "../Action.h"
 
 
 void CCharacterJack::InitCharacter()
@@ -13,18 +14,13 @@ void CCharacterJack::InitCharacter()
   SetID();
   SetMaxHP(MaxHP);
 }
-void CCharacter::DrawCard(CPlague & plague, CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CCharacter::DrawCard(CRoom * room, CPlayer & myself, CPlayer & target)
 {
   // flip, to be continued
   //Define Normal active
   constexpr int DrawCardAmount = 2;
   for(int i = 0;i < DrawCardAmount;i++)
   {
-    CCard * DrawedCard = plague.RandomChooseCard();
-    if(DrawedCard != nullptr)
-    {
-      myself.AddHolding(DrawedCard);
-      plague.RemoveCardFromPlague(DrawedCard);
-    }
+    NSAction::DrawCardFromPlague(CPlague * plague, CPlayer * drawer);
   }
 }

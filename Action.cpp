@@ -13,11 +13,11 @@ namespace NSAction
     }
     else
     {
-      CGameEventObserver::callAttack(attater, attackee);
+      CGameEventObserver::callAttack(nullptr, attacker, attackee);//?????
       attackee->SetHP(attackee->GetHP()-1);
       if(attackee->GetHP() <= 0)
       {
-        CGameEventObserver::callDeath(attackee, attacker);
+        CGameEventObserver::callDeath(nullptr, attackee, attacker);
       }
       return true;
     }
@@ -25,27 +25,28 @@ namespace NSAction
   }
   void RecoverHealth(CPlayer * target, int health)
   {
-    target->SetHP(min(target->GetHP()+health, target->GetMaxHP()));
+    target->SetHP(std::min(target->GetHP()+health, target->GetMaxHP()));
   }
   void DrawCardFromPlague(CPlague * plague, CPlayer * drawer)
   {
-    CCard * DrawedCard = plague.RandomChooseCard();
+    CCard * DrawedCard = plague->ChooseTopCard();
     if(DrawedCard != nullptr)
     {
-      drawer.AddHolding(DrawedCard);
-      plague.RemoveCardFromPlague(DrawedCard);
+      drawer->AddHolding(DrawedCard);
+      plague->RemoveCardFromPlague(DrawedCard);
     }
   }
   void ChooseCardFromPlayer(CPlayer * chooser, CPlayer * choosee)
   {
-
+    //invoke client to show choosee's holding and draw card UI
   }
   void DrawCardFromPlayer(CPlayer * drawer, CPlayer * drawee)
   {
-
+    //invoke client to show draw card UI
   }
-  void FoldCard(CPlayer * folder, CCard * card)
+  void FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague)
   {
-
+    DiscardPlague->InsertCardToPlague(card);
+    folder->RemoveHolding(card);
   }
 }

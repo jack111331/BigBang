@@ -1,5 +1,6 @@
 #include "Winchester.h"
 #include <string>
+#include "../Room.h"
 
 CWinchester::CWinchester()
 {
@@ -21,7 +22,7 @@ void CWinchester::InitCard()
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
 }
-void CWinchester::UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer)
+void CWinchester::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   //No any effect
 }

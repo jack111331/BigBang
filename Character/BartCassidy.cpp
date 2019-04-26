@@ -3,6 +3,7 @@
 #include "../Player.h"
 #include "../GameEventObserver.h"
 #include "../Action.h"
+#include "../Room.h"
 
 
 void CCharacterBart::InitCharacter()
@@ -16,11 +17,11 @@ void CCharacterBart::InitCharacter()
   SetMaxHP(MaxHP);
   CGameEventObserver::registerOnAttack(OnAttacked);
 }
-void CCharacterBart::OnAttacked(CPlayer * attacker, CPlayer * attackee)
+void CCharacterBart::OnAttacked(CRoom * room, CPlayer * attacker, CPlayer * attackee)
 {
-  //if attackee is me, how to implement..???
-  if()
+  //it need room to get plague
+  if(attackee->GetCharacter()->GetName() == std::string("Bart Cassidy"))
   {
-    NSAction::DrawCardFromPlague(CPlague * plague, attackee);
+    NSAction::DrawCardFromPlague(room->GetPlague(), attackee);
   }
 }

@@ -4,6 +4,7 @@
 #include <vector>
 
 class CPlayer;
+class CRoom;
 
 enum class Suit
 {
@@ -18,7 +19,7 @@ class CCard
 public:
   CCard();
   virtual ~CCard();
-  virtual void UseCardEffect(CPlayer & myself, CPlayer & target, std::vector<CPlayer *> & allPlayer) = 0;
+  virtual void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
   std::string GetName() const;
   std::string GetFeature() const;
   int GetNumber() const;
