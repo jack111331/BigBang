@@ -2,11 +2,11 @@
 #include "Action.h"
 #include "Room.h"
 
-void CPlayer::DrawCard(CRoom * room, CPlayer * target)
+void CPlayer::DrawCard(CRoom * room)
 {
   if(Character != nullptr)
   {
-    Character->DrawCard(room, this, target);
+    Character->DrawCard(room, this);
   }
 }
 

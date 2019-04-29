@@ -2,10 +2,11 @@
 #include "Player.h"
 #include "Plague.h"
 #include "GameEventObserver.h"
+#include "Room.h"
 
 namespace NSAction
 {
-  bool Attack(CPlayer * attacker, CPlayer * attackee, std::string dodgeByCard)
+  bool Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std::string dodgeByCard)
   {
     if(attackee->isCardInHolding(dodgeByCard))
     {
@@ -13,11 +14,11 @@ namespace NSAction
     }
     else
     {
-      CGameEventObserver::callAttack(nullptr, attacker, attackee);//?????
+      CGameEventObserver::callAttack(room, attacker, attackee);//?????
       attackee->SetHP(attackee->GetHP()-1);
       if(attackee->GetHP() <= 0)
       {
-        CGameEventObserver::callDeath(nullptr, attackee, attacker);
+        CGameEventObserver::callDeath(room, attackee, attacker);
       }
       return true;
     }

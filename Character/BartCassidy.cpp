@@ -6,7 +6,7 @@
 #include "../Room.h"
 
 
-void CCharacterBart::InitCharacter()
+CCharacterBart::CCharacterBart()
 {
   const std::string Name("Bart Cassidy");
   const std::string Feature("Draw one card from plague while HP decrease one point.");

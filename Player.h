@@ -18,7 +18,7 @@ class CRoom;
 class CPlayer
 {
 public:
-  void DrawCard(CRoom * room, CPlayer * target);
+  void DrawCard(CRoom * room);
   void Attack(CRoom * room, CPlayer * target);
   void UseCard(CRoom * room, CCard * card, CPlayer * target);
   void FoldCard(CRoom * room, CCard * card);

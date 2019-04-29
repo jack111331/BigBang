@@ -6,7 +6,15 @@
 #include "Room.h"
 int CCharacter::CurrentID = 0;
 
-void CCharacter::DrawCard(CRoom * room, CPlayer * myself, CPlayer * target)
+CCharacter::CCharacter()
+{
+
+}
+CCharacter::~CCharacter()
+{
+
+}
+void CCharacter::DrawCard(CRoom * room, CPlayer * myself)
 {
   //Define Normal active
   constexpr int DrawCardAmount = 2;
@@ -19,7 +27,7 @@ void CCharacter::Attack(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(!myself->isAttacked() || myself->isCardInHolding(std::string("Volcanic")))
   {
-    NSAction::Attack(myself, target, std::string("missed!"));
+    NSAction::Attack(room, myself, target, std::string("Missed!"));
     myself->SetAttacked(true);
   }
 }

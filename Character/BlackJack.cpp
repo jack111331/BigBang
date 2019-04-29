@@ -1,10 +1,11 @@
-#include "BartCassidy.h"
+#include "BlackJack.h"
 #include <string>
 #include "../Player.h"
 #include "../Action.h"
+#include "../Room.h"
 
 
-void CCharacterJack::InitCharacter()
+CCharacterJack::CCharacterJack()
 {
   const std::string Name("Black Jack");
   const std::string Feature("Draw one more card from plague if the second drawed card flipped from plague is red.");
@@ -14,13 +15,13 @@ void CCharacterJack::InitCharacter()
   SetID();
   SetMaxHP(MaxHP);
 }
-void CCharacter::DrawCard(CRoom * room, CPlayer & myself, CPlayer & target)
+void CCharacterJack::DrawCard(CRoom * room, CPlayer * myself)
 {
   // flip, to be continued
   //Define Normal active
   constexpr int DrawCardAmount = 2;
   for(int i = 0;i < DrawCardAmount;i++)
   {
-    NSAction::DrawCardFromPlague(CPlague * plague, CPlayer * drawer);
+    NSAction::DrawCardFromPlague(room->GetPlague(), myself);
   }
 }

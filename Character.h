@@ -8,18 +8,12 @@ class CPlague;
 
 class CRoom;
 
-class ICharacter
+class CCharacter
 {
 public:
-  virtual void InitCharacter() = 0;
-  virtual void DrawCard(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
-  virtual void Attack(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
-};
-
-class CCharacter : public ICharacter
-{
-public:
-  void DrawCard(CRoom * room, CPlayer * myself, CPlayer * target);
+  CCharacter();
+  ~CCharacter();
+  void DrawCard(CRoom * room, CPlayer * myself);
   void Attack(CRoom * room, CPlayer * myself, CPlayer * target);
 
   const std::string & GetName() const;

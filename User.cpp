@@ -17,6 +17,10 @@ int CUser::GetLose()
 {
   return lose;
 }
+uint32_t CUser::GetID()
+{
+  return ID;
+}
 CUser::~CUser()
 {
 
