@@ -8,11 +8,11 @@ class CHandleClientSocket : public CSocket
 public:
   bool InitSocket(int SocketFD, int port);
   bool AcceptConnect(int ServerSocketFD);
-  const std::string & receiveMessage();
+  const char * receiveMessage();
   bool sendMessage(const std::string & Buffer);
   ~CHandleClientSocket();
 private:
-  int BufferSize = 4096;
+  static constexpr int BufferSize = 4096;
   sockaddr_in ClientAddress;
-  std::string ReceiveBuffer;
+  char ReceiveBuffer[BufferSize];
 };

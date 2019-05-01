@@ -13,9 +13,9 @@ int CLounge::loungeSize()
 {
   return userList.size();
 }
-uint32_t CLounge::getFirstUserID()
+CUser * CLounge::getFirstUser()
 {
-  return userList[0]->GetID();
+  return userList[0];
 }
 bool CLounge::searchUserInLounge(CUser * user)
 {
@@ -27,6 +27,14 @@ bool CLounge::searchUserInLounge(CUser * user)
     }
   }
   return false;
+}
+void CLounge::changeRoomOwner(CUser * user)
+{
+  this->RoomOwner = user;
+}
+CUser * CLounge::getRoomOwner()
+{
+  return this->RoomOwner;
 }
 void CLounge::setReady(CUser * user)
 {

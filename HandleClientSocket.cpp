@@ -24,12 +24,12 @@ bool CHandleClientSocket::AcceptConnect(int ListenSocketFD)
     return false;
   }
 }
-const std::string & CHandleClientSocket::receiveMessage()
+const char * CHandleClientSocket::receiveMessage()
 {
   // true if there is some data need to be receive, otherwise the other side's socket has closed
-  if(recv(GetSocketFD(), &ReceiveBuffer[0], BufferSize, 0) <= 0)
+  if(recv(GetSocketFD(), ReceiveBuffer, BufferSize, 0) <= 0)
   {
-    ReceiveBuffer = std::string("");
+    ReceiveBuffer[0] = '\0';
   }
   return ReceiveBuffer;
 }

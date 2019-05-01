@@ -11,7 +11,9 @@ public:
   CLounge();
   void joinLounge(CUser * user);
   int loungeSize();
-  uint32_t getFirstUserID();
+  CUser * getFirstUser();
+  void changeRoomOwner(CUser * user);
+  CUser * getRoomOwner();
   bool searchUserInLounge(CUser * user);
   void setReady(CUser * user);
   void setUnready(CUser * user);
@@ -19,4 +21,5 @@ public:
 private:
   std::vector<CUser *> userList;
   std::bitset<16> isReady;
+  CUser * RoomOwner; // Owner is for when all user ready, who will decide the game will start
 };

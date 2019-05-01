@@ -3,11 +3,9 @@
 class CUser
 {
 public:
-  CUser(int money, int win, int lose) : money(money), win(win), lose(lose)
-  {
-
-  }
+  CUser();
   void RetriveDataFromDB();
+  void SetID(uint32_t ID);
   int GetMoney();
   int GetWin();
   int GetLose();

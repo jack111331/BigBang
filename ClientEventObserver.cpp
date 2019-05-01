@@ -1,5 +1,7 @@
 #include "ClientEventObserver.h"
 #include "User.h"
+std::vector<void (*)(CUser * user)> CClientEventObserver::ConnectListener;
+std::vector<void (*)(CUser * user)> CClientEventObserver::DisconnectListener;
 void CClientEventObserver::registerOnConnect(void (*ConnectFunction)(CUser * user))
 {
   ConnectListener.push_back(ConnectFunction);

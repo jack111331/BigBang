@@ -1,12 +1,15 @@
 #include "SocketFacade.h"
+#include "HandleMessage.h"
 #include <string>
 #include <thread>
-std::map<int, CHandleClientSocket *> CSocketFacade::SocketSet;
+std::map<CUser *, CHandleClientSocket *> CSocketFacade::SocketSet;
+CLoungeManage * CSocketFacade::LoungeManager;
 timeval CSocketFacade::timeout = {0, 5};
-CSocketFacade::CSocketFacade(int port)
+CSocketFacade::CSocketFacade(int port, CLoungeManage * loungeManager)
 {
   timeout = {0, 5};
   createListenSocket(port);
+  this->LoungeManager = loungeManager;
 }
 void CSocketFacade::createListenSocket(int port)
 {
@@ -15,19 +18,19 @@ void CSocketFacade::createListenSocket(int port)
   ListenThread = std::thread(ListenThreadFunc, ListenSocket->GetSocketFD());
   ProcessThread = std::thread(SocketProcessFunc);
 }
-const std::string CSocketFacade::receive(int ID)
+const std::string CSocketFacade::receive(CUser * user)
 {
-  if(SocketSet.find(ID) != SocketSet.end())
+  if(SocketSet.find(user) != SocketSet.end())
   {
-    return SocketSet[ID]->receiveMessage();
+    return SocketSet[user]->receiveMessage();
   }
   return std::string("");
 }
-bool CSocketFacade::send(int ID, const std::string & message)
+bool CSocketFacade::send(CUser * user, const std::string & message)
 {
-  if(SocketSet.find(ID) != SocketSet.end())
+  if(SocketSet.find(user) != SocketSet.end())
   {
-    return SocketSet[ID]->sendMessage(message);
+    return SocketSet[user]->sendMessage(message);
   }
   return false;
 }
@@ -37,7 +40,9 @@ void CSocketFacade::ListenThreadFunc(int ListenSocketFD)
   {
     CHandleClientSocket * HCS = new CHandleClientSocket;
     HCS->InitSocket(ListenSocketFD, 0);
-    SocketSet.insert(std::pair<int, CHandleClientSocket *>(HCS->GetSocketID(), HCS));
+    CUser * newUser = new CUser;
+    SocketSet.insert(std::pair<CUser *, CHandleClientSocket *>(newUser, HCS));
+    LoungeManager->addUserToNewLounge(newUser);
   }
 }
 void CSocketFacade::SocketProcessFunc()
@@ -46,7 +51,7 @@ void CSocketFacade::SocketProcessFunc()
   while(1)
   {
     FD_ZERO(&ReadFDSet);
-    for(std::map<int, CHandleClientSocket *>::iterator i = SocketSet.begin();i != SocketSet.end();++i)
+    for(std::map<CUser *, CHandleClientSocket *>::iterator i = SocketSet.begin();i != SocketSet.end();++i)
     {
       FD_SET(i->second->GetSocketFD(), &ReadFDSet);
     }
@@ -55,13 +60,14 @@ void CSocketFacade::SocketProcessFunc()
       //select fail message
       break;
     }
-    for(std::map<int, CHandleClientSocket *>::iterator i = SocketSet.begin();i != SocketSet.end();++i)
+    for(std::map<CUser *, CHandleClientSocket *>::iterator i = SocketSet.begin();i != SocketSet.end();++i)
     {
       if(FD_ISSET(i->second->GetSocketFD(), &ReadFDSet))
       {
-        const std::string & ReceivedData = i->second->receiveMessage();
-        if(ReceivedData != "")
+        const char * ReceivedData = i->second->receiveMessage();
+        if(ReceivedData[0] != '\0')
         {
+          NSHandleMessage::HandleMessage(ReceivedData, i->first);
           //receive
         }
         else

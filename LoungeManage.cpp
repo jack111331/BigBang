@@ -10,6 +10,7 @@ void CLoungeManage::addUserToNewLounge(CUser * user)
 {
   loungeSet[user->GetID()] = new CLounge();
   loungeSet[user->GetID()]->joinLounge(user);
+  loungeSet[user->GetID()]->changeRoomOwner(user);
 }
 void CLoungeManage::addUserToLounge(CUser * user, uint32_t ID)
 {
@@ -34,7 +35,7 @@ void CLoungeManage::removeUserFromLounge(CUser * user)
   uint32_t searchResult = searchLounge(user);
   if(user->GetID() != searchResult)
   {
-    loungeSet[searchResult]->exitLounge(user);
+    loungeSet[searchResult]->exitLounge(user);//this user is not the room owner
   }
   else
   {
@@ -43,7 +44,8 @@ void CLoungeManage::removeUserFromLounge(CUser * user)
     loungeSet.erase(searchResult);
     if(RemoveTemp->loungeSize() >= 1)
     {
-      loungeSet[RemoveTemp->getFirstUserID()] = RemoveTemp;
+      loungeSet[RemoveTemp->getFirstUser()->GetID()] = RemoveTemp;
+      loungeSet[RemoveTemp->getFirstUser()->GetID()]->changeRoomOwner(RemoveTemp->getFirstUser());
     }
   }
 }

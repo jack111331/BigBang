@@ -4,7 +4,7 @@
 #include "Lounge.h"
 
 class CUser;
-
+//Singleton
 class CLoungeManage
 {
 public:

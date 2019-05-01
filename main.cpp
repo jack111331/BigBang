@@ -6,6 +6,7 @@ static constexpr int port = 28715;
 
 int main()
 {
-  CSocketFacade SocketFacade(port);
+  CLoungeManage * LoungeManager = new CLoungeManage;
+  CSocketFacade SocketFacade(port, LoungeManager);
 
 }
