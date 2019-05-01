@@ -2,8 +2,7 @@
 #include "Character.h"
 #include <string>
 
-class CCharacterGenFactory
+namespace NSCharacterGenFactory
 {
-public:
   static CCharacter * createCharacter(std::string Cardname);
-};
+}

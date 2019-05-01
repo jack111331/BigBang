@@ -44,7 +44,7 @@ public:
   void SetMaxHP(int maxHP);
   void AddHolding(CCard * card);
   void AddEquipment(CCard * card);
-  bool isCardInHolding(std::string cardname);
+  CCard * GetCardInHolding(std::string cardname);
   void RemoveHolding(const CCard * card);
   void RemoveEquipment(const CCard * card);
   void SetPosition(int position);
@@ -53,11 +53,6 @@ public:
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
-protected:
-  //不是interface的原因: 因為我有可能用到Class的東西
-  CCharacter * Character = nullptr;
-  std::vector<CCard *> Holding;
-  std::vector<CCard *> Equipment;
 private:
   std::string Name;
   Team Identity;
@@ -65,7 +60,10 @@ private:
   int MaxHP;
   int Position;
   int DrawPerRound;
-  //Weapon??
+  CCharacter * Character = nullptr;
+  std::vector<CCard *> Holding;
+  std::vector<CCard *> Equipment;
+  CCard * EquipedWeapon = nullptr;
   bool Attacked; //是否已攻擊
   bool Dead; //是否處於死亡狀態
   int AttackRange;

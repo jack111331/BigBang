@@ -19,7 +19,7 @@ void CPlayer::Attack(CRoom * room, CPlayer * target)
 }
 void CPlayer::UseCard(CRoom * room, CCard * card, CPlayer * target)
 {
-  if(isCardInHolding(card->GetName()))
+  if(GetCardInHolding(card->GetName()))
   {
     card->UseCardEffect(room, this, target);
     RemoveHolding(card);
@@ -116,16 +116,16 @@ void CPlayer::AddEquipment(CCard * card)
 {
   Equipment.push_back(card);
 }
-bool CPlayer::isCardInHolding(std::string cardname)
+CCard * CPlayer::GetCardInHolding(std::string cardname)
 {
   for(int i = 0;i < static_cast<int>(Holding.size());i++)
   {
     if(Holding[i]->GetName() == cardname)
     {
-      return true;
+      return Holding[i];
     }
   }
-  return false;
+  return nullptr;
 }
 void CPlayer::RemoveHolding(const CCard * card)
 {

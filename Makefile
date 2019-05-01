@@ -1,5 +1,5 @@
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o ClientEventObserver.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
-	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
+	g++ -Wall -lpthread -o BangServer main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
 	rm *.o
 
 
@@ -48,3 +48,9 @@ Lounge.o: Lounge.cpp
 	g++ -Wall -c Lounge.cpp
 LoungeManage.o: LoungeManage.cpp
 	g++ -Wall -c LoungeManage.cpp
+InvokeMessage.o: InvokeMessage.cpp
+	g++ -Wall -c InvokeMessage.cpp
+DrawCard.o: DrawCard.cpp
+	g++ -Wall -c DrawCard.cpp
+DrawCardFactory.o: DrawCardFactory.cpp
+	g++ -Wall -c DrawCardFactory.cpp

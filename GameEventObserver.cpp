@@ -2,13 +2,13 @@
 #include "Player.h"
 #include "Room.h"
 
-std::vector<void (*)(CRoom * room, CPlayer * attacker, CPlayer * attackee)> CGameEventObserver::AttackListener;
+std::vector<void (*)(CRoom * room, CPlayer * loser)> CGameEventObserver::LossBloodListener;
 std::vector<void (*)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)> CGameEventObserver::DeathListener;
 std::vector<void (*)(CRoom * room, CPlayer * Drawer)> CGameEventObserver::DrawCardListener;
 
-void CGameEventObserver::registerOnAttack(void (*AttackFunction)(CRoom * room, CPlayer * attacker, CPlayer * attackee))
+void CGameEventObserver::registerOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser))
 {
-  AttackListener.push_back(AttackFunction);
+  LossBloodListener.push_back(LossBloodFunction);
 }
 void CGameEventObserver::registerOnDeath(void (*DeathFunction)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker))
 {
@@ -18,11 +18,11 @@ void CGameEventObserver::registerOnDrawCard(void (*DrawCardFunction)(CRoom * roo
 {
   DrawCardListener.push_back(DrawCardFunction);
 }
-void CGameEventObserver::callAttack(CRoom * room, CPlayer * attacker, CPlayer * attackee)
+void CGameEventObserver::callLossBlood(CRoom * room, CPlayer * loser)
 {
-  for(auto i = AttackListener.begin();i != AttackListener.end();++i)
+  for(auto i = LossBloodListener.begin();i != LossBloodListener.end();++i)
   {
-    (*i)(room, attacker, attackee);
+    (*i)(room, loser);
   }
 }
 void CGameEventObserver::callDeath(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)
@@ -39,13 +39,13 @@ void CGameEventObserver::callDrawCard(CRoom * room, CPlayer * Drawer)
     (*i)(room, Drawer);
   }
 }
-void CGameEventObserver::unregisterOnAttack(void (*AttackFunction)(CRoom * room, CPlayer * attacker, CPlayer * attackee))
+void CGameEventObserver::unregisterOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser))
 {
-  for(auto i = AttackListener.begin();i != AttackListener.end();++i)
+  for(auto i = LossBloodListener.begin();i != LossBloodListener.end();++i)
   {
-    if(*i == AttackFunction)
+    if(*i == LossBloodFunction)
     {
-      AttackListener.erase(i);
+      LossBloodListener.erase(i);
     }
   }
 }

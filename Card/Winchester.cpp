@@ -4,10 +4,6 @@
 
 CWinchester::CWinchester()
 {
-  InitCard();
-}
-void CWinchester::InitCard()
-{
   const std::string Name("Winchester");
   const std::string Feature("Attack range increased to 5.");
   constexpr int Number = 8;

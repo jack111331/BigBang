@@ -2,19 +2,24 @@
 #include "Player.h"
 #include "Plague.h"
 #include "GameEventObserver.h"
+#include "InvokeMessage.h"
 #include "Room.h"
 
-namespace NSAction
+bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std::string dodgeByCard)
 {
-  bool Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std::string dodgeByCard)
+  CCard * HoldingRevoltCard = attackee->GetCardInHolding(dodgeByCard);
+  if(HoldingRevoltCard != nullptr)
   {
-    if(attackee->isCardInHolding(dodgeByCard))
+    //invoke player to choose whether he want to use this card
+    bool Revolt = NSInvokeMessage::InvokeRevolt(attackee, HoldingRevoltCard);
+    if(Revolt)
     {
-      //invoke player to choose whether he want to use this card
+      attackee->RemoveHolding(HoldingRevoltCard);
+      return false;
     }
     else
     {
-      CGameEventObserver::callAttack(room, attacker, attackee);//?????
+      CGameEventObserver::callLossBlood(room, attackee);
       attackee->SetHP(attackee->GetHP()-1);
       if(attackee->GetHP() <= 0)
       {
@@ -22,32 +27,33 @@ namespace NSAction
       }
       return true;
     }
-    return false;
   }
-  void RecoverHealth(CPlayer * target, int health)
+  else
   {
-    target->SetHP(std::min(target->GetHP()+health, target->GetMaxHP()));
-  }
-  void DrawCardFromPlague(CPlague * plague, CPlayer * drawer)
-  {
-    CCard * DrawedCard = plague->ChooseTopCard();
-    if(DrawedCard != nullptr)
+    CGameEventObserver::callLossBlood(room, attackee);
+    attackee->SetHP(attackee->GetHP()-1);
+    if(attackee->GetHP() <= 0)
     {
-      drawer->AddHolding(DrawedCard);
-      plague->RemoveCardFromPlague(DrawedCard);
+      CGameEventObserver::callDeath(room, attackee, attacker);
     }
+    return true;
   }
-  void ChooseCardFromPlayer(CPlayer * chooser, CPlayer * choosee)
+}
+void NSAction::RecoverHealth(CPlayer * target, int health)
+{
+  target->SetHP(std::min(target->GetHP()+health, target->GetMaxHP()));
+}
+void NSAction::DrawCardFromPlague(CPlague * plague, CPlayer * drawer)
+{
+  CCard * DrawedCard = plague->ChooseTopCard();
+  if(DrawedCard != nullptr)
   {
-    //invoke client to show choosee's holding and draw card UI
+    drawer->AddHolding(DrawedCard);
+    plague->RemoveCardFromPlague(DrawedCard);
   }
-  void DrawCardFromPlayer(CPlayer * drawer, CPlayer * drawee)
-  {
-    //invoke client to show draw card UI
-  }
-  void FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague)
-  {
-    DiscardPlague->InsertCardToPlague(card);
-    folder->RemoveHolding(card);
-  }
+}
+void NSAction::FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague)
+{
+  DiscardPlague->InsertCardToPlague(card);
+  folder->RemoveHolding(card);
 }

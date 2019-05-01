@@ -2,7 +2,7 @@
 #include "./Character/BartCassidy.h"
 #include "./Character/BlackJack.h"
 #include <string>
-CCharacter * CCharacterGenFactory::createCharacter(std::string Charactername)
+CCharacter * NSCharacterGenFactory::createCharacter(std::string Charactername)
 {
   if(Charactername == "Bart Cassidy")
   {

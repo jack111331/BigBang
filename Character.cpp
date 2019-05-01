@@ -25,7 +25,7 @@ void CCharacter::DrawCard(CRoom * room, CPlayer * myself)
 }
 void CCharacter::Attack(CRoom * room, CPlayer * myself, CPlayer * target)
 {
-  if(!myself->isAttacked() || myself->isCardInHolding(std::string("Volcanic")))
+  if(!myself->isAttacked() || myself->GetCardInHolding(std::string("Volcanic")))
   {
     NSAction::Attack(room, myself, target, std::string("Missed!"));
     myself->SetAttacked(true);

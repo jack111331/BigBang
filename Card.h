@@ -25,22 +25,21 @@ public:
   int GetNumber() const;
   Suit GetSuit() const;
   int GetID() const;
-  int GetTypeID() const;
-  static int GetTypeID(std::string cardname);
+  CPlayer * GetOwner() const;
 
   void SetName(std::string name);
   void SetFeature(std::string feature);
   void SetNumber(int number);
   void SetSuit(Suit suit);
   void SetID(int id);
-  static void SetTypeID(std::string cardname);
+  void ChangeOwner(CPlayer * owner);
 protected:
-  static int CurrentID;
+  static uint32_t CurrentID;
 private:
   std::string Name;
   std::string Feature;
   int Number;
   Suit CardSuit;
   int ID;
-  static std::map<std::string, int> TypeMap;
+  CPlayer * Owner;
 };

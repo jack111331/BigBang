@@ -15,13 +15,17 @@ CCharacterBart::CCharacterBart()
   SetFeature(Feature);
   SetID();
   SetMaxHP(MaxHP);
-  CGameEventObserver::registerOnAttack(OnAttacked);
+  CGameEventObserver::registerOnLossBlood(OnLossBlood);
 }
-void CCharacterBart::OnAttacked(CRoom * room, CPlayer * attacker, CPlayer * attackee)
+void CCharacterBart::OnLossBlood(CRoom * room, CPlayer * loser)
 {
   //it need room to get plague
-  if(attackee->GetCharacter()->GetName() == std::string("Bart Cassidy"))
+  if(loser->GetCharacter()->GetName() == "Bart Cassidy")
   {
-    NSAction::DrawCardFromPlague(room->GetPlague(), attackee);
+    NSAction::DrawCardFromPlague(room->GetPlague(), loser);
   }
+}
+CCharacterBart::~CCharacterBart()
+{
+  CGameEventObserver::unregisterOnLossBlood(OnLossBlood);
 }

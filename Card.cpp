@@ -1,6 +1,5 @@
 #include "Card.h"
-int CCard::CurrentID = 0;
-std::map<std::string, int> CCard::TypeMap;
+uint32_t CCard::CurrentID = 0;
 CCard::CCard()
 {
 
@@ -29,17 +28,9 @@ int CCard::GetID() const
 {
   return this->ID;
 }
-int CCard::GetTypeID() const
+CPlayer * CCard::GetOwner() const
 {
-  return TypeMap[Name];
-}
-int CCard::GetTypeID(std::string cardname)
-{
-  if(TypeMap.find(cardname) != TypeMap.end())
-  {
-    return TypeMap[cardname];
-  }
-  return -1;
+  return this->Owner;
 }
 
 void CCard::SetName(std::string name)
@@ -62,7 +53,7 @@ void CCard::SetFeature(std::string feature)
 {
   this->Feature = feature;
 }
-void CCard::SetTypeID(std::string Cardname)
+void CCard::ChangeOwner(CPlayer * owner)
 {
-  TypeMap[Cardname] = TypeMap.size();
+  this->Owner = owner;
 }

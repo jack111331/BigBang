@@ -3,5 +3,6 @@
 class CCharacterBart : public CCharacter
 {
   CCharacterBart();
-  static void OnAttacked(CRoom * room, CPlayer * attacker, CPlayer * attackee);
+  ~CCharacterBart();
+  static void OnLossBlood(CRoom * room, CPlayer * loser);
 };
