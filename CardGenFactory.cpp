@@ -1,21 +1,19 @@
 #include "CardGenFactory.h"
 #include "./Card/Winchester.h"
 #include <string>
-namespace NSCardGenFactory
+
+CCard * NSCardGenFactory::createCard(std::string Cardname)
 {
-  CCard * createCard(std::string Cardname)
+  if(Cardname == "Winchester")
   {
-    if(Cardname == "Winchester")
-    {
-      return new CWinchester();
-    }
-    else
-    {
-      return nullptr;
-    }
+    return new CWinchester();
   }
-  CCard * createCard(char const * Cardname)
+  else
   {
-    return createCard(std::string(Cardname));
+    return nullptr;
   }
-};
+}
+CCard * NSCardGenFactory::createCard(char const * Cardname)
+{
+  return createCard(std::string(Cardname));
+}

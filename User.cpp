@@ -13,7 +13,10 @@ void CUser::SetID(uint32_t ID)
 {
   this->ID = ID;
 }
-
+std::string GetName()
+{
+  return this->name;
+}
 int CUser::GetMoney()
 {
   return this->money;
@@ -29,6 +32,14 @@ int CUser::GetLose()
 uint32_t CUser::GetID()
 {
   return this->ID;
+}
+void CUser::SetSocketIO(CHandleClientSocket * ClientSocket)
+{
+  this->SocketIO = ClientSocket;
+}
+CHandleClientSocket * CUser::GetSocketIO()
+{
+  return SocketIO;
 }
 CUser::~CUser()
 {

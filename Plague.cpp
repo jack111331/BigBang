@@ -27,13 +27,10 @@ CCard * CPlague::ChooseRandomCard()
 }
 CCard * CPlague::ChooseTopCard()
 {
-  //change imple
-  srand(time(0));
   int PlagueCardAmount = GetPlagueCardAmount();
   if(PlagueCardAmount)
   {
-    int random = rand() % PlagueCardAmount;
-    return Plague[random];
+    return Plague[Plague.size()-1];
   }
   else
   {

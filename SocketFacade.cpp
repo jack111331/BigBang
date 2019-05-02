@@ -42,6 +42,7 @@ void CSocketFacade::ListenThreadFunc(int ListenSocketFD)
     HCS->InitSocket(ListenSocketFD, 0);
     CUser * newUser = new CUser;
     SocketSet.insert(std::pair<CUser *, CHandleClientSocket *>(newUser, HCS));
+    newUser->SetSocketIO(HCS);
     LoungeManager->addUserToNewLounge(newUser);
   }
 }
@@ -67,13 +68,14 @@ void CSocketFacade::SocketProcessFunc()
         const char * ReceivedData = i->second->receiveMessage();
         if(ReceivedData[0] != '\0')
         {
-          NSHandleMessage::HandleMessage(ReceivedData, i->first);
           //receive
+          NSHandleMessage::HandleMessage(ReceivedData, i->first);
         }
         else
         {
           //receive failed, socket disconnect
-          delete i->second;
+          delete i->first;//release this user's memory allocation
+          delete i->second;//release this user's client socket memory allocation
           SocketSet.erase(i);
           --i;
         }

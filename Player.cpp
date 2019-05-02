@@ -17,17 +17,22 @@ void CPlayer::Attack(CRoom * room, CPlayer * target)
     Character->Attack(room, this, target);
   }
 }
-void CPlayer::UseCard(CRoom * room, CCard * card, CPlayer * target)
+void CPlayer::UseCard(CRoom * room, std::string cardName, CPlayer * target)
 {
-  if(GetCardInHolding(card->GetName()))
+  CCard * card = GetCardInHolding(cardName);
+  if(card)
   {
     card->UseCardEffect(room, this, target);
     RemoveHolding(card);
   }
 }
-void CPlayer::FoldCard(CRoom * room, CCard * card)
+void CPlayer::FoldCard(CRoom * room, std::string cardName)
 {
-  NSAction::FoldCard(this, card, room->GetDiscardPlague());
+  CCard * card = GetCardInHolding(cardName);
+  if(card)
+  {
+    NSAction::FoldCard(this, card, room->GetDiscardPlague());
+  }
 }
 
 const std::string & CPlayer::GetName() const
@@ -87,7 +92,6 @@ void CPlayer::SetName(const std::string & name)
 {
   this->Name = Name;
 }
-//??
 void CPlayer::SetCharacter(CCharacter * character)
 {
   this->Character = character;

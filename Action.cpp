@@ -35,6 +35,7 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
     if(attackee->GetHP() <= 0)
     {
       CGameEventObserver::callDeath(room, attackee, attacker);
+      attackee->SetDead(true);
     }
     return true;
   }

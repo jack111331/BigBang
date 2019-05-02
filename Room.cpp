@@ -1,12 +1,17 @@
 #include "Room.h"
-
+#include "User.h"
 CRoom::CRoom()
 {
   this->plague = new CPlague;
+  this->plague->InitPlague();
   this->discardPlague = new CPlague;
 }
-void CRoom::PlayerJoin(CPlayer * player)
+void CRoom::PlayerJoin(CUser * user)
 {
+  CPlayer * player = new CPlayer;
+  //to be edit
+  player->SetName(user->GetName());
+  //let player choose card
   playerList.push_back(player);
 }
 CPlague * CRoom::GetPlague()
@@ -23,5 +28,9 @@ std::vector<CPlayer *> & CRoom::GetPlayerList()
 }
 CRoom::~CRoom()
 {
+  for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
+  {
+    delete *it;
+  }
   playerList.clear();
 }

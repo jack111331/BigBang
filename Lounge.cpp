@@ -1,9 +1,10 @@
 #include "Lounge.h"
 #include "User.h"
+#include "Room.h"
 CLounge::CLounge()
 {
   userList.clear();
-  isReady.reset();
+  readyMap.clear();
 }
 void CLounge::joinLounge(CUser * user)
 {
@@ -36,15 +37,48 @@ CUser * CLounge::getRoomOwner()
 {
   return this->RoomOwner;
 }
+bool CLounge::isAllReady()
+{
+  for(std::map<CUser *, bool>::iterator it = readyMap.begin();it != readyMap.end();++it)
+  {
+    if(!it->second)
+    {
+      return false;
+    }
+  }
+  return true;
+}
 void CLounge::setReady(CUser * user)
 {
-
+  readyMap[user] = true;
 }
 void CLounge::setUnready(CUser * user)
 {
-
+  readyMap[user] = false;
 }
 void CLounge::exitLounge(CUser * user)
 {
-
+  for(std::vector<CUser *>::iterator it = userList.begin();it != userList.end();++it)
+  {
+    if(*it == user)
+    {
+      userList.erase(it);
+      break;
+    }
+  }
+  readyMap.erase(user);
+}
+bool CLounge::startGame()
+{
+  if(!isAllReady())
+  {
+    return false;
+  }
+  //Start game
+  room = new CRoom();
+  for(std::vector<CUser *>::iterator it = userList.begin();it != userList.end();++it)
+  {
+    room->PlayerJoin(*it);
+  }
+  //maybe we need a for loop for game loop
 }

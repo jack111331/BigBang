@@ -20,8 +20,8 @@ class CPlayer
 public:
   void DrawCard(CRoom * room);
   void Attack(CRoom * room, CPlayer * target);
-  void UseCard(CRoom * room, CCard * card, CPlayer * target);
-  void FoldCard(CRoom * room, CCard * card);
+  void UseCard(CRoom * room, std::string cardName, CPlayer * target);
+  void FoldCard(CRoom * room, std::string cardName);
 
   const std::string & GetName() const;
   CCharacter * GetCharacter();
@@ -59,14 +59,13 @@ private:
   int HP;
   int MaxHP;
   int Position;
-  int DrawPerRound;
   CCharacter * Character = nullptr;
   std::vector<CCard *> Holding;
   std::vector<CCard *> Equipment;
   CCard * EquipedWeapon = nullptr;
-  bool Attacked; //是否已攻擊
-  bool Dead; //是否處於死亡狀態
-  int AttackRange;
-  int AddRange; //別人看自己的距離
-  int MinusRange; //自己看別人的距離
+  bool Attacked = false; //是否已攻擊
+  bool Dead = false; //是否處於死亡狀態
+  int AttackRange = 1;
+  int AddRange = 0; //別人看自己的距離
+  int MinusRange = 0; //自己看別人的距離
 };

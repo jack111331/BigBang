@@ -8,7 +8,7 @@ using json = nlohmann::json;
 void RetriveUserIDWithData(const json & Content, CUser * user)
 {
   uint32_t UserID;
-  Content.at("UserID").get_to(UserID);
+  Content.at("User ID").get_to(UserID);
   user->SetID(UserID);
   user->RetriveDataFromDB();
 }

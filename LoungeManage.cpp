@@ -35,7 +35,8 @@ void CLoungeManage::removeUserFromLounge(CUser * user)
   uint32_t searchResult = searchLounge(user);
   if(user->GetID() != searchResult)
   {
-    loungeSet[searchResult]->exitLounge(user);//this user is not the room owner
+    //this user is not the room owner
+    loungeSet[searchResult]->exitLounge(user);
   }
   else
   {

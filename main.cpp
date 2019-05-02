@@ -8,5 +8,4 @@ int main()
 {
   CLoungeManage * LoungeManager = new CLoungeManage;
   CSocketFacade SocketFacade(port, LoungeManager);
-
 }

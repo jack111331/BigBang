@@ -11,10 +11,10 @@ void CDrawCardFromPlayer::DrawCardFromPlayer(CPlayer * drawer, CPlayer * drawee)
 }
 void CChooseCard::DrawCard(CPlayer * drawer, CPlayer * drawee)
 {
-  //invoke one player to show holding to another player and draw card UI
+  //invoke one player to show holding to another player and draw card animation
   NSInvokeMessage::InvokeShowHolding(drawee, drawer);
 }
 void CRandomChooseCard::DrawCard(CPlayer * drawer, CPlayer * drawee)
 {
-  //invoke client to show draw card UI
+  //invoke client to show draw card animation
 }

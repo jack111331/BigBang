@@ -4,5 +4,6 @@
 
 namespace NSCharacterGenFactory
 {
-  static CCharacter * createCharacter(std::string Cardname);
+  CCharacter * createCharacter(std::string Cardname);
+  CCharacter * createCharacter(char const * Cardname);
 }
