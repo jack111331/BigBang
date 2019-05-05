@@ -1,5 +1,5 @@
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
-	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o SocketFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o HandleMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
+	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o HandleMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
 	rm *.o
 
 
@@ -10,8 +10,8 @@ ListenSocket.o: ListenSocket.cpp
 HandleClientSocket.o: HandleClientSocket.cpp
 	g++ -Wall -c HandleClientSocket.cpp
 
-SocketFacade.o: SocketFacade.cpp
-	g++ -Wall -c SocketFacade.cpp
+CommunicateFacade.o: CommunicateFacade.cpp
+	g++ -Wall -c CommunicateFacade.cpp
 Room.o: Room.cpp
 	g++ -Wall -c Room.cpp
 User.o: User.cpp
@@ -43,6 +43,10 @@ GameEventObserver.o: GameEventObserver.cpp
 	g++ -Wall -c GameEventObserver.cpp
 Action.o: Action.cpp
 	g++ -Wall -c Action.cpp
+MessageMediator.o: MessageMediator.cpp
+	g++ -Wall -c MessageMediator.cpp
+MessageMediatorColleague.o: MessageMediatorColleague.cpp
+	g++ -Wall -c MessageMediatorColleague.cpp
 	
 Lounge.o: Lounge.cpp
 	g++ -Wall -c Lounge.cpp

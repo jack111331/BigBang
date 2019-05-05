@@ -1,7 +1,8 @@
 #include "User.h"
 
-CUser::CUser()
+CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 {
+  this->mediator = mediator;
   //get data from DB
 }
 
@@ -9,11 +10,15 @@ void CUser::RetriveDataFromDB()
 {
 
 }
+void CUser::ReceiveMessageAndUpdate(const std::string & message)
+{
+  NSHandleMessage::HandleMessage(message.c_str(), this);
+}
 void CUser::SetID(uint32_t ID)
 {
   this->ID = ID;
 }
-std::string GetName()
+std::string CUser::GetName()
 {
   return this->name;
 }
@@ -32,14 +37,6 @@ int CUser::GetLose()
 uint32_t CUser::GetID()
 {
   return this->ID;
-}
-void CUser::SetSocketIO(CHandleClientSocket * ClientSocket)
-{
-  this->SocketIO = ClientSocket;
-}
-CHandleClientSocket * CUser::GetSocketIO()
-{
-  return SocketIO;
 }
 CUser::~CUser()
 {

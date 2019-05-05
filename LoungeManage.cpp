@@ -2,10 +2,6 @@
 #include "Lounge.h"
 #include "User.h"
 
-CLoungeManage::CLoungeManage()
-{
-  loungeSet.clear();
-}
 void CLoungeManage::addUserToNewLounge(CUser * user)
 {
   loungeSet[user->GetID()] = new CLounge();

@@ -1,5 +1,9 @@
 #include "HandleClientSocket.h"
 #include <string>
+CHandleClientSocket::CHandleClientSocket(CMessageMediator * mediator) : CSocket(), CColleague(mediator)
+{
+
+}
 bool CHandleClientSocket::InitSocket(int SocketFD, int port)
 {
   if(!AcceptConnect(SocketFD))

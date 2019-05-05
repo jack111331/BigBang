@@ -2,20 +2,20 @@
 #include <stdint.h>
 #include <string>
 #include "HandleMessage.h"
-#include "HandleClientSocket.h"
-class CUser
+#include "MessageMediatorColleague.h"
+
+class CUser : public CColleague
 {
 public:
-  CUser();
+  CUser(CMessageMediator * mediator);
   void RetriveDataFromDB();
+  void ReceiveMessageAndUpdate(const std::string & message);
   void SetID(uint32_t ID);
   std::string GetName();
   int GetMoney();
   int GetWin();
   int GetLose();
   uint32_t GetID();
-  void SetSocketIO(CHandleClientSocket * ClientSocket);
-  CHandleClientSocket * GetSocketIO();
   ~CUser();
 private:
   std::string name;
@@ -23,5 +23,4 @@ private:
   int win;
   int lose;
   uint32_t ID;
-  CHandleClientSocket * SocketIO;
 };

@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Socket.h"
+#include "MessageMediatorColleague.h"
 #include <string>
 #include <queue>
-class CHandleClientSocket : public CSocket
+
+class CHandleClientSocket : public CSocket, public CColleague
 {
 public:
+  CHandleClientSocket(CMessageMediator * mediator);
   bool InitSocket(int SocketFD, int port);
   bool AcceptConnect(int ServerSocketFD);
   const char * receiveMessage();

@@ -2,13 +2,13 @@
 #include <map>
 #include <stdint.h>
 #include "Lounge.h"
+#include "MessageMediatorColleague.h"
 
 class CUser;
 //Singleton
-class CLoungeManage
+class CLoungeManage : public CColleague
 {
 public:
-  CLoungeManage();
   void addUserToNewLounge(CUser * user);
   void addUserToLounge(CUser * user, uint32_t ID);
   uint32_t searchLounge(CUser * user);

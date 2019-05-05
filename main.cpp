@@ -1,11 +1,11 @@
 #include <iostream>
+//#include "LoungeManage.h"
+//#include "CommunicateFacade.h"
 
-#include "SocketFacade.h"
 
-static constexpr int port = 28715;
 
 int main()
 {
-  CLoungeManage * LoungeManager = new CLoungeManage;
-  CSocketFacade SocketFacade(port, LoungeManager);
+//  CLoungeManage * LoungeManager = new CLoungeManage;
+//  CCommunicateFacade CommunicateFacade(LoungeManager);
 }

@@ -6,6 +6,7 @@
 class CSocket
 {
 public:
+  CSocket();
   virtual bool InitSocket(int SocketFD, int port) = 0;
   void InitServerAddress(int port);
   bool CreateSocket();

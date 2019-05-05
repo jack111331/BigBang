@@ -3,6 +3,10 @@
 #include <stdint.h>
 
 int CSocket::CurrentID = 0;
+CSocket::CSocket()
+{
+  
+}
 void CSocket::InitServerAddress(int port)
 {
   memset(&ServerAddress, 0, sizeof(ServerAddress));
