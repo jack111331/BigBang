@@ -9,12 +9,17 @@ class CUser : public CColleague
 public:
   CUser(CMessageMediator * mediator);
   void RetriveDataFromDB();
-  void ReceiveMessageAndUpdate(const std::string & message);
+  void ReceiveMessage(std::string message);
+  //user的SendMessage已經有父類別的CColleague幫忙處理了
   void SetID(uint32_t ID);
   std::string GetName();
   int GetMoney();
   int GetWin();
   int GetLose();
+  void SetName(const std::string & name);
+  void SetMoney(int money);
+  void SetWin(int win);
+  void SetLose(int lose);
   uint32_t GetID();
   ~CUser();
 private:

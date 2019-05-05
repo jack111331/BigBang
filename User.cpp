@@ -4,13 +4,14 @@ CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 {
   this->mediator = mediator;
   //get data from DB
+  RetriveDataFromDB();
 }
 
 void CUser::RetriveDataFromDB()
 {
 
 }
-void CUser::ReceiveMessageAndUpdate(const std::string & message)
+void CUser::ReceiveMessage(std::string message)
 {
   NSHandleMessage::HandleMessage(message.c_str(), this);
 }
@@ -37,6 +38,22 @@ int CUser::GetLose()
 uint32_t CUser::GetID()
 {
   return this->ID;
+}
+void CUser::SetName(const std::string & name)
+{
+  this->name = name;
+}
+void CUser::SetMoney(int money)
+{
+  this->money = money;
+}
+void CUser::SetWin(int win)
+{
+  this->win = win;
+}
+void CUser::SetLose(int lose)
+{
+  this->lose = lose;
 }
 CUser::~CUser()
 {

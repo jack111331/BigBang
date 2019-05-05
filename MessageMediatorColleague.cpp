@@ -8,3 +8,11 @@ void CColleague::SendMessage(std::string action, std::string message)
 {
   mediator->HandleObjectMessage(action, this, message);
 }
+void CColleague::ReceiveMessage(std::string message)
+{
+
+}
+CColleague::~CColleague()
+{
+
+}

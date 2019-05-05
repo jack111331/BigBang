@@ -8,6 +8,10 @@ CMessageMediator::CMessageMediator(CLoungeManage * LoungeManager)
 {
   this->LoungeManager = LoungeManager;
 }
+CConcreteMessageMediator::CConcreteMessageMediator(CLoungeManage * LoungeManager) : CMessageMediator(LoungeManager)
+{
+
+}
 void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleague * colleague, std::string message)
 {
   int actionNumber = 0;
@@ -36,8 +40,7 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     case 1:
     {
       CUser * newUser = new CUser(this);
-      //I don't sure if this is legal(?), but typically I think this is the best sol i can come up with:D
-      //已確定這是權宜之計  之後會修
+      //原本想把SocketSet包成一個類別 但發現這樣要創建一個Entry太麻煩了..
       SocketSet.insert(std::pair<CUser *, CHandleClientSocket *>(newUser, static_cast<CHandleClientSocket *>(colleague)));
       LoungeManager->addUserToNewLounge(newUser);
       break;
@@ -54,11 +57,13 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     }
     case 4:
     {
-      static_cast<CUser *>(colleague)->ReceiveMessageAndUpdate(message);
+      //讓user自己處理receive到的資訊
+      colleague->ReceiveMessage(message);
       break;
     }
     case 5:
     {
+      //所以SocketSet還是由這個class來管理好了ww
       SocketSet[static_cast<CUser *>(colleague)]->sendMessage(message);
       break;
     }

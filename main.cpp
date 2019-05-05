@@ -1,11 +1,10 @@
 #include <iostream>
-//#include "LoungeManage.h"
-//#include "CommunicateFacade.h"
-
-
+#include "LoungeManage.h"
+#include "MessageMediator.h"
+#include "CommunicateFacade.h"
 
 int main()
 {
-//  CLoungeManage * LoungeManager = new CLoungeManage;
-//  CCommunicateFacade CommunicateFacade(LoungeManager);
+  CConcreteMessageMediator * MessageMediator = new CConcreteMessageMediator(new CLoungeManage);
+  CCommunicateFacade * CommunicateFacade = new CCommunicateFacade(MessageMediator);
 }

@@ -24,6 +24,7 @@ private:
 class CConcreteMessageMediator : public CMessageMediator
 {
 public:
+  CConcreteMessageMediator(CLoungeManage * LoungeManager);
   void HandleObjectMessage(std::string action, CColleague * colleague, std::string message);
   std::map<CUser *, CHandleClientSocket *> & GetSocketSet();
   static void SocketProcessFunc(CConcreteMessageMediator * myself);
