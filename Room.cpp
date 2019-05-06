@@ -9,9 +9,8 @@ CRoom::CRoom()
 void CRoom::PlayerJoin(CUser * user)
 {
   CPlayer * player = new CPlayer;
-  //to be edit
-  player->SetName(user->GetName());
-  //let player choose card
+  player->SetUser(user);
+  user->SetPlayer(player);
   playerList.push_back(player);
 }
 CPlague * CRoom::GetPlague()
@@ -25,6 +24,16 @@ CPlague * CRoom::GetDiscardPlague()
 std::vector<CPlayer *> & CRoom::GetPlayerList()
 {
   return this->playerList;
+}
+void CRoom::GameLoop(CRoom * room)
+{
+  //let player choose card
+  //generate 2 random character, this two can't be identical
+  for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
+  {
+//    it->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCharacter(std::string CharacterName_1, std::string CharacterName_2));
+
+  }
 }
 CRoom::~CRoom()
 {

@@ -1,11 +1,13 @@
 #include "Plague.h"
 #include "CardGenFactory.h"
 #include <time.h>
+#include <algorithm>
 
 
 void CPlague::InitPlague()
 {
 //  Plague.push_back(NSCardGenFactory::createCard("Winchester"));
+  std::random_shuffle(Plague.begin(), Plague.end());
 }
 int CPlague::GetPlagueCardAmount() const
 {

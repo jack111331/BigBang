@@ -19,6 +19,10 @@ void CUser::SetID(uint32_t ID)
 {
   this->ID = ID;
 }
+CPlayer * CUser::GetPlayer()
+{
+  return this->player;
+}
 std::string CUser::GetName()
 {
   return this->name;
@@ -38,6 +42,10 @@ int CUser::GetLose()
 uint32_t CUser::GetID()
 {
   return this->ID;
+}
+void CUser::SetPlayer(CPlayer * player)
+{
+  this->player = player;
 }
 void CUser::SetName(const std::string & name)
 {

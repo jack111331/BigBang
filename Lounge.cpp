@@ -10,13 +10,17 @@ void CLounge::joinLounge(CUser * user)
 {
   userList.push_back(user);
 }
-int CLounge::loungeSize()
+int CLounge::getLoungeSize()
 {
   return userList.size();
 }
 CUser * CLounge::getFirstUser()
 {
   return userList[0];
+}
+std::vector<CUser *> & CLounge::GetAllUser()
+{
+  return userList;
 }
 bool CLounge::searchUserInLounge(CUser * user)
 {
@@ -48,13 +52,9 @@ bool CLounge::isAllReady()
   }
   return true;
 }
-void CLounge::setReady(CUser * user)
+void CLounge::setReadyState(CUser * user, bool state)
 {
-  readyMap[user] = true;
-}
-void CLounge::setUnready(CUser * user)
-{
-  readyMap[user] = false;
+  readyMap[user] = state;
 }
 void CLounge::exitLounge(CUser * user)
 {
@@ -81,4 +81,6 @@ bool CLounge::startGame()
     room->PlayerJoin(*it);
   }
   //maybe we need a for loop for game loop
+  GameLoopThread = std::thread(CRoom::GameLoop, room);
+  return true;
 }

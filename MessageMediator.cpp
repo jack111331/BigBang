@@ -6,6 +6,7 @@ timeval CMessageMediator::timeout = {0, 5};
 
 CMessageMediator::CMessageMediator(CLoungeManage * LoungeManager)
 {
+  //LoungeManager is singleton
   this->LoungeManager = LoungeManager;
 }
 CConcreteMessageMediator::CConcreteMessageMediator(CLoungeManage * LoungeManager) : CMessageMediator(LoungeManager)

@@ -11,6 +11,7 @@ public:
   CPlague * GetPlague();
   CPlague * GetDiscardPlague();
   std::vector<CPlayer *> & GetPlayerList();
+  static void GameLoop(CRoom * room);
   //win lose judge
   ~CRoom();
 private:

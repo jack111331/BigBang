@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Action.h"
 #include "Room.h"
+#include "User.h"
 
 void CPlayer::DrawCard(CRoom * room)
 {
@@ -35,9 +36,9 @@ void CPlayer::FoldCard(CRoom * room, std::string cardName)
   }
 }
 
-const std::string & CPlayer::GetName() const
+CUser * CPlayer::GetUser()
 {
-  return this->Name;
+  return this->User;
 }
 CCharacter * CPlayer::GetCharacter()
 {
@@ -88,9 +89,9 @@ int CPlayer::GetMinusRange() const
   return this->MinusRange;
 }
 
-void CPlayer::SetName(const std::string & name)
+void CPlayer::SetUser(CUser * user)
 {
-  this->Name = Name;
+  this->User = user;
 }
 void CPlayer::SetCharacter(CCharacter * character)
 {

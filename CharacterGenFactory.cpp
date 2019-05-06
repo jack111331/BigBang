@@ -17,7 +17,7 @@ CCharacter * NSCharacterGenFactory::createCharacter(std::string Charactername)
     return nullptr;
   }
 }
-CCard * NSCharacterGenFactory::createCharacter(char const * Charactername)
+CCharacter * NSCharacterGenFactory::createCharacter(char const * Charactername)
 {
   return createCharacter(std::string(Charactername));
 }

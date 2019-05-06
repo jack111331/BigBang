@@ -1,8 +1,8 @@
 COBJECTFLAG = -Wall -c -Iinclude
 CFLAG = -Wall -pthread -Iinclude
 
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
-	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o Winchester.o Character.o BartCassidy.o BlackJack.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
+	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
 	rm *.o
 
 Socket.o: Socket.cpp
@@ -29,11 +29,15 @@ EquipmentCard.o: EquipmentCard.cpp
 	g++ $(COBJECTFLAG) EquipmentCard.cpp
 WeaponCard.o: WeaponCard.cpp
 	g++ $(COBJECTFLAG) WeaponCard.cpp
+CardGenFactory.o: CardGenFactory.cpp
+	g++ $(COBJECTFLAG) CardGenFactory.cpp
 Winchester.o: ./Card/Winchester.cpp
 	g++ $(COBJECTFLAG) ./Card/Winchester.cpp
 
 Character.o: Character.cpp
 	g++ $(COBJECTFLAG) Character.cpp
+CharacterGenFactory.o: CharacterGenFactory.cpp
+	g++ $(COBJECTFLAG) CharacterGenFactory.cpp
 BartCassidy.o: ./Character/BartCassidy.cpp
 	g++ $(COBJECTFLAG) ./Character/BartCassidy.cpp
 BlackJack.o: ./Character/BlackJack.cpp

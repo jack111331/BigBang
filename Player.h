@@ -14,6 +14,7 @@ enum class Team
 };
 
 class CRoom;
+class CUser;
 
 class CPlayer
 {
@@ -23,7 +24,7 @@ public:
   void UseCard(CRoom * room, std::string cardName, CPlayer * target);
   void FoldCard(CRoom * room, std::string cardName);
 
-  const std::string & GetName() const;
+  CUser * GetUser();
   CCharacter * GetCharacter();
   Team GetIdentity() const;
   int GetHP() const;
@@ -37,7 +38,7 @@ public:
   int GetAddRange() const;
   int GetMinusRange() const;
 
-  void SetName(const std::string & name);
+  void SetUser(CUser * user);
   void SetCharacter(CCharacter * character);
   void SetIdentity(Team identity);
   void SetHP(int HP);
@@ -54,7 +55,7 @@ public:
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
 private:
-  std::string Name;
+  CUser * User;
   Team Identity;
   int HP;
   int MaxHP;
