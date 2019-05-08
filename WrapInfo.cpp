@@ -50,3 +50,7 @@ json NSWrapInfo::WrapChooseCharacter(std::string CharacterName_1, std::string Ch
   Buffer["Character Name 2"] = CharacterName_2;
   return Buffer;
 }
+json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
+{
+
+}

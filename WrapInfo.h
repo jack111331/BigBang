@@ -10,4 +10,5 @@ namespace NSWrapInfo
   nlohmann::json WrapConfirm(int action);
   nlohmann::json WrapStartGameFail();
   nlohmann::json WrapChooseCharacter(std::string CharacterName_1, std::string CharacterName_2);
+  nlohmann::json WrapPublicGameInfo(CRoom * room, CPlayer * player);
 }

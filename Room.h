@@ -11,6 +11,8 @@ public:
   CPlague * GetPlague();
   CPlague * GetDiscardPlague();
   std::vector<CPlayer *> & GetPlayerList();
+  void LoopToCheckHaveCharacter();
+  bool isGameEnd();
   static void GameLoop(CRoom * room);
   //win lose judge
   ~CRoom();
