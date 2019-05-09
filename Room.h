@@ -2,7 +2,17 @@
 #include "Plague.h"
 #include "Player.h"
 #include <vector>
+
 class CUser;
+
+enum class WinCondition
+{
+  SergeantWin, //警長
+  BadAssWin, //副警長
+  TraitorWin, //歹徒
+  None
+};
+
 class CRoom
 {
 public:
@@ -12,8 +22,14 @@ public:
   CPlague * GetDiscardPlague();
   std::vector<CPlayer *> & GetPlayerList();
   void LoopToCheckHaveCharacter();
-  bool isGameEnd();
+  WinCondition isGameEnd();
+  void AutoChooseTeam();
+  void InitPlayerState();
+  void InitPlayerRoundState(CPlayer * player);
+  CPlayer * GetNextPlayer(CPlayer * CurrentPlayer);
+  void UpdatePlayerPublicInfo();
   static void GameLoop(CRoom * room);
+  void EndGame(WinCondition GameEndState);
   //win lose judge
   ~CRoom();
 private:

@@ -60,6 +60,10 @@ const std::vector<CCard *> & CPlayer::GetHolding() const
 {
   return this->Holding;
 }
+int CPlayer::GetHoldingAmount() const
+{
+  return static_cast<int>(this->Holding.size());
+}
 const std::vector<CCard *> & CPlayer::GetEquipment() const
 {
   return this->Equipment;
@@ -75,6 +79,10 @@ bool CPlayer::isAttacked() const
 bool CPlayer::isDead() const
 {
   return this->Dead;
+}
+bool CPlayer::isEndUsingCard() const
+{
+  return this->EndUsingCard;
 }
 int CPlayer::GetAttackRange() const
 {
@@ -165,6 +173,10 @@ void CPlayer::SetAttacked(bool attacked)
 void CPlayer::SetDead(bool dead)
 {
   this->Dead = dead;
+}
+void CPlayer::SetEndUsingCard(bool endUsingCard)
+{
+  this->EndUsingCard = endUsingCard;
 }
 void CPlayer::SetAttackRange(int attackRange)
 {

@@ -7,10 +7,10 @@
 
 enum class Team
 {
-  Sergeant, //警長
-  ChiefSergeant, //副警長
-  BadAss, //歹徒
-  Traitor //叛徒
+  Sergeant = 0, //警長
+  ChiefSergeant = 1, //副警長
+  BadAss = 2, //歹徒
+  Traitor = 3 //叛徒
 };
 
 class CRoom;
@@ -30,10 +30,12 @@ public:
   int GetHP() const;
   int GetMaxHP() const;
   const std::vector<CCard *> & GetHolding() const;
+  int GetHoldingAmount() const;
   const std::vector<CCard *> & GetEquipment() const;
   int GetPosition() const;
   bool isAttacked() const;
   bool isDead() const;
+  bool isEndUsingCard() const;
   int GetAttackRange() const;
   int GetAddRange() const;
   int GetMinusRange() const;
@@ -51,6 +53,7 @@ public:
   void SetPosition(int position);
   void SetAttacked(bool attacked);
   void SetDead(bool dead);
+  void SetEndUsingCard(bool endUsingCard);
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
@@ -66,6 +69,7 @@ private:
   CCard * EquipedWeapon = nullptr;
   bool Attacked = false; //是否已攻擊
   bool Dead = false; //是否處於死亡狀態
+  bool EndUsingCard = false;
   int AttackRange = 1;
   int AddRange = 0; //別人看自己的距離
   int MinusRange = 0; //自己看別人的距離

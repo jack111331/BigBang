@@ -52,5 +52,30 @@ json NSWrapInfo::WrapChooseCharacter(std::string CharacterName_1, std::string Ch
 }
 json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
 {
+  //editing
+  json Buffer;
+  Buffer["Action"] = 7;
+  Buffer["Holding Card Amount"] = player->GetHoldingAmount();
+  std::vector<CCard *> holding = player->GetHolding();
+  for(int i = 0;i < static_cast<int>(holding.size());++i)
+  {
+    Buffer["Holding Card " + std::to_string(i)] = 1;
+  }
+  std::vector<CCard *> equiping = player->GetEquipment();
+
+  for(int i = 0;i < static_cast<int>(equiping.size());++i)
+  {
+  }
+  return Buffer;
+}
+json NSWrapInfo::WrapFoldAmount(int amount)
+{
+  json Buffer;
+  Buffer["Action"] = 14;
+  Buffer["Should Fold Card Amount"] = amount;
+  return Buffer;
+}
+json NSWrapInfo::WrapEndGame(CRoom * room)
+{
 
 }
