@@ -3,7 +3,6 @@ CFLAG = -Wall -pthread -Iinclude
 
 BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
 	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
-	rm *.o
 
 Socket.o: Socket.cpp
 	g++ $(COBJECTFLAG) Socket.cpp

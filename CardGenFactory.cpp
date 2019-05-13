@@ -1,5 +1,5 @@
 #include "CardGenFactory.h"
-#include "./Card/Winchester.h"
+#include "Winchester.h"
 #include <string>
 
 CCard * NSCardGenFactory::createCard(std::string Cardname)

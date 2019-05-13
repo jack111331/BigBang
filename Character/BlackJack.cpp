@@ -1,8 +1,8 @@
 #include "BlackJack.h"
 #include <string>
-#include "../Player.h"
-#include "../Action.h"
-#include "../Room.h"
+#include "Player.h"
+#include "Action.h"
+#include "Room.h"
 
 
 CCharacterJack::CCharacterJack()

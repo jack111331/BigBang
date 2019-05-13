@@ -1,5 +1,5 @@
 #include "EquipmentCard.h"
-
+#include "GameEventObserver.h"
 int CEquipmentCard::GetType() const
 {
   return this->Type;
@@ -7,4 +7,8 @@ int CEquipmentCard::GetType() const
 void CEquipmentCard::SetType(int type)
 {
   this->Type = type;
+}
+void CEquipmentCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+{
+  CGameEventObserver::callEquip(this, myself);
 }

@@ -1,6 +1,6 @@
 #include "CharacterGenFactory.h"
-#include "./Character/BartCassidy.h"
-#include "./Character/BlackJack.h"
+#include "BartCassidy.h"
+#include "BlackJack.h"
 #include <string>
 #include <iterator>
 #include <stdlib.h>

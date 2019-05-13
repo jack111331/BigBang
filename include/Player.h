@@ -50,6 +50,7 @@ public:
   CCard * GetCardInHolding(std::string cardname);
   void RemoveHolding(const CCard * card);
   void RemoveEquipment(const CCard * card);
+  void ChangeWeapon(CCard * weapon);
   void SetPosition(int position);
   void SetAttacked(bool attacked);
   void SetDead(bool dead);

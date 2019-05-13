@@ -1,9 +1,9 @@
 #include "BartCassidy.h"
 #include <string>
-#include "../Player.h"
-#include "../GameEventObserver.h"
-#include "../Action.h"
-#include "../Room.h"
+#include "Player.h"
+#include "GameEventObserver.h"
+#include "Action.h"
+#include "Room.h"
 
 
 CCharacterBart::CCharacterBart()

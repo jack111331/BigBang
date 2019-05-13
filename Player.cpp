@@ -162,6 +162,10 @@ void CPlayer::RemoveEquipment(const CCard * card)
     }
   }
 }
+void CPlayer::ChangeWeapon(CCard * weapon)
+{
+  EquipedWeapon = weapon;
+}
 void CPlayer::SetPosition(int position)
 {
   this->Position = position;

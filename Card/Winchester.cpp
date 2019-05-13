@@ -1,6 +1,7 @@
 #include "Winchester.h"
 #include <string>
-#include "../Room.h"
+#include "Room.h"
+#include "GameEventObserver.h"
 
 CWinchester::CWinchester()
 {
@@ -17,8 +18,16 @@ CWinchester::CWinchester()
   constexpr int attackRange = 5;
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
+  CGameEventObserver::registerOnEquip(OnEquip);
+  //should concern unequip
 }
-void CWinchester::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+void CWinchester::OnEquip(CCard * card, CPlayer * Equiper)
 {
-  //No any effect
+  //this part of code should reuse
+  if(card->GetName() == "Winchester")
+  {
+    card->ChangeOwner(Equiper);
+    Equiper->ChangeWeapon(card);
+    Equiper->SetAttackRange(5);
+  }
 }
