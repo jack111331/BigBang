@@ -1,6 +1,7 @@
 #include "Lounge.h"
 #include "User.h"
 #include "Room.h"
+#include "WrapInfo.h"
 CLounge::CLounge()
 {
   userList.clear();
@@ -72,6 +73,7 @@ bool CLounge::startGame()
 {
   if(!isAllReady())
   {
+    RoomOwner->SendMessage("Send Message", NSWrapInfo::WrapStartGame(nullptr, 0));
     return false;
   }
   //Start game

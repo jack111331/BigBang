@@ -68,6 +68,14 @@ const std::vector<CCard *> & CPlayer::GetEquipment() const
 {
   return this->Equipment;
 }
+int CPlayer::GetEquipmentAmount() const
+{
+  return static_cast<int>(this->Equipment.size());
+}
+const CCard * CPlayer::GetWeapon() const
+{
+  return this->EquipedWeapon;
+}
 int CPlayer::GetPosition() const
 {
   return this->Position;

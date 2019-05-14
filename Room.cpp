@@ -181,6 +181,9 @@ void CRoom::GameLoop(CRoom * room)
   CRandomCharacterPool * CharacterPool = new CRandomCharacterPool;
   for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
   {
+    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapStartGame(room, 1));
+
+
     std::vector<std::string> CharacterChoicePool = CharacterPool->ChoiceCharacterFromPool();
     //hard code to have 2 character
     (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCharacter(CharacterChoicePool[0], CharacterChoicePool[1]));

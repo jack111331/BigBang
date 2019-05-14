@@ -2,7 +2,7 @@
 uint32_t CCard::CurrentID = 0;
 CCard::CCard()
 {
-
+  SetID();
 }
 CCard::~CCard()
 {
@@ -45,7 +45,7 @@ void CCard::SetSuit(Suit suit)
 {
   this->CardSuit = suit;
 }
-void CCard::SetID(int id)
+void CCard::SetID()
 {
   this->ID = CurrentID++;
 }

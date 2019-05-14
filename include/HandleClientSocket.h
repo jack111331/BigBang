@@ -15,7 +15,7 @@ public:
   bool sendMessage(const std::string & Buffer);
   ~CHandleClientSocket();
 private:
-  static constexpr int BufferSize = 4096;
+  static constexpr int BufferSize = 8192;
   sockaddr_in ClientAddress;
   char ReceiveBuffer[BufferSize];
 };

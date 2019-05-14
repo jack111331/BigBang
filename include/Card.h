@@ -8,7 +8,7 @@ class CRoom;
 
 enum class Suit
 {
-  Spade, //黑桃
+  Spade = 0, //黑桃
   Heart, //紅心
   Diamond, //方塊
   Club //梅花
@@ -31,7 +31,7 @@ public:
   void SetFeature(std::string feature);
   void SetNumber(int number);
   void SetSuit(Suit suit);
-  void SetID(int id);
+  void SetID();
   void ChangeOwner(CPlayer * owner);
 protected:
   static uint32_t CurrentID;

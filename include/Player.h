@@ -32,6 +32,8 @@ public:
   const std::vector<CCard *> & GetHolding() const;
   int GetHoldingAmount() const;
   const std::vector<CCard *> & GetEquipment() const;
+  int GetEquipmentAmount() const;
+  const CCard * GetWeapon() const;
   int GetPosition() const;
   bool isAttacked() const;
   bool isDead() const;

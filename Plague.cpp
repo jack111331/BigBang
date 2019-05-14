@@ -55,3 +55,11 @@ void CPlague::RemoveCardFromPlague(const CCard * card)
     }
   }
 }
+const CCard * CPlague::GetCardEntrie(int index) const
+{
+  if(index < 0|| index >= static_cast<int>(Plague.size()))
+  {
+    return nullptr;
+  }
+  return Plague[index];
+}
