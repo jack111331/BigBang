@@ -12,7 +12,7 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
   {
     //invoke player to choose whether he want to use this card
     attackee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapRevoltCard(HoldingRevoltCard));
-    bool Revolt;
+    int Revolt;
     while((Revolt = attackee->isRevolt()) == -1)
     {
     }

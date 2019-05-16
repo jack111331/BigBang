@@ -1,4 +1,5 @@
 #include "DrawCard.h"
+#include "WrapInfo.h"
 
 CDrawCardFromPlayer::CDrawCardFromPlayer(IDrawCardFromPlayer * Method)
 {
