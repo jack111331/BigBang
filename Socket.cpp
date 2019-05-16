@@ -1,11 +1,12 @@
 #include "Socket.h"
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 
 int CSocket::CurrentID = 0;
 CSocket::CSocket()
 {
-  
+
 }
 void CSocket::InitServerAddress(int port)
 {
@@ -31,6 +32,7 @@ bool CSocket::BindSocket()
 {
   //bind socket address and port
   //true if success, otherwise failed
+  setsockopt(SocketFD, SOL_SOCKET, SO_REUSEADDR, &ServerAddress, sizeof(ServerAddress));
   return bind(SocketFD, (sockaddr *)&ServerAddress, sizeof(ServerAddress)) != -1;
 }
 int CSocket::GetSocketFD() const
