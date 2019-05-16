@@ -7,4 +7,8 @@ int main()
 {
   CConcreteMessageMediator * MessageMediator = new CConcreteMessageMediator(new CLoungeManage);
   CCommunicateFacade * CommunicateFacade = new CCommunicateFacade(MessageMediator);
+  while(1)
+  {
+    
+  }
 }
