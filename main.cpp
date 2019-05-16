@@ -5,10 +5,10 @@
 
 int main()
 {
-  CConcreteMessageMediator * MessageMediator = new CConcreteMessageMediator(new CLoungeManage);
+  CConcreteMessageMediator * MessageMediator = new CConcreteMessageMediator();
   CCommunicateFacade * CommunicateFacade = new CCommunicateFacade(MessageMediator);
   while(1)
   {
-    
+
   }
 }

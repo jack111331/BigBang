@@ -4,14 +4,11 @@
 #include "HandleClientSocket.h"
 timeval CMessageMediator::timeout = {0, 5};
 
-CMessageMediator::CMessageMediator(CLoungeManage * LoungeManager)
+CMessageMediator::CMessageMediator()
 {
-  //LoungeManager is singleton
-  this->LoungeManager = LoungeManager;
 }
-CConcreteMessageMediator::CConcreteMessageMediator(CLoungeManage * LoungeManager) : CMessageMediator(LoungeManager)
+CConcreteMessageMediator::CConcreteMessageMediator()
 {
-
 }
 void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleague * colleague, std::string message)
 {
@@ -43,7 +40,7 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
       CUser * newUser = new CUser(this);
       //原本想把SocketSet包成一個類別 但發現這樣要創建一個Entry太麻煩了..
       SocketSet.insert(std::pair<CUser *, CHandleClientSocket *>(newUser, static_cast<CHandleClientSocket *>(colleague)));
-      LoungeManager->addUserToNewLounge(newUser);
+      CLoungeManage::getInstance()->addUserToNewLounge(newUser);
       break;
     }
     case 2:
@@ -53,7 +50,7 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     }
     case 3:
     {
-      LoungeManager->removeUserFromLounge(static_cast<CUser *>(colleague));
+      CLoungeManage::getInstance()->removeUserFromLounge(static_cast<CUser *>(colleague));
       break;
     }
     case 4:

@@ -12,11 +12,10 @@ class CLoungeManage;
 class CMessageMediator
 {
 public:
-  CMessageMediator(CLoungeManage * LoungeManager);
+  CMessageMediator();
   virtual void HandleObjectMessage(std::string action, CColleague * colleague, std::string message) = 0;
 protected:
   std::map<CUser *, CHandleClientSocket *> SocketSet;
-  CLoungeManage * LoungeManager;
   std::thread ProcessThread;
   static timeval timeout;//second, usecond
 private:
@@ -24,7 +23,7 @@ private:
 class CConcreteMessageMediator : public CMessageMediator
 {
 public:
-  CConcreteMessageMediator(CLoungeManage * LoungeManager);
+  CConcreteMessageMediator();
   void HandleObjectMessage(std::string action, CColleague * colleague, std::string message);
   std::map<CUser *, CHandleClientSocket *> & GetSocketSet();
   static void SocketProcessFunc(CConcreteMessageMediator * myself);
