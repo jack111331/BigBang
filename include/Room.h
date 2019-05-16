@@ -27,6 +27,7 @@ public:
   void InitPlayerState();
   void InitPlayerRoundState(CPlayer * player);
   CPlayer * GetNextPlayer(CPlayer * CurrentPlayer);
+  CPlayer * GetPlayerByPosition(int Position);
   void UpdatePlayerPublicInfo();
   static void GameLoop(CRoom * room);
   void EndGame(WinCondition GameEndState);

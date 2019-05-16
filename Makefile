@@ -1,8 +1,8 @@
 COBJECTFLAG = -Wall -c -Iinclude
 CFLAG = -Wall -pthread -Iinclude
 
-BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
-	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o InvokeMessage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o  GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
+BangServer : main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
+	g++ -Wall -lpthread -o BangServer -Iinclude main.cpp Socket.o ListenSocket.o HandleClientSocket.o CommunicateFacade.o Action.o Room.o User.o Lounge.o LoungeManage.o MessageMediator.o MessageMediatorColleague.o WrapInfo.o HandleMessage.o ClientEventObserver.o DrawCard.o DrawCardFactory.o GameEventObserver.o Player.o Plague.o Card.o EquipmentCard.o WeaponCard.o CardGenFactory.o Winchester.o Character.o CharacterGenFactory.o BartCassidy.o BlackJack.o
 
 Socket.o: Socket.cpp
 	g++ $(COBJECTFLAG) Socket.cpp
@@ -59,8 +59,6 @@ Lounge.o: Lounge.cpp
 	g++ $(COBJECTFLAG) Lounge.cpp
 LoungeManage.o: LoungeManage.cpp
 	g++ $(COBJECTFLAG) LoungeManage.cpp
-InvokeMessage.o: InvokeMessage.cpp
-	g++ $(COBJECTFLAG) InvokeMessage.cpp
 HandleMessage.o: HandleMessage.cpp
 	g++ $(COBJECTFLAG) HandleMessage.cpp
 DrawCard.o: DrawCard.cpp

@@ -12,4 +12,5 @@ namespace NSAction
   void RecoverHealth(CPlayer * target, int health);
   void DrawCardFromPlague(CPlague * plague, CPlayer * drawer);
   void FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague);
+  void GiveCard(CPlayer * Giver, CPlayer * Given, int GiveCardID);
 }

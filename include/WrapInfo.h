@@ -15,7 +15,8 @@ namespace NSWrapInfo
   nlohmann::json WrapChooseCharacter(std::string CharacterName_1, std::string CharacterName_2);
   nlohmann::json WrapPublicGameInfo(CRoom * room, CPlayer * player);
   nlohmann::json WrapShowCard(CPlayer * shower, CPlayer * showee);
+  nlohmann::json WrapChooseCard(CPlayer * chooser, CPlayer * choosee);
   nlohmann::json WrapRevoltCard(CCard * card);
   nlohmann::json WrapFoldAmount(int amount);
-  nlohmann::json WrapEndGame(CRoom * room);
+  nlohmann::json WrapEndGame(bool WinOrLose);
 }

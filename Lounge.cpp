@@ -69,6 +69,10 @@ void CLounge::exitLounge(CUser * user)
   }
   readyMap.erase(user);
 }
+CRoom * CLounge::getRoom()
+{
+  return this->room;
+}
 bool CLounge::startGame()
 {
   if(!isAllReady())

@@ -22,7 +22,9 @@ public:
   void DrawCard(CRoom * room);
   void Attack(CRoom * room, CPlayer * target);
   void UseCard(CRoom * room, std::string cardName, CPlayer * target);
-  void FoldCard(CRoom * room, std::string cardName);
+  void FoldCard(CRoom * room, int cardID);
+  void GetCard(uint32_t cardID);
+  void RemoveCard(uint32_t cardID);
 
   CUser * GetUser();
   CCharacter * GetCharacter();
@@ -38,6 +40,8 @@ public:
   bool isAttacked() const;
   bool isDead() const;
   bool isEndUsingCard() const;
+  bool isEndChooseCard() const;
+  int isRevolt() const;
   int GetAttackRange() const;
   int GetAddRange() const;
   int GetMinusRange() const;
@@ -50,6 +54,7 @@ public:
   void AddHolding(CCard * card);
   void AddEquipment(CCard * card);
   CCard * GetCardInHolding(std::string cardname);
+  CCard * GetCardInHolding(int cardID);
   void RemoveHolding(const CCard * card);
   void RemoveEquipment(const CCard * card);
   void ChangeWeapon(CCard * weapon);
@@ -57,6 +62,8 @@ public:
   void SetAttacked(bool attacked);
   void SetDead(bool dead);
   void SetEndUsingCard(bool endUsingCard);
+  void SetEndChooseCard(bool endChooseCard);
+  void SetRevolt(int state);
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
@@ -72,7 +79,9 @@ private:
   CCard * EquipedWeapon = nullptr;
   bool Attacked = false; //是否已攻擊
   bool Dead = false; //是否處於死亡狀態
-  bool EndUsingCard = false;
+  bool EndUsingCard = true;
+  bool EndChooseCard = true;
+  int Revolt = -1;
   int AttackRange = 1;
   int AddRange = 0; //別人看自己的距離
   int MinusRange = 0; //自己看別人的距離

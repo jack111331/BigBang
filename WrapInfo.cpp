@@ -133,15 +133,23 @@ json NSWrapInfo::WrapShowCard(CPlayer * shower, CPlayer * showee)
 {
   json Buffer;
   Buffer["Action"] = 10;
-  Buffer["Shower"] = shower->GetPosition();
-  Buffer["Showee"] = showee->GetPosition();
+  Buffer["Shower Position"] = shower->GetPosition();
+  Buffer["Showee Position"] = showee->GetPosition();
+  return Buffer;
+}
+json NSWrapInfo::WrapChooseCard(CPlayer * chooser, CPlayer * choosee)
+{
+  json Buffer;
+  Buffer["Action"] = 11;
+  Buffer["Chooser Position"] = chooser->GetPosition();
+  Buffer["Choosee Position"] = choosee->GetPosition();
   return Buffer;
 }
 json NSWrapInfo::WrapRevoltCard(CCard * card)
 {
   json Buffer;
   Buffer["Action"] = 12;
-  Buffer["Revolt Card"] = card->GetID();
+  Buffer["Revolt Card Name"] = card->GetName();
   return Buffer;
 }
 
@@ -153,10 +161,10 @@ json NSWrapInfo::WrapFoldAmount(int amount)
   return Buffer;
 }
 
-json NSWrapInfo::WrapEndGame(CRoom * room)
+json NSWrapInfo::WrapEndGame(bool WinOrLose)
 {
-  //need some edit
   json Buffer;
   Buffer["Action"] = 15;
+  Buffer["WinOrLose"] = WinOrLose;
   return Buffer;
 }

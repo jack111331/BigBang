@@ -2,8 +2,8 @@
 #include "Player.h"
 #include "Plague.h"
 #include "GameEventObserver.h"
-#include "InvokeMessage.h"
 #include "Room.h"
+#include "WrapInfo.h"
 
 bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std::string dodgeByCard)
 {
@@ -11,7 +11,12 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
   if(HoldingRevoltCard != nullptr)
   {
     //invoke player to choose whether he want to use this card
-    bool Revolt = NSInvokeMessage::InvokeRevolt(attackee, HoldingRevoltCard);
+    attackee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapRevoltCard(HoldingRevoltCard));
+    bool Revolt;
+    while((Revolt = attackee->isRevolt()) == -1)
+    {
+    }
+    attackee->SetRevolt(-1);
     if(Revolt)
     {
       attackee->RemoveHolding(HoldingRevoltCard);
@@ -57,4 +62,9 @@ void NSAction::FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague)
 {
   DiscardPlague->InsertCardToPlague(card);
   folder->RemoveHolding(card);
+}
+void NSAction::GiveCard(CPlayer * Giver, CPlayer * Given, int GiveCardID)
+{
+  Given->GetCard(GiveCardID);
+  Giver->RemoveCard(GiveCardID);
 }

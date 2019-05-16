@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include "Action.h"
+#include "Room.h"
 
 using json = nlohmann::json;
 
@@ -36,6 +38,10 @@ bool RetrieveReadyState(const json & Content)
 std::string RetrieveChooseCharacter(const json & Content)
 {
   return Content["Choose Character Name"];
+}
+void BlockHandleMessage(CUser * User)
+{
+
 }
 void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
 {
@@ -82,18 +88,61 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
         std::vector<CUser *> AllUser = UserLounge->GetAllUser();
         for(std::vector<CUser *>::iterator it = AllUser.begin();it != AllUser.end();++it)
         {
-//          it->SendMessage("Send Message", NSWrapInfo::WrapGameStartInfo().dump());
+          (*it)->SendMessage("Send Message", NSWrapInfo::WrapStartGame(UserLounge->getRoom(), 1).dump());
         }
       }
       else
       {
-        user->SendMessage("Send Message", NSWrapInfo::WrapStartGameFail().dump());
+        user->SendMessage("Send Message", NSWrapInfo::WrapStartGame(UserLounge->getRoom(), 0).dump());
       }
       break;
     }
     case 6:
     {
       user->GetPlayer()->SetCharacter(NSCharacterGenFactory::createCharacter(RetrieveChooseCharacter(Content)));
+      break;
+    }
+    case 9:
+    {
+      CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
+      std::string UseCardName = Content["Card Name"];
+      uint32_t TargetPosition = Content["Target Position"];
+      user->GetPlayer()->UseCard(UserLounge->getRoom(), UseCardName, UserLounge->getRoom()->GetPlayerByPosition(TargetPosition));
+      std::vector<CUser *> AllUser = UserLounge->GetAllUser();
+      for(std::vector<CUser *>::iterator it = AllUser.begin();it != AllUser.end();++it)
+      {
+        (*it)->SendMessage("Send Message", NSWrapInfo::WrapPublicGameInfo(UserLounge->getRoom(), (*it)->GetPlayer()).dump());
+      }
+      break;
+    }
+    case 11:
+    {
+      CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
+      CPlayer * Chooser = UserLounge->getRoom()->GetPlayerByPosition(Content["Chooser Position"]);
+      CPlayer * Choosee = UserLounge->getRoom()->GetPlayerByPosition(Content["Choosee Position"]);
+      uint32_t GiveCardID = Content["Choose Card ID"];
+      NSAction::GiveCard(Chooser, Choosee, GiveCardID);
+      user->GetPlayer()->SetEndChooseCard(true);
+      break;
+    }
+    case 12:
+    {
+      user->GetPlayer()->SetRevolt(Content["Revolt"]);
+      break;
+    }
+    case 13:
+    {
+      user->GetPlayer()->SetEndUsingCard(true);
+      break;
+    }
+    case 14:
+    {
+      int FoldCardAmount = Content["Fold Card Amount"];
+      CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
+      for(int i = 0;i < FoldCardAmount;i++)
+      {
+        user->GetPlayer()->FoldCard(UserLounge->getRoom(), Content["Fold Card " + std::to_string(i) + " ID"]);
+      }
       break;
     }
     default:

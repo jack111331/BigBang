@@ -117,6 +117,18 @@ CPlayer * CRoom::GetNextPlayer(CPlayer * CurrentPlayer)
   }
   return nullptr;
 }
+CPlayer * CRoom::GetPlayerByPosition(int Position)
+{
+  for(std::vector<CPlayer *>::iterator it = playerList.begin();;++it)
+  {
+    if((*it)->GetPosition() == Position)
+    {
+      return *it;
+    }
+  }
+  return nullptr;
+}
+
 void CRoom::UpdatePlayerPublicInfo()
 {
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
@@ -153,21 +165,24 @@ void CRoom::EndGame(WinCondition GameEndState)
 {
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
   {
-    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(this));
     if(((*it)->GetIdentity() == Team::Sergeant || (*it)->GetIdentity() == Team::ChiefSergeant) && GameEndState == WinCondition::SergeantWin)
     {
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1));
       (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
     }
     else if((*it)->GetIdentity() == Team::BadAss && GameEndState == WinCondition::BadAssWin)
     {
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1));
       (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
     }
     else if((*it)->GetIdentity() == Team::Traitor && GameEndState == WinCondition::TraitorWin)
     {
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1));
       (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
     }
     else
     {
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0));
       (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
     }
   }
@@ -176,7 +191,7 @@ void CRoom::EndGame(WinCondition GameEndState)
 
 void CRoom::GameLoop(CRoom * room)
 {
-  //let player choose card
+  //let player choose character
   //generate 2 random character, this two can't be identical
   CRandomCharacterPool * CharacterPool = new CRandomCharacterPool;
   for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)

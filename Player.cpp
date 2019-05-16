@@ -27,12 +27,28 @@ void CPlayer::UseCard(CRoom * room, std::string cardName, CPlayer * target)
     RemoveHolding(card);
   }
 }
-void CPlayer::FoldCard(CRoom * room, std::string cardName)
+void CPlayer::FoldCard(CRoom * room, int cardID)
 {
-  CCard * card = GetCardInHolding(cardName);
+  CCard * card = GetCardInHolding(cardID);
   if(card)
   {
     NSAction::FoldCard(this, card, room->GetDiscardPlague());
+  }
+}
+void CPlayer::GetCard(uint32_t cardID)
+{
+  CCard * card = GetCardInHolding(cardID);
+  if(card)
+  {
+    AddHolding(card);
+  }
+}
+void CPlayer::RemoveCard(uint32_t cardID)
+{
+  CCard * card = GetCardInHolding(cardID);
+  if(card)
+  {
+    RemoveHolding(card);
   }
 }
 
@@ -92,6 +108,15 @@ bool CPlayer::isEndUsingCard() const
 {
   return this->EndUsingCard;
 }
+bool CPlayer::isEndChooseCard() const
+{
+  return this->EndChooseCard;
+}
+int CPlayer::isRevolt() const
+{
+  return this->Revolt;
+}
+
 int CPlayer::GetAttackRange() const
 {
   return this->AttackRange;
@@ -148,6 +173,17 @@ CCard * CPlayer::GetCardInHolding(std::string cardname)
   }
   return nullptr;
 }
+CCard * CPlayer::GetCardInHolding(int cardID)
+{
+  for(int i = 0;i < static_cast<int>(Holding.size());i++)
+  {
+    if(Holding[i]->GetID() == cardID)
+    {
+      return Holding[i];
+    }
+  }
+  return nullptr;
+}
 void CPlayer::RemoveHolding(const CCard * card)
 {
   for(int i = 0;i < static_cast<int>(Holding.size());i++)
@@ -189,6 +225,14 @@ void CPlayer::SetDead(bool dead)
 void CPlayer::SetEndUsingCard(bool endUsingCard)
 {
   this->EndUsingCard = endUsingCard;
+}
+void CPlayer::SetEndChooseCard(bool endChooseCard)
+{
+  this->EndChooseCard = endChooseCard;
+}
+void CPlayer::SetRevolt(int State)
+{
+  this->Revolt = State;
 }
 void CPlayer::SetAttackRange(int attackRange)
 {

@@ -21,6 +21,7 @@ public:
   bool isAllReady();
   void setReadyState(CUser * user, bool state);
   void exitLounge(CUser * user);
+  CRoom * getRoom();
   bool startGame();
 private:
   std::vector<CUser *> userList;
