@@ -1,5 +1,4 @@
 #include "User.h"
-
 CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 {
   this->mediator = mediator;

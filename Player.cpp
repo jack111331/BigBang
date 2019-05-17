@@ -80,17 +80,9 @@ int CPlayer::GetHoldingAmount() const
 {
   return static_cast<int>(this->Holding.size());
 }
-const std::vector<CCard *> & CPlayer::GetEquipment() const
+const CCard * CPlayer::GetEquipment() const
 {
   return this->Equipment;
-}
-int CPlayer::GetEquipmentAmount() const
-{
-  return static_cast<int>(this->Equipment.size());
-}
-const CCard * CPlayer::GetWeapon() const
-{
-  return this->EquipedWeapon;
 }
 int CPlayer::GetPosition() const
 {
@@ -103,6 +95,10 @@ bool CPlayer::isAttacked() const
 bool CPlayer::isDead() const
 {
   return this->Dead;
+}
+bool CPlayer::isHasMultiAttack() const
+{
+  return this->HasMultiAttack;
 }
 bool CPlayer::isEndUsingCard() const
 {
@@ -158,10 +154,6 @@ void CPlayer::AddHolding(CCard * card)
 {
   Holding.push_back(card);
 }
-void CPlayer::AddEquipment(CCard * card)
-{
-  Equipment.push_back(card);
-}
 CCard * CPlayer::GetCardInHolding(std::string cardname)
 {
   for(int i = 0;i < static_cast<int>(Holding.size());i++)
@@ -195,20 +187,9 @@ void CPlayer::RemoveHolding(const CCard * card)
     }
   }
 }
-void CPlayer::RemoveEquipment(const CCard * card)
+void CPlayer::ChangeEquipment(CCard * equipment)
 {
-  for(int i = 0;i < static_cast<int>(Equipment.size());i++)
-  {
-    if(Equipment[i]->GetID() == card->GetID())
-    {
-      Equipment.erase(Equipment.begin() + i);
-      break;
-    }
-  }
-}
-void CPlayer::ChangeWeapon(CCard * weapon)
-{
-  EquipedWeapon = weapon;
+  this->Equipment = equipment;
 }
 void CPlayer::SetPosition(int position)
 {
@@ -221,6 +202,10 @@ void CPlayer::SetAttacked(bool attacked)
 void CPlayer::SetDead(bool dead)
 {
   this->Dead = dead;
+}
+void CPlayer::SetMultiAttack(bool HasMultiAttack)
+{
+  this->HasMultiAttack = HasMultiAttack;
 }
 void CPlayer::SetEndUsingCard(bool endUsingCard)
 {

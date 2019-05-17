@@ -1,6 +1,6 @@
 #include "Card.h"
 uint32_t CCard::CurrentID = 0;
-CCard::CCard()
+CCard::CCard(int number, Suit suit) : Number(number), CardSuit(suit)
 {
   SetID();
 }

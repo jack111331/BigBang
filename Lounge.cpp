@@ -75,7 +75,7 @@ CRoom * CLounge::getRoom()
 }
 bool CLounge::startGame()
 {
-  if(!isAllReady())
+  if(!isAllReady() || userList.size() < 4 || userList.size() > 7)
   {
     RoomOwner->SendMessage("Send Message", NSWrapInfo::WrapStartGame(nullptr, 0));
     return false;
@@ -86,7 +86,7 @@ bool CLounge::startGame()
   {
     room->PlayerJoin(*it);
   }
-  //maybe we need a for loop for game loop
+  //game loop
   GameLoopThread = std::thread(CRoom::GameLoop, room);
   return true;
 }

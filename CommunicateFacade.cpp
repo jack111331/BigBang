@@ -4,7 +4,7 @@
 #include <thread>
 CCommunicateFacade::CCommunicateFacade(CMessageMediator * mediator) : CColleague(mediator)
 {
-  static constexpr int port = 28715;
+  static constexpr int port = 28716;
   createListenSocket(port);
   this->mediator = mediator;
 }

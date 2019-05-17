@@ -64,17 +64,17 @@ WinCondition CRoom::isGameEnd()
       TeamSurviveAmount[static_cast<int>((*it)->GetIdentity())]++;
     }
   }
-  if(!TeamSurviveAmount[static_cast<int>(Team::Sergeant)])
+  if(!TeamSurviveAmount[static_cast<int>(Team::Sergeant)] && !TeamSurviveAmount[static_cast<int>(Team::ChiefSergeant)] && !TeamSurviveAmount[static_cast<int>(Team::BadAss)])
+  {
+    return WinCondition::TraitorWin;
+  }
+  else if(!TeamSurviveAmount[static_cast<int>(Team::Sergeant)])
   {
     return WinCondition::SergeantWin;
   }
   else if(!TeamSurviveAmount[static_cast<int>(Team::BadAss)] && !TeamSurviveAmount[static_cast<int>(Team::Traitor)])
   {
     return WinCondition::BadAssWin;
-  }
-  else if(!TeamSurviveAmount[static_cast<int>(Team::Sergeant)] && !TeamSurviveAmount[static_cast<int>(Team::ChiefSergeant)] && !TeamSurviveAmount[static_cast<int>(Team::BadAss)])
-  {
-    return WinCondition::TraitorWin;
   }
   return WinCondition::None;
 }
@@ -197,7 +197,6 @@ void CRoom::GameLoop(CRoom * room)
   for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
   {
     (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapStartGame(room, 1));
-
 
     std::vector<std::string> CharacterChoicePool = CharacterPool->ChoiceCharacterFromPool();
     //hard code to have 2 character

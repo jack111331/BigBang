@@ -13,4 +13,6 @@ namespace NSAction
   void DrawCardFromPlague(CPlague * plague, CPlayer * drawer);
   void FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague);
   void GiveCard(CPlayer * Giver, CPlayer * Given, int GiveCardID);
+  void EquipItem(CPlayer * equiper, CCard * equipmentCard);
+  void UnequipItem(CPlayer * equiper, CCard * equipmentCard);
 }

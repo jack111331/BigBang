@@ -23,9 +23,9 @@ json NSWrapInfo::WrapLoungeSetInfo()
   for(std::map<uint32_t, CLounge *>::iterator it = LoungeSet.begin();it != LoungeSet.end();++it)
   {
     json Lounge;
-    Lounge["ID"] = it->first;
+    Lounge["ID" + std::to_string(LoungeCount)] = it->first;
     Lounge["User Amount"] = it->second->getLoungeSize();
-    Buffer[std::string("Lounge ")+std::to_string(LoungeCount)] = Lounge;
+    Buffer[std::string("Lounge ") + std::to_string(LoungeCount)] = Lounge;
     LoungeCount++;
   }
   return Buffer;
@@ -48,7 +48,6 @@ json NSWrapInfo::WrapStartGame(CRoom * room, int success)
     {
       json PlayerBuffer;
       PlayerBuffer["Player Name"] = playerList[i]->GetUser()->GetName();
-      PlayerBuffer["Character Name"] = playerList[i]->GetCharacter()->GetName();
       PlayerBuffer["Position"] = playerList[i]->GetPosition();
 
       Buffer["Player " + std::to_string(i)] = PlayerBuffer;
@@ -82,6 +81,7 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
   Buffer["Action"] = 7;
   Buffer["Max HP"] = player->GetMaxHP();
   Buffer["HP"] = player->GetHP();
+  Buffer["Character Name"] = player->GetCharacter()->GetName();
 
   Buffer["Holding Card Amount"] = player->GetHoldingAmount();
   std::vector<CCard *> holding = player->GetHolding();
@@ -92,17 +92,8 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
   }
   Buffer["Holding"] = HoldingBuffer;
 
-  Buffer["Equipment Card Amount"] = player->GetEquipmentAmount();
-  std::vector<CCard *> equiping = player->GetEquipment();
-  json EquipmentBuffer;
-  for(int i = 0;i < static_cast<int>(equiping.size());++i)
-  {
-    EquipmentBuffer["Equipment Card " + std::to_string(i)] = equiping[i]->GetID();
-  }
-  Buffer["Equipment"] = EquipmentBuffer;
-
-  const CCard * Weapon = player->GetWeapon();
-  Buffer["Weapon"] = Weapon?Weapon->GetID():NoneMagicNumber;
+  const CCard * Equipment = player->GetEquipment();
+  Buffer["Equipment"] = Equipment?NoneMagicNumber:Equipment->GetID();
 
   std::vector<CPlayer *> playerList = room->GetPlayerList();
   for(int i = 0;i < static_cast<int>(playerList.size());++i)
@@ -110,19 +101,11 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     json PlayerBuffer;
     PlayerBuffer["Max HP"] = playerList[i]->GetMaxHP();
     PlayerBuffer["HP"] = playerList[i]->GetHP();
+    PlayerBuffer["Character Name"] = playerList[i]->GetCharacter()->GetName();
     PlayerBuffer["Holding Card Amount"] = playerList[i]->GetHoldingAmount();
-    PlayerBuffer["Equipment Card Amount"] = playerList[i]->GetEquipmentAmount();
 
-    std::vector<CCard *> OtherEquiping = playerList[i]->GetEquipment();
-    json OtherEquipmentBuffer;
-    for(int i = 0;i < static_cast<int>(OtherEquiping.size());++i)
-    {
-      OtherEquipmentBuffer["Equipment Card " + std::to_string(i)] = OtherEquiping[i]->GetID();
-    }
-    PlayerBuffer["Equipment"] = OtherEquipmentBuffer;
-
-    const CCard * OtherWeapon = playerList[i]->GetWeapon();
-    PlayerBuffer["Weapon"] = OtherWeapon?OtherWeapon->GetID():NoneMagicNumber;
+    const CCard * OtherEquipment = playerList[i]->GetEquipment();
+    PlayerBuffer["Equipment"] = OtherEquipment?NoneMagicNumber:OtherEquipment->GetID();
 
     Buffer["Player " + std::to_string(i)] = PlayerBuffer;
   }

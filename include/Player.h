@@ -33,12 +33,11 @@ public:
   int GetMaxHP() const;
   const std::vector<CCard *> & GetHolding() const;
   int GetHoldingAmount() const;
-  const std::vector<CCard *> & GetEquipment() const;
-  int GetEquipmentAmount() const;
-  const CCard * GetWeapon() const;
+  const CCard * GetEquipment() const;
   int GetPosition() const;
   bool isAttacked() const;
   bool isDead() const;
+  bool isHasMultiAttack() const;
   bool isEndUsingCard() const;
   bool isEndChooseCard() const;
   int isRevolt() const;
@@ -52,15 +51,14 @@ public:
   void SetHP(int HP);
   void SetMaxHP(int maxHP);
   void AddHolding(CCard * card);
-  void AddEquipment(CCard * card);
   CCard * GetCardInHolding(std::string cardname);
   CCard * GetCardInHolding(int cardID);
   void RemoveHolding(const CCard * card);
-  void RemoveEquipment(const CCard * card);
-  void ChangeWeapon(CCard * weapon);
+  void ChangeEquipment(CCard * equipment);
   void SetPosition(int position);
   void SetAttacked(bool attacked);
   void SetDead(bool dead);
+  void SetMultiAttack(bool HasMultiAttack);
   void SetEndUsingCard(bool endUsingCard);
   void SetEndChooseCard(bool endChooseCard);
   void SetRevolt(int state);
@@ -75,10 +73,10 @@ private:
   int Position;
   CCharacter * Character = nullptr;
   std::vector<CCard *> Holding;
-  std::vector<CCard *> Equipment;
-  CCard * EquipedWeapon = nullptr;
+  CCard * Equipment = nullptr;
   bool Attacked = false; //是否已攻擊
   bool Dead = false; //是否處於死亡狀態
+  bool HasMultiAttack = false;
   bool EndUsingCard = true;
   bool EndChooseCard = true;
   int Revolt = -1;

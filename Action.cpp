@@ -4,6 +4,7 @@
 #include "GameEventObserver.h"
 #include "Room.h"
 #include "WrapInfo.h"
+#include "EquipmentCard.h"
 
 bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std::string dodgeByCard)
 {
@@ -67,4 +68,22 @@ void NSAction::GiveCard(CPlayer * Giver, CPlayer * Given, int GiveCardID)
 {
   Given->GetCard(GiveCardID);
   Giver->RemoveCard(GiveCardID);
+}
+void NSAction::EquipItem(CPlayer * equiper, CCard * equipmentCard)
+{
+  CEquipmentCard * EquipCard = static_cast<CEquipmentCard *>(equipmentCard);
+  EquipCard->ChangeOwner(equiper);
+  equiper->ChangeEquipment(EquipCard);
+  equiper->SetAttackRange(EquipCard->GetAttackRange());
+  equiper->SetMinusRange(EquipCard->GetDefendRange());
+  equiper->SetMultiAttack(EquipCard->isMultiAttack());
+}
+void NSAction::UnequipItem(CPlayer * equiper, CCard * equipmentCard)
+{
+  CEquipmentCard * EquipCard = static_cast<CEquipmentCard *>(equipmentCard);
+  EquipCard->ChangeOwner(nullptr);
+  equiper->ChangeEquipment(nullptr);
+  equiper->SetAttackRange(1);
+  equiper->SetMinusRange(0);
+  equiper->SetMultiAttack(false);
 }

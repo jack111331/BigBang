@@ -1,4 +1,5 @@
 #include "ListenSocket.h"
+#include <stdio.h>
 CListenSocket::CListenSocket()
 {
 }
@@ -8,17 +9,17 @@ bool CListenSocket::InitSocket(int SocketFD, int port)
   SetSocketID(CurrentID++);
   if(!CreateSocket())
   {
-//    std::cout << perror(0) << std::endl;
+    perror(NULL);
     return 0;
   }
   if(!BindSocket())
   {
-//    std::cout << perror(0) << std::endl;
+    perror(NULL);
     return 0;
   }
   if(!StartListening())
   {
-//    std::cout << perror(0) << std::endl;
+    perror(NULL);
     return 0;
   }
   return 1;

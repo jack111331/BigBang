@@ -7,6 +7,7 @@ std::vector<void (*)(CRoom * room, CPlayer * loser)> CGameEventObserver::LossBlo
 std::vector<void (*)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)> CGameEventObserver::DeathListener;
 std::vector<void (*)(CRoom * room, CPlayer * Drawer)> CGameEventObserver::DrawCardListener;
 std::vector<void (*)(CCard * card, CPlayer * Equiper)> CGameEventObserver::EquipListener;
+std::vector<void (*)(CCard * card, CPlayer * Unequiper)> CGameEventObserver::UnequipListener;
 
 void CGameEventObserver::registerOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser))
 {
@@ -23,6 +24,10 @@ void CGameEventObserver::registerOnDrawCard(void (*DrawCardFunction)(CRoom * roo
 void CGameEventObserver::registerOnEquip(void (*EquipFunction)(CCard * card, CPlayer * Equiper))
 {
   EquipListener.push_back(EquipFunction);
+}
+void CGameEventObserver::registerOnUnequip(void (*UnequipFunction)(CCard * card, CPlayer * Unequiper))
+{
+  UnequipListener.push_back(UnequipFunction);
 }
 void CGameEventObserver::callLossBlood(CRoom * room, CPlayer * loser)
 {
@@ -50,6 +55,13 @@ void CGameEventObserver::callEquip(CCard * card, CPlayer * Equiper)
   for(auto i = EquipListener.begin();i != EquipListener.end();++i)
   {
     (*i)(card, Equiper);
+  }
+}
+void CGameEventObserver::callUnequip(CCard * card, CPlayer * Unequiper)
+{
+  for(auto i = UnequipListener.begin();i != UnequipListener.end();++i)
+  {
+    (*i)(card, Unequiper);
   }
 }
 void CGameEventObserver::unregisterOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser))
@@ -89,6 +101,16 @@ void CGameEventObserver::unregisterOnEquip(void (*EquipFunction)(CCard * card, C
     if(*i == EquipFunction)
     {
       EquipListener.erase(i);
+    }
+  }
+}
+void CGameEventObserver::unregisterOnUnequip(void (*UnequipFunction)(CCard * card, CPlayer * Equiper))
+{
+  for(auto i = UnequipListener.begin();i != UnequipListener.end();++i)
+  {
+    if(*i == UnequipFunction)
+    {
+      UnequipListener.erase(i);
     }
   }
 }

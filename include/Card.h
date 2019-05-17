@@ -17,7 +17,7 @@ enum class Suit
 class CCard
 {
 public:
-  CCard();
+  CCard(int Number, Suit suit);
   virtual ~CCard();
   virtual void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
   std::string GetName() const;

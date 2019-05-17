@@ -20,12 +20,14 @@ void RetrieveUserRegisterInfo(const json & Content, CUser * user)
   user->SetMoney(20);
   user->SetWin(0);
   user->SetLose(0);
+  CLoungeManage::getInstance()->addUserToNewLounge(user);
 }
 void RetrieveUserIDWithData(const json & Content, CUser * user)
 {
   uint32_t UserID = Content["User ID"];
   user->SetID(UserID);
   user->RetriveDataFromDB();
+  CLoungeManage::getInstance()->addUserToNewLounge(user);
 }
 uint32_t RetrieveJoinLoungeID(const json & Content)
 {
@@ -45,9 +47,10 @@ void BlockHandleMessage(CUser * User)
 }
 void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
 {
+  printf("Receive:\n%s\n", Message);
   json Content = json::parse(Message);
   int Action;
-  Content.at("Action").get_to(Action);
+  Action = Content["Action"];
   switch(Action)
   {
     case 0:
@@ -69,6 +72,7 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     }
     case 3:
     {
+      CLoungeManage::getInstance()->removeUserFromLounge(user);
       CLoungeManage::getInstance()->addUserToLounge(user, RetrieveJoinLoungeID(Content));
       user->SendMessage("Send Message", NSWrapInfo::WrapConfirm(3).dump());
       break;
@@ -82,16 +86,14 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     case 5:
     {
       CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
-      bool StartGame = UserLounge->startGame();
-      if(StartGame)
+      if(user != UserLounge->getRoomOwner())
       {
-        std::vector<CUser *> AllUser = UserLounge->GetAllUser();
-        for(std::vector<CUser *>::iterator it = AllUser.begin();it != AllUser.end();++it)
-        {
-          (*it)->SendMessage("Send Message", NSWrapInfo::WrapStartGame(UserLounge->getRoom(), 1).dump());
-        }
+        //can't let not-room-owner start game
+        user->SendMessage("Send Message", NSWrapInfo::WrapStartGame(UserLounge->getRoom(), 0).dump());
+        break;
       }
-      else
+      bool StartGame = UserLounge->startGame();
+      if(!StartGame)
       {
         user->SendMessage("Send Message", NSWrapInfo::WrapStartGame(UserLounge->getRoom(), 0).dump());
       }

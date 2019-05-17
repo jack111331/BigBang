@@ -2,6 +2,7 @@
 #include "User.h"
 #include "LoungeManage.h"
 #include "HandleClientSocket.h"
+#include <unistd.h>
 timeval CMessageMediator::timeout = {0, 5};
 
 CMessageMediator::CMessageMediator()
@@ -40,7 +41,6 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
       CUser * newUser = new CUser(this);
       //原本想把SocketSet包成一個類別 但發現這樣要創建一個Entry太麻煩了..
       SocketSet.insert(std::pair<CUser *, CHandleClientSocket *>(newUser, static_cast<CHandleClientSocket *>(colleague)));
-      CLoungeManage::getInstance()->addUserToNewLounge(newUser);
       break;
     }
     case 2:
@@ -80,6 +80,11 @@ void CConcreteMessageMediator::SocketProcessFunc(CConcreteMessageMediator * myse
   fd_set ReadFDSet;
   while(1)
   {
+    if(myself->GetSocketSet().empty())
+    {
+      sleep(1);
+      continue;
+    }
     FD_ZERO(&ReadFDSet);
     for(std::map<CUser *, CHandleClientSocket *>::iterator i = myself->GetSocketSet().begin();i != myself->GetSocketSet().end();++i)
     {
