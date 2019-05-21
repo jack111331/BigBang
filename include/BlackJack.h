@@ -5,6 +5,6 @@ class CRoom;
 class CCharacterJack : public CCharacter
 {
 public:
-  CCharacterJack();
+  CCharacterJack(CRoom * room);
   void DrawCard(CRoom * room, CPlayer * myself);
 };

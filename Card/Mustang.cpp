@@ -2,8 +2,9 @@
 #include <string>
 #include "GameEventObserver.h"
 #include "Action.h"
+#include "Room.h"
 
-CMustang::CMustang(int number, Suit suit) : CEquipmentCard(number, suit)
+CMustang::CMustang(CRoom * room, int number, Suit suit) : CEquipmentCard(room, number, suit)
 {
   const std::string Name("Mustang");
   const std::string Feature("Defend range increased to 1.");
@@ -16,9 +17,8 @@ CMustang::CMustang(int number, Suit suit) : CEquipmentCard(number, suit)
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
   SetDefendRange(defendRange);
-  CGameEventObserver::registerOnEquip(OnEquip);
-  CGameEventObserver::registerOnUnequip(OnUnequip);
-  //should concern unequip
+  GetInRoom()->GetRoomEvent()->registerOnEquip(OnEquip);
+  GetInRoom()->GetRoomEvent()->registerOnUnequip(OnUnequip);
 }
 void CMustang::OnEquip(CCard * card, CPlayer * Equiper)
 {

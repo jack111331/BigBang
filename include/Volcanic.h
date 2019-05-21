@@ -5,7 +5,7 @@ class CRoom;
 class CVolcanic : public CEquipmentCard
 {
 public:
-  CVolcanic(int number, Suit suit);
+  CVolcanic(CRoom * room, int number, Suit suit);
   static void OnEquip(CCard * card, CPlayer * Equiper);
   static void OnUnequip(CCard * card, CPlayer * Unequiper);
 };

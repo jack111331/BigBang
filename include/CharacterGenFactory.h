@@ -6,8 +6,8 @@
 
 namespace NSCharacterGenFactory
 {
-  CCharacter * createCharacter(std::string Cardname);
-  CCharacter * createCharacter(char const * Cardname);
+  CCharacter * createCharacter(std::string Cardname, CRoom * room);
+  CCharacter * createCharacter(char const * Cardname, CRoom * room);
 }
 class CRandomCharacterPool
 {

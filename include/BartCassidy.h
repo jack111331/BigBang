@@ -3,7 +3,7 @@
 class CCharacterBart : public CCharacter
 {
 public:
-  CCharacterBart();
+  CCharacterBart(CRoom * room);
   ~CCharacterBart();
-  static void OnLossBlood(CRoom * room, CPlayer * loser);
+  static void OnLossBlood(CRoom * room, CPlayer * loser, CPlayer * attacker);
 };

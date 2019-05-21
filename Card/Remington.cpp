@@ -1,18 +1,18 @@
-#include "Volcanic.h"
+#include "Remington.h"
 #include <string>
 #include "Room.h"
 #include "GameEventObserver.h"
 #include "Action.h"
 
-CVolcanic::CVolcanic(CRoom * room, int number, Suit suit) : CEquipmentCard(room, number, suit)
+CRemington::CRemington(CRoom * room, int number, Suit suit) : CEquipmentCard(room, number, suit)
 {
-  const std::string Name("Volcanic");
-  const std::string Feature("Attack range is 1, player can multi attack other.");
+  const std::string Name("Remington");
+  const std::string Feature("Attack range increased to 3.");
   SetName(Name);
   SetFeature(Feature);
 
-  constexpr bool multiAttack = true;
-  constexpr int attackRange = 1;
+  constexpr bool multiAttack = false;
+  constexpr int attackRange = 3;
   constexpr int defendRange = 0;
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
@@ -20,18 +20,18 @@ CVolcanic::CVolcanic(CRoom * room, int number, Suit suit) : CEquipmentCard(room,
   GetInRoom()->GetRoomEvent()->registerOnEquip(OnEquip);
   GetInRoom()->GetRoomEvent()->registerOnUnequip(OnUnequip);
 }
-void CVolcanic::OnEquip(CCard * card, CPlayer * Equiper)
+void CRemington::OnEquip(CCard * card, CPlayer * Equiper)
 {
   //this part of code should reuse
-  if(card->GetName() == "Volcanic")
+  if(card->GetName() == "Remington")
   {
     NSAction::EquipItem(Equiper, card);
   }
 }
-void CVolcanic::OnUnequip(CCard * card, CPlayer * Unequiper)
+void CRemington::OnUnequip(CCard * card, CPlayer * Unequiper)
 {
   //this part of code should reuse
-  if(card->GetName() == "Volcanic")
+  if(card->GetName() == "Remington")
   {
     NSAction::UnequipItem(Unequiper, card);
   }

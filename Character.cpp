@@ -6,9 +6,9 @@
 #include "Room.h"
 int CCharacter::CurrentID = 0;
 
-CCharacter::CCharacter()
+CCharacter::CCharacter(CRoom * room)
 {
-
+  this->InRoom = room;
 }
 CCharacter::~CCharacter()
 {
@@ -47,6 +47,26 @@ int CCharacter::GetMaxHP() const
 {
   return this->MaxHP;
 }
+int CCharacter::GetDefaultAttackRange() const
+{
+  return this->AttackRange;
+}
+int CCharacter::GetDefaultAddRange() const
+{
+  return this->AddRange;
+}
+int CCharacter::GetDefaultMinusRange() const
+{
+  return this->MinusRange;
+}
+int CCharacter::GetDefaultMultiAttack() const
+{
+  return this->HasMultiAttack;
+}
+CRoom * CCharacter::GetInRoom() const
+{
+  return this->InRoom;
+}
 
 void CCharacter::SetName(const std::string & name)
 {
@@ -63,4 +83,20 @@ void CCharacter::SetID()
 void CCharacter::SetMaxHP(int maxHP)
 {
   this->MaxHP = maxHP;
+}
+void CCharacter::SetAttackRange(int AttackRange)
+{
+  this->AttackRange = AttackRange;
+}
+void CCharacter::SetAddRange(int AddRange)
+{
+  this->AddRange = AddRange;
+}
+void CCharacter::SetMinusRange(int MinusRange)
+{
+  this->MinusRange = MinusRange;
+}
+void CCharacter::SetMultiAttack(bool HasMultiAttack)
+{
+  this->HasMultiAttack = HasMultiAttack;
 }

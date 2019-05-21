@@ -2,18 +2,18 @@
 #include "Winchester.h"
 #include <string>
 
-CCard * NSCardGenFactory::createCard(std::string Cardname, int Number, Suit suit)
+CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Number, Suit suit)
 {
   if(Cardname == "Winchester")
   {
-    return new CWinchester(Number, suit);
+    return new CWinchester(room, Number, suit);
   }
   else
   {
     return nullptr;
   }
 }
-CCard * NSCardGenFactory::createCard(char const * Cardname, int Number, Suit suit)
+CCard * NSCardGenFactory::createCard(char const * Cardname, CRoom * room, int Number, Suit suit)
 {
-  return createCard(std::string(Cardname), Number, suit);
+  return createCard(std::string(Cardname), room, Number, suit);
 }

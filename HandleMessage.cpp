@@ -101,7 +101,8 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     }
     case 6:
     {
-      user->GetPlayer()->SetCharacter(NSCharacterGenFactory::createCharacter(RetrieveChooseCharacter(Content)));
+      CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
+      user->GetPlayer()->SetCharacter(NSCharacterGenFactory::createCharacter(RetrieveChooseCharacter(Content), UserLounge->getRoom()));
       break;
     }
     case 9:

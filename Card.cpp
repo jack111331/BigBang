@@ -1,6 +1,6 @@
 #include "Card.h"
 uint32_t CCard::CurrentID = 0;
-CCard::CCard(int number, Suit suit) : Number(number), CardSuit(suit)
+CCard::CCard(CRoom * room, int number, Suit suit) : Number(number), CardSuit(suit), InRoom(room)
 {
   SetID();
 }
@@ -32,7 +32,10 @@ CPlayer * CCard::GetOwner() const
 {
   return this->Owner;
 }
-
+CRoom * CCard::GetInRoom() const
+{
+  return this->InRoom;
+}
 void CCard::SetName(std::string name)
 {
   this->Name = name;

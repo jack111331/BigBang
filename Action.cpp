@@ -11,6 +11,10 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
   CCard * HoldingRevoltCard = attackee->GetCardInHolding(dodgeByCard);
   if(HoldingRevoltCard != nullptr)
   {
+    if(!room->GetRoomEvent()->callPreLossBlood(room, attackee))
+    {
+      return false;
+    }
     //invoke player to choose whether he want to use this card
     attackee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapRevoltCard(HoldingRevoltCard));
     int Revolt;
@@ -25,22 +29,22 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
     }
     else
     {
-      CGameEventObserver::callLossBlood(room, attackee);
+      room->GetRoomEvent()->callLossBlood(room, attackee, attacker);
       attackee->SetHP(attackee->GetHP()-1);
       if(attackee->GetHP() <= 0)
       {
-        CGameEventObserver::callDeath(room, attackee, attacker);
+        room->GetRoomEvent()->callDeath(room, attackee, attacker);
       }
       return true;
     }
   }
   else
   {
-    CGameEventObserver::callLossBlood(room, attackee);
+    room->GetRoomEvent()->callLossBlood(room, attackee, attacker);
     attackee->SetHP(attackee->GetHP()-1);
     if(attackee->GetHP() <= 0)
     {
-      CGameEventObserver::callDeath(room, attackee, attacker);
+      room->GetRoomEvent()->callDeath(room, attackee, attacker);
       attackee->SetDead(true);
     }
     return true;
@@ -58,6 +62,11 @@ void NSAction::DrawCardFromPlague(CPlague * plague, CPlayer * drawer)
     drawer->AddHolding(DrawedCard);
     plague->RemoveCardFromPlague(DrawedCard);
   }
+}
+void NSAction::RemoveCardToDiscardPlague(CPlague * discardPlague, CPlayer * remover, CCard * card)
+{
+  remover->RemoveHolding(card);
+  discardPlague->InsertCardToPlague(card);
 }
 void NSAction::FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague)
 {
@@ -83,7 +92,17 @@ void NSAction::UnequipItem(CPlayer * equiper, CCard * equipmentCard)
   CEquipmentCard * EquipCard = static_cast<CEquipmentCard *>(equipmentCard);
   EquipCard->ChangeOwner(nullptr);
   equiper->ChangeEquipment(nullptr);
-  equiper->SetAttackRange(1);
-  equiper->SetMinusRange(0);
-  equiper->SetMultiAttack(false);
+  equiper->SetAttackRange(equiper->GetCharacter()->GetDefaultAttackRange());
+  equiper->SetAddRange(equiper->GetCharacter()->GetDefaultAddRange());
+  equiper->SetMinusRange(equiper->GetCharacter()->GetDefaultMinusRange());
+  equiper->SetMinusRange(equiper->GetCharacter()->GetDefaultMultiAttack());
+}
+CCard * NSAction::DrawCardFromPlagueForDetermine(CPlague * plague)
+{
+  CCard * DrawedCard = plague->ChooseTopCard();
+  if(DrawedCard != nullptr)
+  {
+    plague->RemoveCardFromPlague(DrawedCard);
+  }
+  return DrawedCard;
 }

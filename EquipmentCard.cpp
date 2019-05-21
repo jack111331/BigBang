@@ -1,6 +1,7 @@
 #include "EquipmentCard.h"
 #include "GameEventObserver.h"
-CEquipmentCard::CEquipmentCard(int number, Suit suit) : CCard(number, suit)
+#include "Room.h"
+CEquipmentCard::CEquipmentCard(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
 {
 
 }
@@ -30,5 +31,5 @@ void CEquipmentCard::SetMultiAttack(bool multiAttack)
 }
 void CEquipmentCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
-  CGameEventObserver::callEquip(this, myself);
+  GetInRoom()->GetRoomEvent()->callEquip(this, myself);
 }

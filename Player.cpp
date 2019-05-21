@@ -7,7 +7,10 @@ void CPlayer::DrawCard(CRoom * room)
 {
   if(Character != nullptr)
   {
-    Character->DrawCard(room, this);
+    if(room->GetRoomEvent()->callDrawCard(room, this))
+    {
+      Character->DrawCard(room, this);
+    }
   }
 }
 
@@ -133,6 +136,11 @@ void CPlayer::SetUser(CUser * user)
 void CPlayer::SetCharacter(CCharacter * character)
 {
   this->Character = character;
+  SetMaxHP(character->GetMaxHP());
+  SetAttackRange(character->GetDefaultAttackRange());
+  SetAddRange(character->GetDefaultAddRange());
+  SetMinusRange(character->GetDefaultMinusRange());
+  SetMultiAttack(character->GetDefaultMultiAttack());
 }
 void CPlayer::SetIdentity(Team identity)
 {

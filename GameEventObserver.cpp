@@ -3,13 +3,11 @@
 #include "Room.h"
 #include "Card.h"
 
-std::vector<void (*)(CRoom * room, CPlayer * loser)> CGameEventObserver::LossBloodListener;
-std::vector<void (*)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)> CGameEventObserver::DeathListener;
-std::vector<void (*)(CRoom * room, CPlayer * Drawer)> CGameEventObserver::DrawCardListener;
-std::vector<void (*)(CCard * card, CPlayer * Equiper)> CGameEventObserver::EquipListener;
-std::vector<void (*)(CCard * card, CPlayer * Unequiper)> CGameEventObserver::UnequipListener;
-
-void CGameEventObserver::registerOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser))
+void CGameEventObserver::registerOnPreLossBlood(bool (*PreLossBloodFunction)(CRoom * room, CPlayer * loser))
+{
+  PreLossBloodListener.push_back(PreLossBloodFunction);
+}
+void CGameEventObserver::registerOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser, CPlayer * attacker))
 {
   LossBloodListener.push_back(LossBloodFunction);
 }
@@ -17,7 +15,7 @@ void CGameEventObserver::registerOnDeath(void (*DeathFunction)(CRoom * room, CPl
 {
   DeathListener.push_back(DeathFunction);
 }
-void CGameEventObserver::registerOnDrawCard(void (*DrawCardFunction)(CRoom * room, CPlayer * Drawer))
+void CGameEventObserver::registerOnDrawCard(bool (*DrawCardFunction)(CRoom * room, CPlayer * Drawer))
 {
   DrawCardListener.push_back(DrawCardFunction);
 }
@@ -29,11 +27,27 @@ void CGameEventObserver::registerOnUnequip(void (*UnequipFunction)(CCard * card,
 {
   UnequipListener.push_back(UnequipFunction);
 }
-void CGameEventObserver::callLossBlood(CRoom * room, CPlayer * loser)
+void CGameEventObserver::registerOnRoundEnd(void (*RoundEndFunction)(CRoom * room, CPlayer * RoundEnder))
+{
+  RoundEndListener.push_back(RoundEndFunction);
+}
+
+bool CGameEventObserver::callPreLossBlood(CRoom * room, CPlayer * loser)
+{
+  for(auto i = PreLossBloodListener.begin();i != PreLossBloodListener.end();++i)
+  {
+    if((*i)(room, loser) == false)
+    {
+      return false;
+    }
+  }
+  return true;
+}
+void CGameEventObserver::callLossBlood(CRoom * room, CPlayer * loser, CPlayer * attacker)
 {
   for(auto i = LossBloodListener.begin();i != LossBloodListener.end();++i)
   {
-    (*i)(room, loser);
+    (*i)(room, loser, attacker);
   }
 }
 void CGameEventObserver::callDeath(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)
@@ -43,12 +57,16 @@ void CGameEventObserver::callDeath(CRoom * room, CPlayer * deadPerson, CPlayer *
     (*i)(room, deadPerson, attacker);
   }
 }
-void CGameEventObserver::callDrawCard(CRoom * room, CPlayer * Drawer)
+bool CGameEventObserver::callDrawCard(CRoom * room, CPlayer * Drawer)
 {
   for(auto i = DrawCardListener.begin();i != DrawCardListener.end();++i)
   {
-    (*i)(room, Drawer);
+    if((*i)(room, Drawer) == false)
+    {
+      return false;
+    }
   }
+  return true;
 }
 void CGameEventObserver::callEquip(CCard * card, CPlayer * Equiper)
 {
@@ -64,7 +82,24 @@ void CGameEventObserver::callUnequip(CCard * card, CPlayer * Unequiper)
     (*i)(card, Unequiper);
   }
 }
-void CGameEventObserver::unregisterOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser))
+void CGameEventObserver::callRoundEnd(CRoom * room, CPlayer * RoundEnder)
+{
+  for(auto i = RoundEndListener.begin();i != RoundEndListener.end();++i)
+  {
+    (*i)(room, RoundEnder);
+  }
+}
+void CGameEventObserver::unregisterOnPreLossBlood(bool (*PreLossBloodFunction)(CRoom * room, CPlayer * loser))
+{
+  for(auto i = PreLossBloodListener.begin();i != PreLossBloodListener.end();++i)
+  {
+    if(*i == PreLossBloodFunction)
+    {
+      PreLossBloodListener.erase(i);
+    }
+  }
+}
+void CGameEventObserver::unregisterOnLossBlood(void (*LossBloodFunction)(CRoom * room, CPlayer * loser, CPlayer * attacker))
 {
   for(auto i = LossBloodListener.begin();i != LossBloodListener.end();++i)
   {
@@ -84,7 +119,7 @@ void CGameEventObserver::unregisterOnDeath(void (*DeathFunction)(CRoom * room, C
     }
   }
 }
-void CGameEventObserver::unregisterOnDeath(void (*DrawCardFunction)(CRoom * room, CPlayer * Drawer))
+void CGameEventObserver::unregisterOnDrawCard(bool (*DrawCardFunction)(CRoom * room, CPlayer * Drawer))
 {
   for(auto i = DrawCardListener.begin();i != DrawCardListener.end();++i)
   {
@@ -111,6 +146,16 @@ void CGameEventObserver::unregisterOnUnequip(void (*UnequipFunction)(CCard * car
     if(*i == UnequipFunction)
     {
       UnequipListener.erase(i);
+    }
+  }
+}
+void CGameEventObserver::unregisterOnRoundEnd(void (*RoundEndFunction)(CRoom * room, CPlayer * RoundEnder))
+{
+  for(auto i = RoundEndListener.begin();i != RoundEndListener.end();++i)
+  {
+    if(*i == RoundEndFunction)
+    {
+      RoundEndListener.erase(i);
     }
   }
 }

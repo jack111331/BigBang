@@ -2,6 +2,7 @@
 #include "User.h"
 #include "LoungeManage.h"
 #include "HandleClientSocket.h"
+#include "ClientEventObserver.h"
 #include <unistd.h>
 timeval CMessageMediator::timeout = {0, 5};
 
@@ -50,6 +51,7 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     }
     case 3:
     {
+      CClientEventObserver::CallDisconnect(static_cast<CUser *>(colleague));
       CLoungeManage::getInstance()->removeUserFromLounge(static_cast<CUser *>(colleague));
       break;
     }

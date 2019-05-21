@@ -5,7 +5,7 @@
 class CEquipmentCard : public CCard
 {
 public:
-  CEquipmentCard(int number, Suit suit);
+  CEquipmentCard(CRoom * room, int number, Suit suit);
   int GetAttackRange() const;
   int GetDefendRange() const;
   bool isMultiAttack() const;

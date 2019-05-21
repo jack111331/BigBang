@@ -4,7 +4,7 @@
 #include "GameEventObserver.h"
 #include "Action.h"
 
-CWinchester::CWinchester(int number, Suit suit) : CEquipmentCard(number, suit)
+CWinchester::CWinchester(CRoom * room, int number, Suit suit) : CEquipmentCard(room, number, suit)
 {
   const std::string Name("Winchester");
   const std::string Feature("Attack range increased to 5.");
@@ -13,20 +13,19 @@ CWinchester::CWinchester(int number, Suit suit) : CEquipmentCard(number, suit)
 
   constexpr bool multiAttack = false;
   constexpr int attackRange = 5;
-  constexpr int defendRange = 5;
+  constexpr int defendRange = 0;
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
   SetDefendRange(defendRange);
-  CGameEventObserver::registerOnEquip(OnEquip);
-  CGameEventObserver::registerOnUnequip(OnUnequip);
-  //should concern unequip
+  GetInRoom()->GetRoomEvent()->registerOnEquip(OnEquip);
+  GetInRoom()->GetRoomEvent()->registerOnUnequip(OnUnequip);
 }
 void CWinchester::OnEquip(CCard * card, CPlayer * Equiper)
 {
   //this part of code should reuse
   if(card->GetName() == "Winchester")
   {
-    NSAction::UnequipItem(Equiper, card);
+    NSAction::EquipItem(Equiper, card);
   }
 }
 void CWinchester::OnUnequip(CCard * card, CPlayer * Unequiper)

@@ -4,6 +4,6 @@
 
 namespace NSCardGenFactory
 {
-  CCard * createCard(std::string Cardname, int Number, Suit suit);
-  CCard * createCard(char const * Cardname, int Number, Suit suit);
+  CCard * createCard(std::string Cardname, CRoom * room, int Number, Suit suit);
+  CCard * createCard(char const * Cardname, CRoom * room, int Number, Suit suit);
 };

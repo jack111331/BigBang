@@ -8,6 +8,7 @@ CRoom::CRoom()
   this->plague = new CPlague;
   this->plague->InitPlague();
   this->discardPlague = new CPlague;
+  this->RoomEvent = new CGameEventObserver;
 }
 void CRoom::PlayerJoin(CUser * user)
 {
@@ -128,7 +129,10 @@ CPlayer * CRoom::GetPlayerByPosition(int Position)
   }
   return nullptr;
 }
-
+CGameEventObserver * CRoom::GetRoomEvent() const
+{
+  return this->RoomEvent;
+}
 void CRoom::UpdatePlayerPublicInfo()
 {
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
@@ -243,6 +247,7 @@ void CRoom::GameLoop(CRoom * room)
     }
     //init player's state
     room->InitPlayerRoundState(CurrentPlayer);
+    room->GetRoomEvent()->callRoundEnd(room, CurrentPlayer);
     CurrentPlayer = room->GetNextPlayer(CurrentPlayer);
   }
   room->EndGame(GameEndState);
@@ -254,4 +259,7 @@ CRoom::~CRoom()
     delete *it;
   }
   playerList.clear();
+  delete this->plague;
+  delete this->discardPlague;
+  delete this->RoomEvent;
 }

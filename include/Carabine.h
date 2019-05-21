@@ -2,10 +2,10 @@
 #include "EquipmentCard.h"
 #include "Player.h"
 class CRoom;
-class CWinchester : public CEquipmentCard
+class CCarabine : public CEquipmentCard
 {
 public:
-  CWinchester(CRoom * room, int number, Suit suit);
+  CCarabine(CRoom * room, int number, Suit suit);
   static void OnEquip(CCard * card, CPlayer * Equiper);
   static void OnUnequip(CCard * card, CPlayer * Unequiper);
 };

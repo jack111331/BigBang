@@ -17,7 +17,7 @@ enum class Suit
 class CCard
 {
 public:
-  CCard(int Number, Suit suit);
+  CCard(CRoom * room, int Number, Suit suit);
   virtual ~CCard();
   virtual void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target) = 0;
   std::string GetName() const;
@@ -26,6 +26,7 @@ public:
   Suit GetSuit() const;
   int GetID() const;
   CPlayer * GetOwner() const;
+  CRoom * GetInRoom() const;
 
   void SetName(std::string name);
   void SetFeature(std::string feature);
@@ -42,4 +43,5 @@ private:
   Suit CardSuit;
   int ID;
   CPlayer * Owner;
+  CRoom * InRoom;
 };
