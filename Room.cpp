@@ -155,6 +155,49 @@ void CRoom::InitPlayerState()
     }
   }
 }
+int CRoom::GetDistance(CPlayer * Watcher, CPlayer * Watchee)
+{
+  int minDistance = 666666;
+  for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
+  {
+    if((*it) == Watcher)
+    {
+      int distance = 1;
+      for(std::vector<CPlayer *>::iterator it_begin = ++it;;)
+      {
+        if((*it_begin) == Watchee)
+        {
+          minDistance = min(minDistance, distance);
+          distance = 0;
+        }
+        else if((*it_begin) == Watcher)
+        {
+          minDistance = min(minDistance, distance);
+          break;
+        }
+        if(!(*it_begin)->isDead())
+        {
+          distance++;
+        }
+        it_begin++;
+      }
+      break;
+    }
+  }
+  return max(0, minDistance + Watcher->GetAddRange() - Watchee->GetDefendRange());
+}
+int CRoom::GetAlivePlayer()
+{
+  int AliveAmount = 0;
+  for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
+  {
+    if(!(*it)->isDead())
+    {
+      AliveAmount++;
+    }
+  }
+  return AliveAmount;
+}
 void CRoom::InitPlayerRoundState(CPlayer * player)
 {
   player->SetAttacked(false);

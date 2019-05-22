@@ -10,6 +10,12 @@
 #include "Stagecoach.h"
 #include "Volcanic.h"
 #include "Wellsfargo.h"
+#include "Bang.h"
+#include "Missed.h"
+#include "Indians.h"
+#include "Gatling.h"
+#include "Duel.h"
+#include "Beer.h"
 #include <string>
 
 CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Number, Suit suit)
@@ -57,6 +63,30 @@ CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Num
   else if(Cardname == "Wells fargo")
   {
     return new CWellsfargo(room, Number, suit);
+  }
+  else if(Cardname == "Bang!")
+  {
+    return new CBang(room, Number, suit);
+  }
+  else if(Cardname == "Missed!")
+  {
+    return new CMissed(room, Number, suit);
+  }
+  else if(Cardname == "Indians!")
+  {
+    return new CIndians(room, Number, suit);
+  }
+  else if(Cardname == "Gatling")
+  {
+    return new CGatling(room, Number, suit);
+  }
+  else if(Cardname == "Duel")
+  {
+    return new CDuel(room, Number, suit);
+  }
+  else if(Cardname == "Beer")
+  {
+    return new CBeer(room, Number, suit);
   }
   else
   {

@@ -34,14 +34,12 @@ void CGameEventObserver::registerOnRoundEnd(void (*RoundEndFunction)(CRoom * roo
 
 bool CGameEventObserver::callPreLossBlood(CRoom * room, CPlayer * loser)
 {
+  bool result = true;
   for(auto i = PreLossBloodListener.begin();i != PreLossBloodListener.end();++i)
   {
-    if((*i)(room, loser) == false)
-    {
-      return false;
-    }
+    result = min(result, (*i)(room, loser));
   }
-  return true;
+  return result;
 }
 void CGameEventObserver::callLossBlood(CRoom * room, CPlayer * loser, CPlayer * attacker)
 {
@@ -59,14 +57,12 @@ void CGameEventObserver::callDeath(CRoom * room, CPlayer * deadPerson, CPlayer *
 }
 bool CGameEventObserver::callDrawCard(CRoom * room, CPlayer * Drawer)
 {
+  bool result = true;
   for(auto i = DrawCardListener.begin();i != DrawCardListener.end();++i)
   {
-    if((*i)(room, Drawer) == false)
-    {
-      return false;
-    }
+    result = min(result, (*i)(room, Drawer));
   }
-  return true;
+  return result;
 }
 void CGameEventObserver::callEquip(CCard * card, CPlayer * Equiper)
 {

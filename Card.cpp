@@ -8,6 +8,10 @@ CCard::~CCard()
 {
 
 }
+void CCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+{
+  
+}
 std::string CCard::GetName() const
 {
   return this->Name;

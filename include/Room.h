@@ -27,6 +27,8 @@ public:
   void AutoChooseTeam();
   void InitPlayerState();
   void InitPlayerRoundState(CPlayer * player);
+  int GetDistance(CPlayer * Watcher, CPlayer * Watchee);
+  int GetAlivePlayer();
   CPlayer * GetNextPlayer(CPlayer * CurrentPlayer);
   CPlayer * GetPlayerByPosition(int Position);
   CGameEventObserver * GetRoomEvent() const;
