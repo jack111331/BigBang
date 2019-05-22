@@ -17,8 +17,8 @@ CWinchester::CWinchester(CRoom * room, int number, Suit suit) : CEquipmentCard(r
   SetMultiAttack(multiAttack);
   SetAttackRange(attackRange);
   SetDefendRange(defendRange);
-  GetInRoom()->GetRoomEvent()->registerOnEquip(OnEquip);
-  GetInRoom()->GetRoomEvent()->registerOnUnequip(OnUnequip);
+  room->GetRoomEvent()->registerOnEquip(OnEquip);
+  room->GetRoomEvent()->registerOnUnequip(OnUnequip);
 }
 void CWinchester::OnEquip(CCard * card, CPlayer * Equiper)
 {

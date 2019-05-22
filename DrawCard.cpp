@@ -12,9 +12,9 @@ void CDrawCardFromPlayer::DrawCardFromPlayer(CPlayer * drawer, CPlayer * drawee)
 void CChooseCard::DrawCard(CPlayer * drawer, CPlayer * drawee)
 {
   //invoke one player to show holding to another player and draw card animation
-  drawer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(drawer, drawee));
-  drawee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(drawer, drawee));
-  drawer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCard(drawer, drawee));
+  drawer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(drawer, drawee).dump());
+  drawee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(drawer, drawee).dump());
+  drawer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCard(drawer, drawee).dump());
   while(!drawer->isEndChooseCard())
   {
 

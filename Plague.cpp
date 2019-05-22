@@ -4,9 +4,20 @@
 #include <algorithm>
 
 
-void CPlague::InitPlague()
+void CPlague::InitPlague(CRoom * room)
 {
-//  Plague.push_back(NSCardGenFactory::createCard("Winchester"));
+  Plague.push_back(NSCardGenFactory::createCard("Winchester", room, 1, Suit::Diamond));
+  Plague.push_back(NSCardGenFactory::createCard("Barrel", room, 5, Suit::Heart));
+  Plague.push_back(NSCardGenFactory::createCard("Carabine", room, 7, Suit::Spade));
+  Plague.push_back(NSCardGenFactory::createCard("Jail", room, 9, Suit::Club));
+  Plague.push_back(NSCardGenFactory::createCard("Mustang", room, 3, Suit::Heart));
+  Plague.push_back(NSCardGenFactory::createCard("Remington", room, 9, Suit::Spade));
+  Plague.push_back(NSCardGenFactory::createCard("Saloon", room, 12, Suit::Diamond));
+  Plague.push_back(NSCardGenFactory::createCard("Schofield", room, 13, Suit::Club));
+  Plague.push_back(NSCardGenFactory::createCard("Volcanic", room, 2, Suit::Club));
+  Plague.push_back(NSCardGenFactory::createCard("Stagecoach", room, 8, Suit::Heart));
+  Plague.push_back(NSCardGenFactory::createCard("Wells fargo", room, 11, Suit::Diamond));
+  Plague.push_back(NSCardGenFactory::createCard("Jail", room, 4, Suit::Spade));
   std::random_shuffle(Plague.begin(), Plague.end());
 }
 int CPlague::GetPlagueCardAmount() const

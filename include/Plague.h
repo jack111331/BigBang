@@ -2,11 +2,11 @@
 
 #include "Card.h"
 #include <vector>
-
+class CRoom;
 class CPlague
 {
 public:
-  void InitPlague();
+  void InitPlague(CRoom * room);
   int GetPlagueCardAmount() const;
   CCard * ChooseRandomCard();
   CCard * ChooseTopCard();

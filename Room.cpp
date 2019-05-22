@@ -6,17 +6,17 @@
 CRoom::CRoom()
 {
   this->plague = new CPlague;
-  this->plague->InitPlague();
-  this->discardPlague = new CPlague;
   this->RoomEvent = new CGameEventObserver;
+  this->plague->InitPlague(this);
+  this->discardPlague = new CPlague;
 }
 void CRoom::PlayerJoin(CUser * user)
 {
   CPlayer * player = new CPlayer;
   player->SetUser(user);
   user->SetPlayer(player);
-  playerList.push_back(player);
   player->SetPosition(static_cast<int>(playerList.size()));
+  playerList.push_back(player);
 }
 CPlague * CRoom::GetPlague()
 {
@@ -51,12 +51,6 @@ void CRoom::LoopToCheckHaveCharacter()
 }
 WinCondition CRoom::isGameEnd()
 {
-  /*
-  Sergeant = 0, //警長
-  ChiefSergeant, //副警長
-  BadAss, //歹徒
-  Traitor //叛徒
-  */
   int TeamSurviveAmount[4] = {};
   for(std::vector<CPlayer *>::iterator it = GetPlayerList().begin();it != GetPlayerList().end();++it)
   {
@@ -138,7 +132,8 @@ void CRoom::UpdatePlayerPublicInfo()
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
   {
     //update player's info
-    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapPublicGameInfo(this, *it));
+    //bug
+    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapPublicGameInfo(this, *it).dump());
   }
 }
 void CRoom::InitPlayerState()
@@ -171,22 +166,22 @@ void CRoom::EndGame(WinCondition GameEndState)
   {
     if(((*it)->GetIdentity() == Team::Sergeant || (*it)->GetIdentity() == Team::ChiefSergeant) && GameEndState == WinCondition::SergeantWin)
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1));
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
       (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
     }
     else if((*it)->GetIdentity() == Team::BadAss && GameEndState == WinCondition::BadAssWin)
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1));
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
       (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
     }
     else if((*it)->GetIdentity() == Team::Traitor && GameEndState == WinCondition::TraitorWin)
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1));
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
       (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
     }
     else
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0));
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
       (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
     }
   }
@@ -200,11 +195,11 @@ void CRoom::GameLoop(CRoom * room)
   CRandomCharacterPool * CharacterPool = new CRandomCharacterPool;
   for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
   {
-    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapStartGame(room, 1));
-
+    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapStartGame(room, 1).dump());
+    CharacterPool->FlushChoicePool();
     std::vector<std::string> CharacterChoicePool = CharacterPool->ChoiceCharacterFromPool();
     //hard code to have 2 character
-    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCharacter(CharacterChoicePool[0], CharacterChoicePool[1]));
+    (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCharacter(CharacterChoicePool[0], CharacterChoicePool[1]).dump());
     CharacterPool->RemoveChoiceFromPool();
   }
   //loop to check if everybody has character card
@@ -229,16 +224,17 @@ void CRoom::GameLoop(CRoom * room)
     CurrentPlayer->DrawCard(room);
     room->UpdatePlayerPublicInfo();
     //inform user that it's his/her turn
-    CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8));
+    CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8).dump());
+    CurrentPlayer->SetEndUsingCard(false);
     while(!CurrentPlayer->isEndUsingCard())
     {
       //Use card stage
     }
     room->UpdatePlayerPublicInfo();
-    CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(13));
+    CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(13).dump());
     if(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
     {
-      CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapFoldAmount(CurrentPlayer->GetHoldingAmount() - CurrentPlayer->GetHP()));
+      CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapFoldAmount(CurrentPlayer->GetHoldingAmount() - CurrentPlayer->GetHP()).dump());
       while(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
       {
         //Fold card stage

@@ -1,7 +1,7 @@
-COBJECTFLAG = -Wall -c -Iinclude
-CFLAG = -Wall -pthread -Iinclude
+COBJECTFLAG = -Wall -c -Iinclude -I/usr/include/mysql -I/usr/local/include/mysql++ -lmysqlpp
+CFLAG = -Wall -pthread -Iinclude -I/usr/include/mysql -I/usr/local/include/mysql++ -lmysqlpp
 
-BuildList = Socket ListenSocket HandleClientSocket CommunicateFacade Action Room User Lounge LoungeManage MessageMediator MessageMediatorColleague WrapInfo HandleMessage ClientEventObserver DrawCard DrawCardFactory GameEventObserver Player Plague Card EquipmentCard CardGenFactory Winchester Mustang Volcanic Schofield Remington Carabine Barrel Jail Character CharacterGenFactory BartCassidy BlackJack ElGringo VultureSam SuzyLafayette RoseDoolan PaulRegret WillyTheKid
+BuildList = Socket ListenSocket HandleClientSocket CommunicateFacade Action Room User Lounge LoungeManage MessageMediator MessageMediatorColleague WrapInfo HandleMessage ClientEventObserver DrawCard DrawCardFactory GameEventObserver Player Plague Card EquipmentCard CardGenFactory Winchester Mustang Volcanic Schofield Remington Carabine Barrel Jail Stagecoach Wellsfargo Saloon Character CharacterGenFactory BartCassidy BlackJack ElGringo VultureSam SuzyLafayette RoseDoolan PaulRegret WillyTheKid
 
 objectlist = $(foreach objectfile,$(BuildList),$(objectfile).o)
 
@@ -34,6 +34,16 @@ Barrel.o: ./Card/Barrel.cpp
 
 Jail.o: ./Card/Jail.cpp
 	g++ $(COBJECTFLAG) $<
+	
+Wellsfargo.o: ./Card/Wellsfargo.cpp
+	g++ $(COBJECTFLAG) $<
+
+Stagecoach.o: ./Card/Stagecoach.cpp
+	g++ $(COBJECTFLAG) $<
+	
+Saloon.o: ./Card/Saloon.cpp
+	g++ $(COBJECTFLAG) $<
+
 
 BlackJack.o: ./Character/BlackJack.cpp
 	g++ $(COBJECTFLAG) $<

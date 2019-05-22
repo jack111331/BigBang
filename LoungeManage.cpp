@@ -28,7 +28,7 @@ uint32_t CLoungeManage::searchLoungeNumber(CUser * user)
       return it->first;
     }
   }
-  return 0;//may cause bug?
+  return 0xFFFFFFFF;
 }
 CLounge * CLoungeManage::searchLounge(CUser * user)
 {
@@ -39,11 +39,15 @@ CLounge * CLoungeManage::searchLounge(CUser * user)
       return it->second;
     }
   }
-  return nullptr;//may cause bug?
+  return nullptr;
 }
 void CLoungeManage::removeUserFromLounge(CUser * user)
 {
   uint32_t searchResult = searchLoungeNumber(user);
+  if(searchResult == 0xFFFFFFFF)
+  {
+    return;
+  }
   if(user->GetID() != searchResult)
   {
     //this user is not the room owner

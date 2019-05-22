@@ -1,5 +1,4 @@
 #include "Lounge.h"
-#include "User.h"
 #include "Room.h"
 #include "WrapInfo.h"
 CLounge::CLounge()

@@ -1,4 +1,6 @@
 #include "User.h"
+#include "mysql++/mysql++.h"
+#include <iostream>
 CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 {
   this->mediator = mediator;
@@ -8,7 +10,21 @@ CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 
 void CUser::RetriveDataFromDB()
 {
+  mysqlpp::Connection conn(false);
+  conn.connect("datas", (std::string("35.201") + std::string(".243.64")).c_str(), "root", "object-oriented");//ㄅ要打我們的資料庫QQ
+  mysqlpp::Query query = conn.query();
+  query << ("SELECT * FROM users WHERE user_id=" + std::to_string(this->ID) + ";");
+  mysqlpp::StoreQueryResult ares = query.store();
+  if(ares.num_rows())
+  {
+    SetName(std::string(ares[0]["username"]));
 
+    query << ("SELECT * FROM records WHERE user_id=" + std::to_string(this->ID) + ";");
+    ares = query.store();
+    SetMoney(ares[0]["money"]);
+    SetWin(ares[0]["win"]);
+    SetLose(ares[0]["lose"]);
+  }
 }
 void CUser::ReceiveMessage(std::string message)
 {
@@ -64,5 +80,22 @@ void CUser::SetLose(int lose)
 }
 CUser::~CUser()
 {
+  mysqlpp::Connection conn(false);
+  conn.connect("datas", (std::string("35.201") + std::string(".243.64")).c_str(), "root", "object-oriented");//ㄅ要打我們的資料庫QQ
+  mysqlpp::Query query = conn.query();
+  query << ("SELECT * FROM users WHERE user_id=" + std::to_string(this->ID));
+  mysqlpp::StoreQueryResult ares = query.store();
+  if(!ares.num_rows())
+  {
+    query << "Insert into users (user_id, username) values (" << std::to_string(this->ID) << ", \"" << GetName() << "\");";
+    query.execute();
 
+    query << ("Insert into records (user_id, win, lose, money) values (" + std::to_string(this->ID) + ", " + std::to_string(GetWin()) + ", " + std::to_string(GetLose()) + ", " + std::to_string(GetMoney()) + ");");
+    query.execute();
+  }
+  else
+  {
+    query << ("UPDATE records SET win = " + std::to_string(GetWin()) + " , lose = " + std::to_string(GetLose()) + " , money = " + std::to_string(GetMoney()) + " WHERE user_id = " + std::to_string(this->ID) + ";");
+    query.execute();
+  }
 }

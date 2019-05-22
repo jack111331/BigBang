@@ -58,13 +58,12 @@ json NSWrapInfo::WrapStartGame(CRoom * room, int success)
       json CardBuffer;
       const CCard * Entry = room->GetPlague()->GetCardEntrie(i);
       CardBuffer["Name"] = Entry->GetName();
+      CardBuffer["ID"] = Entry->GetID();
       CardBuffer["Suit"] = static_cast<int>(Entry->GetSuit());
       CardBuffer["Number"] = Entry->GetNumber();
-      Buffer["Card " + std::to_string(Entry->GetID())] = CardBuffer;
+      Buffer["Card " + std::to_string(i)] = CardBuffer;
     }
-    return Buffer;
   }
-
   return Buffer;
 }
 json NSWrapInfo::WrapChooseCharacter(std::string CharacterName_1, std::string CharacterName_2)
@@ -91,9 +90,8 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     HoldingBuffer["Holding Card " + std::to_string(i)] = holding[i]->GetID();
   }
   Buffer["Holding"] = HoldingBuffer;
-
   const CCard * Equipment = player->GetEquipment();
-  Buffer["Equipment"] = Equipment?NoneMagicNumber:Equipment->GetID();
+  Buffer["Equipment"] = Equipment?Equipment->GetID():NoneMagicNumber;
 
   std::vector<CPlayer *> playerList = room->GetPlayerList();
   for(int i = 0;i < static_cast<int>(playerList.size());++i)
@@ -103,9 +101,8 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     PlayerBuffer["HP"] = playerList[i]->GetHP();
     PlayerBuffer["Character Name"] = playerList[i]->GetCharacter()->GetName();
     PlayerBuffer["Holding Card Amount"] = playerList[i]->GetHoldingAmount();
-
     const CCard * OtherEquipment = playerList[i]->GetEquipment();
-    PlayerBuffer["Equipment"] = OtherEquipment?NoneMagicNumber:OtherEquipment->GetID();
+    PlayerBuffer["Equipment"] = OtherEquipment?OtherEquipment->GetID():NoneMagicNumber;
 
     Buffer["Player " + std::to_string(i)] = PlayerBuffer;
   }

@@ -66,7 +66,6 @@ CRandomCharacterPool::CRandomCharacterPool()
   CharacterPool["Rose Doolan"] = 0;
   CharacterPool["Willy The Kid"] = 0;
   //.....
-  FlushChoicePool();
 }
 void CRandomCharacterPool::RemoveChoiceFromPool()
 {
@@ -79,6 +78,7 @@ void CRandomCharacterPool::RemoveChoiceFromPool()
 void CRandomCharacterPool::FlushChoicePool()
 {
   constexpr int choiceAmount = 2;
+  srand(time(NULL));
   for(int i = static_cast<int>(CharacterChoicePool.size());i < choiceAmount;i++)
   {
     std::map<std::string, bool>::iterator it = CharacterPool.begin();

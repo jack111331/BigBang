@@ -3,8 +3,8 @@
 #include <map>
 #include <stdint.h>
 #include <thread>
+#include "User.h"
 
-class CUser;
 class CRoom;
 
 class CLounge

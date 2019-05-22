@@ -3,6 +3,13 @@
 #include "Player.h"
 class CRoom;
 class CCard;
+typedef bool (*PreLossBloodFunction)(CRoom *, CPlayer *);
+typedef void (*LossBloodFunction)(CRoom *, CPlayer *, CPlayer *);
+typedef void (*DeathFunction)(CRoom *, CPlayer *, CPlayer *);
+typedef bool (*DrawCardFunction)(CRoom *, CPlayer *);
+typedef void (*EquipFunction)(CCard *, CPlayer *);
+typedef void (*UnequipFunction)(CCard *, CPlayer *);
+typedef void (*RoundEndFunction)(CRoom *, CPlayer *);
 class CGameEventObserver
 {
 public:
@@ -28,11 +35,11 @@ public:
   void unregisterOnUnequip(void (*UnequipFunction)(CCard * card, CPlayer * Unequiper));
   void unregisterOnRoundEnd(void (*RoundEndFunction)(CRoom * room, CPlayer * RoundEnder));
 private:
-  std::vector<bool (*)(CRoom * room, CPlayer * loser)> PreLossBloodListener;
-  std::vector<void (*)(CRoom * room, CPlayer * loser, CPlayer * attacker)> LossBloodListener;
-  std::vector<void (*)(CRoom * room, CPlayer * deadPerson, CPlayer * attacker)> DeathListener;
-  std::vector<bool (*)(CRoom * room, CPlayer * Drawer)> DrawCardListener;
-  std::vector<void (*)(CCard * card, CPlayer * Equiper)> EquipListener;
-  std::vector<void (*)(CCard * card, CPlayer * Unequiper)> UnequipListener;
-  std::vector<void (*)(CRoom * room, CPlayer * RoundEnder)> RoundEndListener;
+  std::vector<PreLossBloodFunction> PreLossBloodListener;
+  std::vector<LossBloodFunction> LossBloodListener;
+  std::vector<DeathFunction> DeathListener;
+  std::vector<DrawCardFunction> DrawCardListener;
+  std::vector<EquipFunction> EquipListener;
+  std::vector<UnequipFunction> UnequipListener;
+  std::vector<RoundEndFunction> RoundEndListener;
 };
