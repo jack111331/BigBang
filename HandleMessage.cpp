@@ -34,6 +34,10 @@ uint32_t RetrieveJoinLoungeID(const json & Content)
 {
   return Content["Lounge ID"];
 }
+uint32_t RetrieveJoinUserID(const json & Content)
+{
+  return Content["User ID"];
+}
 bool RetrieveReadyState(const json & Content)
 {
   return Content["Ready"];
@@ -74,7 +78,15 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     case 3:
     {
       CLoungeManage::getInstance()->removeUserFromLounge(user);
-      CLoungeManage::getInstance()->addUserToLounge(user, RetrieveJoinLoungeID(Content));
+      bool JoinMethod = Content["Join Method"];
+      if(JoinMethod)
+      {
+        CLoungeManage::getInstance()->addUserToLounge(user, RetrieveJoinLoungeID(Content));
+      }
+      else
+      {
+        CLoungeManage::getInstance()->addUserToLounge(user, CLoungeManage::getInstance()->searchLoungeByUserID(RetrieveJoinUserID(Content)));
+      }
       user->SendMessage("Send Message", NSWrapInfo::WrapConfirm(3).dump());
       break;
     }

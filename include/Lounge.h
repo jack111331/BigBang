@@ -18,6 +18,7 @@ public:
   void changeRoomOwner(CUser * user);
   CUser * getRoomOwner();
   bool searchUserInLounge(CUser * user);
+  bool searchUserInLounge(uint32_t ID);
   bool isAllReady();
   void setReadyState(CUser * user, bool state);
   void exitLounge(CUser * user);

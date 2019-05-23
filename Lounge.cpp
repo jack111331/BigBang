@@ -24,9 +24,13 @@ std::vector<CUser *> & CLounge::GetAllUser()
 }
 bool CLounge::searchUserInLounge(CUser * user)
 {
+  return searchUserInLounge(user->GetID());
+}
+bool CLounge::searchUserInLounge(uint32_t ID)
+{
   for(int i = 0;i < static_cast<int>(userList.size());++i)
   {
-    if(userList[i]->GetID() == user->GetID())
+    if(userList[i]->GetID() == ID)
     {
       return true;
     }

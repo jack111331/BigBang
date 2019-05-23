@@ -30,6 +30,17 @@ uint32_t CLoungeManage::searchLoungeNumber(CUser * user)
   }
   return 0xFFFFFFFF;
 }
+uint32_t CLoungeManage::searchLoungeByUserID(uint32_t ID)
+{
+  for(std::map<uint32_t, CLounge *>::iterator it = loungeSet.begin();it != loungeSet.end();++it)
+  {
+    if(it->second->searchUserInLounge(ID))
+    {
+      return it->first;
+    }
+  }
+  return 0xFFFFFFFF;
+}
 CLounge * CLoungeManage::searchLounge(CUser * user)
 {
   for(std::map<uint32_t, CLounge *>::iterator it = loungeSet.begin();it != loungeSet.end();++it)
