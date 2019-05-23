@@ -41,7 +41,7 @@ bool CJail::OnDrawCard(CRoom * room, CPlayer * drawer)
   //this part of code should reuse
   if(drawer->GetEquipment()->GetName() == "Jail")
   {
-    CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room->GetPlague());
+    CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room);
     if(DrawedCard->GetSuit() == Suit::Heart)
     {
       room->GetDiscardPlague()->InsertCardToPlague(DrawedCard);

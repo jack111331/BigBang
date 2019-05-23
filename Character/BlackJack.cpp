@@ -28,7 +28,7 @@ void CCharacterJack::DrawCard(CRoom * room, CPlayer * myself)
   // flip, to be continued
   //Define Normal active
   NSAction::DrawCardFromPlague(room, myself);
-  CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room->GetPlague());
+  CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room);
   if(DrawedCard->GetSuit() == Suit::Heart || DrawedCard->GetSuit() == Suit::Diamond)
   {
     NSAction::DrawCardFromPlague(room, myself);

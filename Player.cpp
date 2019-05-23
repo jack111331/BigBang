@@ -79,6 +79,13 @@ const std::vector<CCard *> & CPlayer::GetHolding() const
 {
   return this->Holding;
 }
+CCard * CPlayer::GetRandomHolding()
+{
+  std::vector<CCard *>::iterator it = Holding.begin();
+  srand(time(0));
+  std::advance(it, rand() % static_cast<int>(Holding.size()));
+  return *it;
+}
 int CPlayer::GetHoldingAmount() const
 {
   return static_cast<int>(this->Holding.size());
@@ -148,11 +155,7 @@ void CPlayer::SetIdentity(Team identity)
 }
 void CPlayer::SetHP(int HP)
 {
-  if(HP == 0)
-  {
-    this->Dead = true;
-  }
-  this->HP = HP;
+  this->HP = std::max(HP, 0);
 }
 void CPlayer::SetMaxHP(int maxHP)
 {

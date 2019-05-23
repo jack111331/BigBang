@@ -109,7 +109,7 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     {
       CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
       std::string UseCardName = Content["Card Name"];
-      uint32_t TargetPosition = Content["Target Position"];
+      int TargetPosition = Content["Target Position"];
       user->GetPlayer()->UseCard(UserLounge->getRoom(), UseCardName, UserLounge->getRoom()->GetPlayerByPosition(TargetPosition));
       std::vector<CUser *> AllUser = UserLounge->GetAllUser();
       for(std::vector<CUser *>::iterator it = AllUser.begin();it != AllUser.end();++it)
@@ -123,8 +123,16 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
       CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
       CPlayer * Chooser = UserLounge->getRoom()->GetPlayerByPosition(Content["Chooser Position"]);
       CPlayer * Choosee = UserLounge->getRoom()->GetPlayerByPosition(Content["Choosee Position"]);
-      uint32_t GiveCardID = Content["Choose Card ID"];
-      NSAction::GiveCard(Chooser, Choosee, GiveCardID);
+      int CardID = Content["Choose Card ID"];
+      bool ChooseOrDiscard = Content["Choose or Discard"];
+      if(ChooseOrDiscard)
+      {
+        NSAction::GiveCard(Chooser, Choosee, CardID);
+      }
+      else
+      {
+        NSAction::FoldCard(Choosee, Choosee->GetCardInHolding(CardID), UserLounge->getRoom()->GetDiscardPlague());
+      }
       user->GetPlayer()->SetEndChooseCard(true);
       break;
     }

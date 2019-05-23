@@ -117,12 +117,13 @@ json NSWrapInfo::WrapShowCard(CPlayer * shower, CPlayer * showee)
   Buffer["Showee Position"] = showee->GetPosition();
   return Buffer;
 }
-json NSWrapInfo::WrapChooseCard(CPlayer * chooser, CPlayer * choosee)
+json NSWrapInfo::WrapChooseCard(CPlayer * chooser, CPlayer * choosee, bool ChooseOrDiscard)
 {
   json Buffer;
   Buffer["Action"] = 11;
   Buffer["Chooser Position"] = chooser->GetPosition();
   Buffer["Choosee Position"] = choosee->GetPosition();
+  Buffer["Choose or Discard"] = ChooseOrDiscard;
   return Buffer;
 }
 json NSWrapInfo::WrapRevoltCard(CCard * card)

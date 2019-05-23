@@ -32,6 +32,7 @@ public:
   int GetHP() const;
   int GetMaxHP() const;
   const std::vector<CCard *> & GetHolding() const;
+  CCard * GetRandomHolding();
   int GetHoldingAmount() const;
   const CCard * GetEquipment() const;
   int GetPosition() const;

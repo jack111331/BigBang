@@ -54,7 +54,7 @@ void NSAction::RecoverHealth(CPlayer * target, int health)
 {
   target->SetHP(std::min(target->GetHP()+health, target->GetMaxHP()));
 }
-void NSAction::DrawCardFromPlague(CRoom * room, CPlayer * drawer)
+void NSAction::AutoFlushPlague(CRoom * room)
 {
   CPlague * Plague = room->GetPlague();
   CPlague * DiscardPlague = room->GetDiscardPlague();
@@ -67,6 +67,11 @@ void NSAction::DrawCardFromPlague(CRoom * room, CPlayer * drawer)
       DiscardPlague->RemoveCardFromPlague(TopCard);
     }
   }
+}
+void NSAction::DrawCardFromPlague(CRoom * room, CPlayer * drawer)
+{
+  AutoFlushPlague(room);
+  CPlague * Plague = room->GetPlague();
   CCard * DrawedCard = Plague->ChooseTopCard();
   if(DrawedCard != nullptr)
   {
@@ -108,12 +113,14 @@ void NSAction::UnequipItem(CPlayer * equiper, CCard * equipmentCard)
   equiper->SetMinusRange(equiper->GetCharacter()->GetDefaultMinusRange());
   equiper->SetMinusRange(equiper->GetCharacter()->GetDefaultMultiAttack());
 }
-CCard * NSAction::DrawCardFromPlagueForDetermine(CPlague * plague)
+CCard * NSAction::DrawCardFromPlagueForDetermine(CRoom * room)
 {
-  CCard * DrawedCard = plague->ChooseTopCard();
+  AutoFlushPlague(room);
+  CPlague * Plague = room->GetPlague();
+  CCard * DrawedCard = Plague->ChooseTopCard();
   if(DrawedCard != nullptr)
   {
-    plague->RemoveCardFromPlague(DrawedCard);
+    Plague->RemoveCardFromPlague(DrawedCard);
   }
   return DrawedCard;
 }

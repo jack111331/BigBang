@@ -33,7 +33,7 @@ bool CBarrel::OnPreLossBlood(CRoom * room, CPlayer * loser)
 {
   if(loser->GetEquipment()->GetName() == "Barrel")
   {
-    CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room->GetPlague());
+    CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room);
     if(DrawedCard->GetSuit() == Suit::Heart)
     {
       return false;

@@ -16,6 +16,9 @@
 #include "Gatling.h"
 #include "Duel.h"
 #include "Beer.h"
+#include "Panic.h"
+#include "CatBalou.h"
+#include "Dynamite.h"
 #include <string>
 
 CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Number, Suit suit)
@@ -87,6 +90,18 @@ CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Num
   else if(Cardname == "Beer")
   {
     return new CBeer(room, Number, suit);
+  }
+  else if(Cardname == "Cat Balou")
+  {
+    return new CCatBalou(room, Number, suit);
+  }
+  else if(Cardname == "Panic!")
+  {
+    return new CPanic(room, Number, suit);
+  }
+  else if(Cardname == "Dynamite")
+  {
+    return new CDynamite(room, Number, suit);
   }
   else
   {
