@@ -19,4 +19,5 @@ namespace NSWrapInfo
   nlohmann::json WrapRevoltCard(CCard * card);
   nlohmann::json WrapFoldAmount(int amount);
   nlohmann::json WrapEndGame(bool WinOrLose);
+  nlohmann::json WrapFriendList(uint32_t ID);
 }

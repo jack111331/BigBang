@@ -1,6 +1,7 @@
 #include "WrapInfo.h"
 #include "LoungeManage.h"
 #include "Room.h"
+#include "Database.h"
 
 using json = nlohmann::json;
 static constexpr uint32_t NoneMagicNumber = 0xffffffff;
@@ -147,5 +148,21 @@ json NSWrapInfo::WrapEndGame(bool WinOrLose)
   json Buffer;
   Buffer["Action"] = 15;
   Buffer["WinOrLose"] = WinOrLose;
+  return Buffer;
+}
+json NSWrapInfo::WrapFriendList(uint32_t ID)
+{
+  json Buffer;
+  Buffer["Action"] = 17;
+  CDatabase DB;
+  DB.ConnectToDatabase();
+  std::vector<uint32_t> FriendList = DB.GetFriendList(ID);
+  Buffer["Friend Amount"] = FriendList.size();
+  json FriendBuffer;
+  for(int i = 0;i < static_cast<int>(FriendList.size());i++)
+  {
+    FriendBuffer["Friend " + std::to_string(i)] = FriendList[i];
+  }
+  Buffer["Friend"] = FriendBuffer;
   return Buffer;
 }

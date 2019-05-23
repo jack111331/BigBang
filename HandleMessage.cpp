@@ -9,6 +9,7 @@
 #include <vector>
 #include "Action.h"
 #include "Room.h"
+#include "Database.h"
 
 using json = nlohmann::json;
 
@@ -154,6 +155,19 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
       {
         user->GetPlayer()->FoldCard(UserLounge->getRoom(), Content["Fold Card " + std::to_string(i) + " ID"]);
       }
+      break;
+    }
+    case 17:
+    {
+      user->SendMessage("Send Message", NSWrapInfo::WrapFriendList(user->GetID()).dump());
+      break;
+    }
+    case 18:
+    {
+      uint32_t FriendID = Content["Friend ID"];
+      CDatabase DB;
+      DB.ConnectToDatabase();
+      DB.InsertFriend(user->GetID(), FriendID);
       break;
     }
     default:
