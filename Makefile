@@ -1,7 +1,7 @@
 COBJECTFLAG = -Wall -c -Iinclude -I/usr/include/mysql -I/usr/local/include/mysql++ -lmysqlpp
 CFLAG = -Wall -pthread -Iinclude -I/usr/include/mysql -I/usr/local/include/mysql++ -lmysqlpp
 
-BuildList = Socket ListenSocket HandleClientSocket CommunicateFacade Action Room User Lounge LoungeManage MessageMediator MessageMediatorColleague WrapInfo HandleMessage ClientEventObserver DrawCard DrawCardFactory GameEventObserver Player Plague Card EquipmentCard CardGenFactory Winchester Mustang Volcanic Schofield Remington Carabine Barrel Jail Stagecoach Wellsfargo Saloon Bang Missed Character CharacterGenFactory BartCassidy BlackJack ElGringo VultureSam SuzyLafayette RoseDoolan PaulRegret WillyTheKid
+BuildList = Socket ListenSocket HandleClientSocket CommunicateFacade Action Room User Lounge LoungeManage MessageMediator MessageMediatorColleague WrapInfo HandleMessage ClientEventObserver DrawCard DrawCardFactory GameEventObserver Player Plague Card EquipmentCard CardGenFactory Winchester Mustang Volcanic Schofield Remington Carabine Barrel Jail Stagecoach Wellsfargo Saloon Bang Missed Gatling Indians Duel Beer Character CharacterGenFactory BartCassidy BlackJack ElGringo VultureSam SuzyLafayette RoseDoolan PaulRegret WillyTheKid
 
 objectlist = $(foreach objectfile,$(BuildList),$(objectfile).o)
 

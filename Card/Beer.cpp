@@ -1,4 +1,4 @@
-#include "Bang.h"
+#include "Beer.h"
 #include <string>
 #include "Room.h"
 #include "Action.h"
@@ -10,7 +10,7 @@ CBeer::CBeer(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
   const std::string Feature("On your turn, drink beer to recover 1 HP under Max HP. Not on your turn, when you are about to die, drink it immediately.");
   SetName(Name);
   SetFeature(Feature);
-  room->GetEvent()->registerOnLossBlood(OnLossBlood);
+  room->GetRoomEvent()->registerOnLossBlood(OnLossBlood);
 }
 void CBeer::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {

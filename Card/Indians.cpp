@@ -1,4 +1,4 @@
-#include "Gatling.h"
+#include "Indians.h"
 #include <string>
 #include "Room.h"
 #include "Action.h"

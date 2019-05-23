@@ -31,7 +31,7 @@ void CCharacterLafayette::OnRoundEnd(CRoom * room, CPlayer * RoundEnder)
   {
     if(!RoundEnder->GetHoldingAmount())
     {
-      NSAction::DrawCardFromPlague(room->GetPlague(), RoundEnder);
+      NSAction::DrawCardFromPlague(room, RoundEnder);
     }
   }
 }

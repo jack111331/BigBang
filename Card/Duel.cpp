@@ -16,8 +16,8 @@ void CDuel::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
   bool isEnd = 0;
   while(!isEnd)
   {
-    isEnd = max(isEnd, NSAction::Attack(room, MyTurn?target:myself, Myturn?myself:target, "Bang!"));
-    Myturn ^= 1;
+    isEnd = std::max(isEnd, NSAction::Attack(room, MyTurn?target:myself, MyTurn?myself:target, "Bang!"));
+    MyTurn ^= 1;
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
 }

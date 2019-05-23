@@ -151,7 +151,7 @@ void CRoom::InitPlayerState()
     //give player corresponding card
     for(int i = 1;i <= (*it)->GetMaxHP();i++)
     {
-      NSAction::DrawCardFromPlague(plague, *it);
+      NSAction::DrawCardFromPlague(this, *it);
     }
   }
 }
@@ -167,12 +167,12 @@ int CRoom::GetDistance(CPlayer * Watcher, CPlayer * Watchee)
       {
         if((*it_begin) == Watchee)
         {
-          minDistance = min(minDistance, distance);
+          minDistance = std::min(minDistance, distance);
           distance = 0;
         }
         else if((*it_begin) == Watcher)
         {
-          minDistance = min(minDistance, distance);
+          minDistance = std::min(minDistance, distance);
           break;
         }
         if(!(*it_begin)->isDead())
@@ -184,7 +184,7 @@ int CRoom::GetDistance(CPlayer * Watcher, CPlayer * Watchee)
       break;
     }
   }
-  return max(0, minDistance + Watcher->GetAddRange() - Watchee->GetDefendRange());
+  return std::max(0, minDistance + Watcher->GetAddRange() - Watchee->GetMinusRange());
 }
 int CRoom::GetAlivePlayer()
 {

@@ -40,7 +40,7 @@ void CPlague::InitPlague(CRoom * room)
   Plague.push_back(NSCardGenFactory::createCard("Indians!", room, 4, Suit::Club));
   Plague.push_back(NSCardGenFactory::createCard("Gatling", room, 9, Suit::Diamond));
   Plague.push_back(NSCardGenFactory::createCard("Gatling", room, 9, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Duel", room, 3, Suit::Diamon));
+  Plague.push_back(NSCardGenFactory::createCard("Duel", room, 3, Suit::Diamond));
   Plague.push_back(NSCardGenFactory::createCard("Duel", room, 4, Suit::Club));
   Plague.push_back(NSCardGenFactory::createCard("Beer", room, 9, Suit::Heart));
   Plague.push_back(NSCardGenFactory::createCard("Beer", room, 10, Suit::Heart));

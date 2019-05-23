@@ -54,13 +54,24 @@ void NSAction::RecoverHealth(CPlayer * target, int health)
 {
   target->SetHP(std::min(target->GetHP()+health, target->GetMaxHP()));
 }
-void NSAction::DrawCardFromPlague(CPlague * plague, CPlayer * drawer)
+void NSAction::DrawCardFromPlague(CRoom * room, CPlayer * drawer)
 {
-  CCard * DrawedCard = plague->ChooseTopCard();
+  CPlague * Plague = room->GetPlague();
+  CPlague * DiscardPlague = room->GetDiscardPlague();
+  if(Plague->GetPlagueCardAmount())
+  {
+    for(int i = 0;i < DiscardPlague->GetPlagueCardAmount();i++)
+    {
+      CCard * TopCard = DiscardPlague->ChooseTopCard();
+      Plague->InsertCardToPlague(TopCard);
+      DiscardPlague->RemoveCardFromPlague(TopCard);
+    }
+  }
+  CCard * DrawedCard = Plague->ChooseTopCard();
   if(DrawedCard != nullptr)
   {
     drawer->AddHolding(DrawedCard);
-    plague->RemoveCardFromPlague(DrawedCard);
+    Plague->RemoveCardFromPlague(DrawedCard);
   }
 }
 void NSAction::RemoveCardToDiscardPlague(CPlague * discardPlague, CPlayer * remover, CCard * card)

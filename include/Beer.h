@@ -7,5 +7,5 @@ class CBeer : public CCard
 public:
   CBeer(CRoom * room, int number, Suit suit);
   void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
-  void OnLossBlood(CRoom * room, CPlayer * loser, CPlayer * attacker);
+  static void OnLossBlood(CRoom * room, CPlayer * loser, CPlayer * attacker);
 };

@@ -30,7 +30,7 @@ void CCharacterBart::OnLossBlood(CRoom * room, CPlayer * loser, CPlayer * attack
   //it need room to get plague
   if(loser->GetCharacter()->GetName() == "Bart Cassidy")
   {
-    NSAction::DrawCardFromPlague(room->GetPlague(), loser);
+    NSAction::DrawCardFromPlague(room, loser);
   }
 }
 CCharacterBart::~CCharacterBart()

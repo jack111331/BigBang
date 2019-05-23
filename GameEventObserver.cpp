@@ -37,7 +37,7 @@ bool CGameEventObserver::callPreLossBlood(CRoom * room, CPlayer * loser)
   bool result = true;
   for(auto i = PreLossBloodListener.begin();i != PreLossBloodListener.end();++i)
   {
-    result = min(result, (*i)(room, loser));
+    result = std::min(result, (*i)(room, loser));
   }
   return result;
 }
@@ -60,7 +60,7 @@ bool CGameEventObserver::callDrawCard(CRoom * room, CPlayer * Drawer)
   bool result = true;
   for(auto i = DrawCardListener.begin();i != DrawCardListener.end();++i)
   {
-    result = min(result, (*i)(room, Drawer));
+    result = std::min(result, (*i)(room, Drawer));
   }
   return result;
 }

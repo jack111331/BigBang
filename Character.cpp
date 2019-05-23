@@ -20,7 +20,7 @@ void CCharacter::DrawCard(CRoom * room, CPlayer * myself)
   constexpr int DrawCardAmount = 2;
   for(int i = 0;i < DrawCardAmount;i++)
   {
-    NSAction::DrawCardFromPlague(room->GetPlague(), myself);
+    NSAction::DrawCardFromPlague(room, myself);
   }
 }
 void CCharacter::Attack(CRoom * room, CPlayer * myself, CPlayer * target)

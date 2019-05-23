@@ -17,7 +17,7 @@ void CWellsfargo::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target
   constexpr int DrawCardAmount = 3;
   for(int i = 0;i < DrawCardAmount;i++)
   {
-    NSAction::DrawCardFromPlague(room->GetPlague(), myself);
+    NSAction::DrawCardFromPlague(room, myself);
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
 }
