@@ -50,7 +50,6 @@ json NSWrapInfo::WrapStartGame(CRoom * room, int success)
       json PlayerBuffer;
       PlayerBuffer["Player Name"] = playerList[i]->GetUser()->GetName();
       PlayerBuffer["Position"] = playerList[i]->GetPosition();
-
       Buffer["Player " + std::to_string(i)] = PlayerBuffer;
     }
     Buffer["Card Amount"] = room->GetPlague()->GetPlagueCardAmount();
@@ -82,7 +81,7 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
   Buffer["Max HP"] = player->GetMaxHP();
   Buffer["HP"] = player->GetHP();
   Buffer["Character Name"] = player->GetCharacter()->GetName();
-
+  Buffer["Death"] = player->isDead();
   Buffer["Holding Card Amount"] = player->GetHoldingAmount();
   std::vector<CCard *> holding = player->GetHolding();
   json HoldingBuffer;
@@ -102,6 +101,7 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     PlayerBuffer["HP"] = playerList[i]->GetHP();
     PlayerBuffer["Character Name"] = playerList[i]->GetCharacter()->GetName();
     PlayerBuffer["Holding Card Amount"] = playerList[i]->GetHoldingAmount();
+    PlayerBuffer["Death"] = playerList[i]->isDead();
     const CCard * OtherEquipment = playerList[i]->GetEquipment();
     PlayerBuffer["Equipment"] = OtherEquipment?OtherEquipment->GetID():NoneMagicNumber;
 
