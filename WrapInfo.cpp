@@ -24,7 +24,7 @@ json NSWrapInfo::WrapLoungeSetInfo()
   for(std::map<uint32_t, CLounge *>::iterator it = LoungeSet.begin();it != LoungeSet.end();++it)
   {
     json Lounge;
-    Lounge["ID" + std::to_string(LoungeCount)] = it->first;
+    Lounge["ID"] = it->first;
     Lounge["User Amount"] = it->second->getLoungeSize();
     Buffer[std::string("Lounge ") + std::to_string(LoungeCount)] = Lounge;
     LoungeCount++;
@@ -155,7 +155,6 @@ json NSWrapInfo::WrapFriendList(uint32_t ID)
   json Buffer;
   Buffer["Action"] = 17;
   CDatabase DB;
-  DB.ConnectToDatabase();
   std::vector<uint32_t> FriendList = DB.GetFriendList(ID);
   Buffer["Friend Amount"] = FriendList.size();
   json FriendBuffer;

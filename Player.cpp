@@ -21,9 +21,9 @@ void CPlayer::Attack(CRoom * room, CPlayer * target)
     Character->Attack(room, this, target);
   }
 }
-void CPlayer::UseCard(CRoom * room, std::string cardName, CPlayer * target)
+void CPlayer::UseCard(CRoom * room, int cardID, CPlayer * target)
 {
-  CCard * card = GetCardInHolding(cardName);
+  CCard * card = GetCardInHolding(cardID);
   if(card)
   {
     card->UseCardEffect(room, this, target);
@@ -241,4 +241,13 @@ void CPlayer::SetAddRange(int addRange)
 void CPlayer::SetMinusRange(int minusRange)
 {
   this->MinusRange = minusRange;
+}
+CPlayer::~CPlayer()
+{
+  delete this->Character;
+  for(std::vector<CCard *>::iterator it = this->Holding.begin();it != this->Holding.end();)
+  {
+    it = Holding.erase(it);
+  }
+  delete this->Equipment;
 }

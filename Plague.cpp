@@ -106,3 +106,11 @@ const CCard * CPlague::GetCardEntrie(int index) const
   }
   return Plague[index];
 }
+CPlague::~CPlague()
+{
+  for(std::vector<CCard *>::iterator it = Plague.begin();it != Plague.end();)
+  {
+    delete *it;
+    it = Plague.erase(it);
+  }
+}

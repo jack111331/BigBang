@@ -13,6 +13,7 @@ public:
   void InsertCardToPlague(CCard * card);
   void RemoveCardFromPlague(const CCard * card);
   const CCard * GetCardEntrie(int index) const;
+  ~CPlague();
 private:
   std::vector<CCard *> Plague;
 };

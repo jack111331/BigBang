@@ -293,11 +293,11 @@ void CRoom::GameLoop(CRoom * room)
 }
 CRoom::~CRoom()
 {
-  for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
+  for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();)
   {
     delete *it;
+    it = playerList.erase(it);
   }
-  playerList.clear();
   delete this->plague;
   delete this->discardPlague;
   delete this->RoomEvent;

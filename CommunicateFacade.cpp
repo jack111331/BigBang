@@ -27,5 +27,5 @@ void CCommunicateFacade::ListenThreadFunc(int ListenSocketFD, CCommunicateFacade
 CCommunicateFacade::~CCommunicateFacade()
 {
   delete this->ListenSocket;
-  // ListenThread destruct
+  ListenThread.detach();
 }

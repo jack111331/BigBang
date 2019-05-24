@@ -9,6 +9,14 @@ timeval CMessageMediator::timeout = {0, 5};
 CMessageMediator::CMessageMediator()
 {
 }
+CMessageMediator::~CMessageMediator()
+{
+  ProcessThread.detach();
+  for(std::map<CUser *, CHandleClientSocket *>::iterator it = SocketSet.begin();it != SocketSet.end();++it)
+  {
+    SocketSet.erase(it);
+  }
+}
 CConcreteMessageMediator::CConcreteMessageMediator()
 {
 }

@@ -56,7 +56,7 @@ bool CDynamite::OnDrawCard(CRoom * room, CPlayer * drawer)
     {
       CPlayer * NextPlayer = room->GetNextPlayer(drawer);
       NSAction::GiveCard(drawer, NextPlayer, drawer->GetEquipment()->GetID());
-      NextPlayer->UseCard(room, "Dynamite", nullptr);//equip immediately
+      NextPlayer->UseCard(room, NextPlayer->GetCardInHolding("Dynamite")->GetID(), nullptr);//equip immediately
     }
   }
   return true;

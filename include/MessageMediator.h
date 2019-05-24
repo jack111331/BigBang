@@ -14,6 +14,7 @@ class CMessageMediator
 public:
   CMessageMediator();
   virtual void HandleObjectMessage(std::string action, CColleague * colleague, std::string message) = 0;
+  ~CMessageMediator();
 protected:
   std::map<CUser *, CHandleClientSocket *> SocketSet;
   std::thread ProcessThread;
@@ -27,4 +28,5 @@ public:
   void HandleObjectMessage(std::string action, CColleague * colleague, std::string message);
   std::map<CUser *, CHandleClientSocket *> & GetSocketSet();
   static void SocketProcessFunc(CConcreteMessageMediator * myself);
+  ~CConcreteMessageMediator();
 };

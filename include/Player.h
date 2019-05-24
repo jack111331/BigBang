@@ -21,7 +21,7 @@ class CPlayer
 public:
   void DrawCard(CRoom * room);
   void Attack(CRoom * room, CPlayer * target);
-  void UseCard(CRoom * room, std::string cardName, CPlayer * target);
+  void UseCard(CRoom * room, int cardID, CPlayer * target);
   void FoldCard(CRoom * room, int cardID);
   void GetCard(uint32_t cardID);
   void RemoveCard(uint32_t cardID);
@@ -66,6 +66,7 @@ public:
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
+  ~CPlayer();
 private:
   CUser * User;
   Team Identity;

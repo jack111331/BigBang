@@ -3,7 +3,7 @@
 #include <vector>
 CDatabase::CDatabase() : conn(false)
 {
-
+  ConnectToDatabase();
 }
 void CDatabase::ConnectToDatabase()
 {
@@ -73,4 +73,8 @@ void CDatabase::InsertFriend(uint32_t ID, uint32_t ID_2)
     query << "Insert into friend (user_1, user_2) values (" << ID << ", " << ID_2 << ");";
     query.execute();
   }
+}
+CDatabase::~CDatabase()
+{
+  conn.disconnect();
 }

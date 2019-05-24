@@ -93,3 +93,13 @@ bool CLounge::startGame()
   GameLoopThread = std::thread(CRoom::GameLoop, room);
   return true;
 }
+CLounge::~CLounge()
+{
+  for(std::vector<CUser *>::iterator it = userList.begin();it != userList.end();)
+  {
+    delete *it;
+    it = userList.erase(it);
+  }
+  delete room;
+  GameLoopThread.detach();
+}

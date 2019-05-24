@@ -11,7 +11,6 @@ CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 void CUser::RetriveDataFromDB()
 {
   CDatabase DB;
-  DB.ConnectToDatabase();
   DB.UpdateUserInfo(this);
 }
 void CUser::ReceiveMessage(std::string message)
@@ -69,6 +68,5 @@ void CUser::SetLose(int lose)
 CUser::~CUser()
 {
   CDatabase DB;
-  DB.ConnectToDatabase();
   DB.UpdateDBUserInfo(this);
 }

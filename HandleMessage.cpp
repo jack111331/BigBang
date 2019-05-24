@@ -121,9 +121,9 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     case 9:
     {
       CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
-      std::string UseCardName = Content["Card Name"];
+      int UseCardID = Content["Card ID"];
       int TargetPosition = Content["Target Position"];
-      user->GetPlayer()->UseCard(UserLounge->getRoom(), UseCardName, UserLounge->getRoom()->GetPlayerByPosition(TargetPosition));
+      user->GetPlayer()->UseCard(UserLounge->getRoom(), UseCardID, UserLounge->getRoom()->GetPlayerByPosition(TargetPosition));
       std::vector<CUser *> AllUser = UserLounge->GetAllUser();
       for(std::vector<CUser *>::iterator it = AllUser.begin();it != AllUser.end();++it)
       {
@@ -178,7 +178,6 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     {
       uint32_t FriendID = Content["Friend ID"];
       CDatabase DB;
-      DB.ConnectToDatabase();
       DB.InsertFriend(user->GetID(), FriendID);
       break;
     }

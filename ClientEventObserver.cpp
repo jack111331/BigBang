@@ -1,46 +1,54 @@
 #include "ClientEventObserver.h"
 #include "User.h"
-std::vector<void (*)(CUser * user)> CClientEventObserver::ConnectListener;
-std::vector<void (*)(CUser * user)> CClientEventObserver::DisconnectListener;
 void CClientEventObserver::registerOnConnect(void (*ConnectFunction)(CUser * user))
 {
-  ConnectListener.push_back(ConnectFunction);
+  if(ConnectListener.find(ConnectFunction) == ConnectListener.end())
+  {
+    ConnectListener[ConnectFunction] = 0;
+  }
+  ConnectListener[ConnectFunction]++;
 }
 void CClientEventObserver::registerOnDisconnect(void (*DisconnectFunction)(CUser * user))
 {
-  DisconnectListener.push_back(DisconnectFunction);
+  if(DisconnectListener.find(DisconnectFunction) == DisconnectListener.end())
+  {
+    DisconnectListener[DisconnectFunction] = 0;
+  }
+  DisconnectListener[DisconnectFunction]++;
 }
 void CClientEventObserver::CallConnect(CUser * user)
 {
   for(auto i = ConnectListener.begin();i != ConnectListener.end();++i)
   {
-    (*i)(user);
+    (i->first)(user);
   }
 }
 void CClientEventObserver::CallDisconnect(CUser * user)
 {
-  for(auto i = ConnectListener.begin();i != ConnectListener.end();++i)
+  for(auto i = DisconnectListener.begin();i != DisconnectListener.end();++i)
   {
-    (*i)(user);
+    (i->first)(user);
   }
 }
 void CClientEventObserver::unregisterOnConnect(void (*ConnectFunction)(CUser * user))
 {
-  for(auto i = ConnectListener.begin();i != ConnectListener.end();++i)
+  if(ConnectListener[ConnectFunction] <= 1)
   {
-    if(*i == ConnectFunction)
-    {
-      ConnectListener.erase(i);
-    }
+    ConnectListener.erase(ConnectFunction);
+  }
+  else
+  {
+    ConnectListener[ConnectFunction]--;
   }
 }
 void CClientEventObserver::unregisterOnDisconnect(void (*DisconnectFunction)(CUser * user))
 {
-  for(auto i = DisconnectListener.begin();i != DisconnectListener.end();++i)
+  if(DisconnectListener[DisconnectFunction] <= 1)
   {
-    if(*i == DisconnectFunction)
-    {
-      DisconnectListener.erase(i);
-    }
+    DisconnectListener.erase(DisconnectFunction);
+  }
+  else
+  {
+    DisconnectListener[DisconnectFunction]--;
   }
 }

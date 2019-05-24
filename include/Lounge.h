@@ -24,6 +24,7 @@ public:
   void exitLounge(CUser * user);
   CRoom * getRoom();
   bool startGame();
+  ~CLounge();
 private:
   std::vector<CUser *> userList;
   std::map<CUser *, bool> readyMap;
