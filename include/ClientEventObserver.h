@@ -4,13 +4,13 @@
 class CClientEventObserver
 {
 public:
-  void registerOnConnect(void (*ConnectFunction)(CUser * user));
-  void registerOnDisconnect(void (*DisconnectFunction)(CUser * user));
-  void CallConnect(CUser * user);
-  void CallDisconnect(CUser * user);
-  void unregisterOnConnect(void (*ConnectFunction)(CUser * user));
-  void unregisterOnDisconnect(void (*DisconnectFunction)(CUser * user));
+  static void registerOnConnect(void (*ConnectFunction)(CUser * user));
+  static void registerOnDisconnect(void (*DisconnectFunction)(CUser * user));
+  static void CallConnect(CUser * user);
+  static void CallDisconnect(CUser * user);
+  static void unregisterOnConnect(void (*ConnectFunction)(CUser * user));
+  static void unregisterOnDisconnect(void (*DisconnectFunction)(CUser * user));
 private:
-  std::map<void (*)(CUser * user), int> ConnectListener;
-  std::map<void (*)(CUser * user), int> DisconnectListener;
+  static std::map<void (*)(CUser * user), int> ConnectListener;
+  static std::map<void (*)(CUser * user), int> DisconnectListener;
 };

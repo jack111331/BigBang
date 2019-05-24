@@ -1,5 +1,7 @@
 #include "ClientEventObserver.h"
 #include "User.h"
+std::map<void (*)(CUser * user), int> CClientEventObserver::ConnectListener;
+std::map<void (*)(CUser * user), int> CClientEventObserver::DisconnectListener;
 void CClientEventObserver::registerOnConnect(void (*ConnectFunction)(CUser * user))
 {
   if(ConnectListener.find(ConnectFunction) == ConnectListener.end())

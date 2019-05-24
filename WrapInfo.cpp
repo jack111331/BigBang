@@ -8,7 +8,7 @@ static constexpr uint32_t NoneMagicNumber = 0xffffffff;
 json NSWrapInfo::WrapUserInfo(CUser * user)
 {
   json Buffer;
-  Buffer["Action"] = 1;
+  Buffer["Action"] = 0;
   Buffer["Nick Name"] = user->GetName();
   Buffer["User Money"] = user->GetMoney();
   Buffer["User Win"] = user->GetWin();

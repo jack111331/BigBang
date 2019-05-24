@@ -13,22 +13,20 @@
 
 using json = nlohmann::json;
 
-void RetrieveUserRegisterInfo(const json & Content, CUser * user)
+void RetrieveUserID(const json & Content, CUser * user)
 {
   uint32_t UserID = Content["User ID"];
   user->SetID(UserID);
-  user->SetName(Content["Nick Name"]);
   user->SetMoney(20);
   user->SetWin(0);
   user->SetLose(0);
-  CLoungeManage::getInstance()->addUserToNewLounge(user);
-}
-void RetrieveUserIDWithData(const json & Content, CUser * user)
-{
-  uint32_t UserID = Content["User ID"];
-  user->SetID(UserID);
   user->RetriveDataFromDB();
   CLoungeManage::getInstance()->addUserToNewLounge(user);
+}
+void RetrieveUserNickName(const json & Content, CUser * user)
+{
+  std::string UserNickName = Content["Nick Name"];
+  user->SetName(UserNickName);
 }
 uint32_t RetrieveJoinLoungeID(const json & Content)
 {
@@ -60,14 +58,14 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
   {
     case 0:
     {
-      RetrieveUserRegisterInfo(Content, user);
+      RetrieveUserID(Content, user);
       user->SendMessage("Send Message", NSWrapInfo::WrapUserInfo(user).dump());
       break;
     }
     case 1:
     {
-      RetrieveUserIDWithData(Content, user);
-      user->SendMessage("Send Message", NSWrapInfo::WrapUserInfo(user).dump());
+      RetrieveUserNickName(Content, user);
+      user->SendMessage("Send Message", NSWrapInfo::WrapConfirm(1).dump());
       break;
     }
     case 2:

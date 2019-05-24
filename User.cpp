@@ -4,8 +4,6 @@
 CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 {
   this->mediator = mediator;
-  //get data from DB
-  RetriveDataFromDB();
 }
 
 void CUser::RetriveDataFromDB()
@@ -67,6 +65,9 @@ void CUser::SetLose(int lose)
 }
 CUser::~CUser()
 {
-  CDatabase DB;
-  DB.UpdateDBUserInfo(this);
+  if(!name.empty())
+  {
+    CDatabase DB;
+    DB.UpdateDBUserInfo(this);
+  }
 }

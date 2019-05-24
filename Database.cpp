@@ -1,13 +1,8 @@
 #include "Database.h"
 #include "User.h"
 #include <vector>
-CDatabase::CDatabase() : conn(false)
+CDatabase::CDatabase() : conn("datas", (std::string("35.201") + std::string(".243.64")).c_str(), "root", "object-oriented")
 {
-  ConnectToDatabase();
-}
-void CDatabase::ConnectToDatabase()
-{
-  conn.connect("datas", (std::string("35.201") + std::string(".243.64")).c_str(), "root", "object-oriented");//ㄅ要打我們的資料庫QQ
 }
 void CDatabase::UpdateUserInfo(CUser * user)
 {

@@ -6,7 +6,6 @@ class CDatabase
 {
 public:
   CDatabase();
-  void ConnectToDatabase();
   void UpdateUserInfo(CUser * user);
   void UpdateDBUserInfo(CUser * user);
   std::vector<uint32_t> GetFriendList(uint32_t ID);
