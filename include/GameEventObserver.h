@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <map>
 #include "Player.h"
 class CRoom;
 class CCard;
@@ -35,11 +35,11 @@ public:
   void unregisterOnUnequip(void (*UnequipFunction)(CCard * card, CPlayer * Unequiper));
   void unregisterOnRoundEnd(void (*RoundEndFunction)(CRoom * room, CPlayer * RoundEnder));
 private:
-  std::vector<PreLossBloodFunction> PreLossBloodListener;
-  std::vector<LossBloodFunction> LossBloodListener;
-  std::vector<DeathFunction> DeathListener;
-  std::vector<DrawCardFunction> DrawCardListener;
-  std::vector<EquipFunction> EquipListener;
-  std::vector<UnequipFunction> UnequipListener;
-  std::vector<RoundEndFunction> RoundEndListener;
+  std::map<PreLossBloodFunction, int> PreLossBloodListener;
+  std::map<LossBloodFunction, int> LossBloodListener;
+  std::map<DeathFunction, int> DeathListener;
+  std::map<DrawCardFunction, int> DrawCardListener;
+  std::map<EquipFunction, int> EquipListener;
+  std::map<UnequipFunction, int> UnequipListener;
+  std::map<RoundEndFunction, int> RoundEndListener;
 };
