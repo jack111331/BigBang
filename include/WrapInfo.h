@@ -20,4 +20,5 @@ namespace NSWrapInfo
   nlohmann::json WrapFoldAmount(int amount);
   nlohmann::json WrapEndGame(bool WinOrLose);
   nlohmann::json WrapFriendList(uint32_t ID);
+  nlohmann::json WrapDetermineCard(int CardID);
 }

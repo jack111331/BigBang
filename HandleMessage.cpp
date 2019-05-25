@@ -179,6 +179,12 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
       DB.InsertFriend(user->GetID(), FriendID);
       break;
     }
+    case 21:
+    {
+      CLoungeManage::getInstance()->removeUserFromLounge(user);
+      CLoungeManage::getInstance()->addUserToNewLounge(user);
+      break;
+    }
     default:
     {
 

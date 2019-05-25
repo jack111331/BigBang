@@ -165,3 +165,10 @@ json NSWrapInfo::WrapFriendList(uint32_t ID)
   Buffer["Friend"] = FriendBuffer;
   return Buffer;
 }
+json NSWrapInfo::WrapDetermineCard(int CardID)
+{
+  json Buffer;
+  Buffer["Action"] = 20;
+  Buffer["Card ID"] = CardID;
+  return Buffer;
+}

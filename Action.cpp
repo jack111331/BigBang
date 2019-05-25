@@ -121,6 +121,10 @@ CCard * NSAction::DrawCardFromPlagueForDetermine(CRoom * room)
   if(DrawedCard != nullptr)
   {
     Plague->RemoveCardFromPlague(DrawedCard);
+    for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
+    {
+      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapDetermineCard(DrawedCard->GetID()).dump());
+    }
   }
   return DrawedCard;
 }
