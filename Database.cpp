@@ -58,15 +58,29 @@ std::vector<uint32_t> CDatabase::GetFriendList(uint32_t ID)
   }
   return Friend;
 }
-void CDatabase::InsertFriend(uint32_t ID, uint32_t ID_2)
+int CDatabase::InsertFriend(uint32_t ID, uint32_t ID_Target)
 {
   mysqlpp::Query query = conn.query();
-  query << ("SELECT * FROM friend WHERE (user_1=" + std::to_string(ID) + " AND user_2=" + std::to_string(ID_2) + ") OR (user_1=" + std::to_string(ID_2) + " AND user_2=" + std::to_string(ID) + ");");
+  query << ("SELECT * FROM users WHERE (user_id=" + std::to_string(ID_Target) + ");");
   mysqlpp::StoreQueryResult ares = query.store();
-  if(!ares.num_rows())
+  if(ares.num_rows())
   {
-    query << "Insert into friend (user_1, user_2) values (" << ID << ", " << ID_2 << ");";
-    query.execute();
+    query << ("SELECT * FROM friend WHERE (user_1=" + std::to_string(ID) + " AND user_2=" + std::to_string(ID_Target) + ") OR (user_1=" + std::to_string(ID_Target) + " AND user_2=" + std::to_string(ID) + ");");
+    mysqlpp::StoreQueryResult ares = query.store();
+    if(!ares.num_rows())
+    {
+      query << "Insert into friend (user_1, user_2) values (" << ID << ", " << ID_Target << ");";
+      query.execute();
+      return 1;
+    }
+    else
+    {
+      return 3;
+    }
+  }
+  else
+  {
+    return 2;
   }
 }
 CDatabase::~CDatabase()

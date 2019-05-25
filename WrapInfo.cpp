@@ -165,6 +165,13 @@ json NSWrapInfo::WrapFriendList(uint32_t ID)
   Buffer["Friend"] = FriendBuffer;
   return Buffer;
 }
+json NSWrapInfo::WrapAddFriendMessage(int Result)
+{
+  json Buffer;
+  Buffer["Action"] = 18;
+  Buffer["Result"] = Result;
+  return Buffer;
+}
 json NSWrapInfo::WrapDetermineCard(int CardID)
 {
   json Buffer;

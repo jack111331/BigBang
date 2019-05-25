@@ -21,12 +21,14 @@ void RetrieveUserID(const json & Content, CUser * user)
   user->SetWin(0);
   user->SetLose(0);
   user->RetriveDataFromDB();
+  user->UpdateUserInfo();
   CLoungeManage::getInstance()->addUserToNewLounge(user);
 }
 void RetrieveUserNickName(const json & Content, CUser * user)
 {
   std::string UserNickName = Content["Nick Name"];
   user->SetName(UserNickName);
+  user->UpdateUserInfo();
 }
 uint32_t RetrieveJoinLoungeID(const json & Content)
 {
@@ -176,7 +178,12 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     {
       uint32_t FriendID = Content["Friend ID"];
       CDatabase DB;
-      DB.InsertFriend(user->GetID(), FriendID);
+      int result = 0;
+      if(user->GetID() != FriendID)
+      {
+        result = DB.InsertFriend(user->GetID(), FriendID);
+      }
+      user->SendMessage("Send Message", NSWrapInfo::WrapAddFriendMessage(result).dump());
       break;
     }
     case 21:

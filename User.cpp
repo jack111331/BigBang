@@ -63,11 +63,15 @@ void CUser::SetLose(int lose)
 {
   this->lose = lose;
 }
-CUser::~CUser()
+void CUser::UpdateUserInfo()
 {
   if(!name.empty())
   {
     CDatabase DB;
     DB.UpdateDBUserInfo(this);
   }
+}
+CUser::~CUser()
+{
+  UpdateUserInfo();
 }

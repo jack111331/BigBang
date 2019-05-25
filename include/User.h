@@ -24,6 +24,7 @@ public:
   void SetMoney(int money);
   void SetWin(int win);
   void SetLose(int lose);
+  void UpdateUserInfo();
   uint32_t GetID();
   ~CUser();
 private:
