@@ -21,6 +21,7 @@ json NSWrapInfo::WrapLoungeSetInfo()
   Buffer["Action"] = 2;
   std::map<uint32_t, CLounge *> LoungeSet = CLoungeManage::getInstance()->GetLoungeSet();
   int LoungeCount = 0;
+  Buffer["Lounge Amount"] = static_cast<int>(LoungeSet.size());
   for(std::map<uint32_t, CLounge *>::iterator it = LoungeSet.begin();it != LoungeSet.end();++it)
   {
     json Lounge;
