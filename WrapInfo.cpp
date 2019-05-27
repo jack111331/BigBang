@@ -47,14 +47,16 @@ json NSWrapInfo::WrapStartGame(CRoom * room, int success)
   if(success)
   {
     std::vector<CPlayer *> playerList = room->GetPlayerList();
+    std::vector<json> PlayerJSONList;
+    std::vector<json> CardJSONList;
     for(int i = 0;i < static_cast<int>(playerList.size());++i)
     {
       json PlayerBuffer;
       PlayerBuffer["Player Name"] = playerList[i]->GetUser()->GetName();
       PlayerBuffer["Position"] = playerList[i]->GetPosition();
-      Buffer["Player " + std::to_string(i)] = PlayerBuffer;
+      PlayerJSONList.push_back(PlayerBuffer);
     }
-    Buffer["Card Amount"] = room->GetPlague()->GetPlagueCardAmount();
+    Buffer["Player"] = PlayerJSONList;
     for(int i = 0;i < room->GetPlague()->GetPlagueCardAmount();i++)
     {
       json CardBuffer;
@@ -63,8 +65,9 @@ json NSWrapInfo::WrapStartGame(CRoom * room, int success)
       CardBuffer["ID"] = Entry->GetID();
       CardBuffer["Suit"] = static_cast<int>(Entry->GetSuit());
       CardBuffer["Number"] = Entry->GetNumber();
-      Buffer["Card " + std::to_string(i)] = CardBuffer;
+      CardJSONList.push_back(CardBuffer);
     }
+    Buffer["Card"] = CardJSONList;
   }
   return Buffer;
 }
