@@ -48,6 +48,7 @@ bool CHandleClientSocket::sendMessage(const std::string & Buffer)
   // true if successfully send data, otherwise failed
   return send(GetSocketFD(), Buffer.c_str(), Buffer.size()+1, 0) != -1;
 }
+
 CHandleClientSocket::~CHandleClientSocket()
 {
   shutdown(GetSocketFD(), SHUT_RDWR);

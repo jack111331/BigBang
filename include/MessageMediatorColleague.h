@@ -8,6 +8,10 @@ public:
   void SendMessage(std::string action, std::string message);
   virtual void ReceiveMessage(std::string message);
   virtual ~CColleague();
+
+  void SetState(int State);
+  int GetState() const;
 protected:
   CMessageMediator * mediator;
+  int State = false;
 };

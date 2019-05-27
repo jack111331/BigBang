@@ -201,7 +201,6 @@ int CRoom::GetAlivePlayer()
 void CRoom::InitPlayerRoundState(CPlayer * player)
 {
   player->SetAttacked(false);
-  player->SetEndUsingCard(false);
 }
 void CRoom::EndGame(WinCondition GameEndState)
 {
@@ -268,20 +267,14 @@ void CRoom::GameLoop(CRoom * room)
     room->UpdatePlayerPublicInfo();
     //inform user that it's his/her turn
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8).dump());
-    CurrentPlayer->SetEndUsingCard(false);
-    while(!CurrentPlayer->isEndUsingCard())
-    {
-      //Use card stage
-    }
+    CurrentPlayer->BusyWaiting();
+
     room->UpdatePlayerPublicInfo();
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(13).dump());
     if(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
     {
       CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapFoldAmount(CurrentPlayer->GetHoldingAmount() - CurrentPlayer->GetHP()).dump());
-      while(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
-      {
-        //Fold card stage
-      }
+      CurrentPlayer->BusyWaiting();
       room->UpdatePlayerPublicInfo();
     }
     //init player's state

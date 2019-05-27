@@ -110,14 +110,6 @@ bool CPlayer::isHasMultiAttack() const
 {
   return this->HasMultiAttack;
 }
-bool CPlayer::isEndUsingCard() const
-{
-  return this->EndUsingCard;
-}
-bool CPlayer::isEndChooseCard() const
-{
-  return this->EndChooseCard;
-}
 int CPlayer::isRevolt() const
 {
   return this->Revolt;
@@ -134,6 +126,10 @@ int CPlayer::GetAddRange() const
 int CPlayer::GetMinusRange() const
 {
   return this->MinusRange;
+}
+void CPlayer::BusyWaiting()
+{
+  while(!this->User->GetState());
 }
 
 void CPlayer::SetUser(CUser * user)
@@ -217,14 +213,6 @@ void CPlayer::SetDead(bool dead)
 void CPlayer::SetMultiAttack(bool HasMultiAttack)
 {
   this->HasMultiAttack = HasMultiAttack;
-}
-void CPlayer::SetEndUsingCard(bool endUsingCard)
-{
-  this->EndUsingCard = endUsingCard;
-}
-void CPlayer::SetEndChooseCard(bool endChooseCard)
-{
-  this->EndChooseCard = endChooseCard;
 }
 void CPlayer::SetRevolt(int State)
 {

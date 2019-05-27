@@ -12,6 +12,14 @@ void CColleague::ReceiveMessage(std::string message)
 {
 
 }
+void CColleague::SetState(int State)
+{
+  this->State = State;
+}
+int CColleague::GetState() const
+{
+  return this->State;
+}
 CColleague::~CColleague()
 {
 

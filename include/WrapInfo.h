@@ -22,4 +22,5 @@ namespace NSWrapInfo
   nlohmann::json WrapFriendList(uint32_t ID);
   nlohmann::json WrapAddFriendMessage(int Result);
   nlohmann::json WrapDetermineCard(int CardID);
+  nlohmann::json WrapLoungeInfo(uint32_t ID);
 }

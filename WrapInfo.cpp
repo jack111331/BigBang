@@ -2,6 +2,7 @@
 #include "LoungeManage.h"
 #include "Room.h"
 #include "Database.h"
+#include <vector>
 
 using json = nlohmann::json;
 static constexpr uint32_t NoneMagicNumber = 0xffffffff;
@@ -178,5 +179,22 @@ json NSWrapInfo::WrapDetermineCard(int CardID)
   json Buffer;
   Buffer["Action"] = 20;
   Buffer["Card ID"] = CardID;
+  return Buffer;
+}
+json NSWrapInfo::WrapLoungeInfo(uint32_t ID)
+{
+  json Buffer;
+  Buffer["Action"] = 22;
+  CLounge * Lounge = CLoungeManage::getInstance()->searchLounge(ID);
+  std::vector<json> UserIDList;
+  for(std::vector<CUser *>::iterator it = Lounge->GetAllUser().begin();it != Lounge->GetAllUser().end();++it)
+  {
+    json UserJSON;
+    UserJSON["ID"] = (*it)->GetID();
+    UserJSON["Nick Name"] = (*it)->GetName();
+    UserJSON["Ready"] = Lounge->getReadyState(*it);
+    UserIDList.push_back(UserJSON);
+  }
+  Buffer["User"] = UserIDList;
   return Buffer;
 }

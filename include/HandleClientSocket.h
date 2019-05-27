@@ -13,6 +13,7 @@ public:
   bool AcceptConnect(int ServerSocketFD);
   const char * receiveMessage();
   bool sendMessage(const std::string & Buffer);
+
   ~CHandleClientSocket();
 private:
   static constexpr int BufferSize = 8192;

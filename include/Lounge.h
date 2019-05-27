@@ -20,6 +20,7 @@ public:
   bool searchUserInLounge(CUser * user);
   bool searchUserInLounge(uint32_t ID);
   bool isAllReady();
+  bool getReadyState(CUser * user);
   void setReadyState(CUser * user, bool state);
   void exitLounge(CUser * user);
   CRoom * getRoom();

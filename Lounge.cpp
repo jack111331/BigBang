@@ -49,12 +49,16 @@ bool CLounge::isAllReady()
 {
   for(std::map<CUser *, bool>::iterator it = readyMap.begin();it != readyMap.end();++it)
   {
-    if(!it->second)
+    if(!it->second && it->first != RoomOwner)
     {
       return false;
     }
   }
   return true;
+}
+bool CLounge::getReadyState(CUser * user)
+{
+  return readyMap[user];
 }
 void CLounge::setReadyState(CUser * user, bool state)
 {

@@ -16,10 +16,7 @@ void CChooseCard::DrawCard(CPlayer * drawer, CPlayer * drawee)
   drawer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(drawer, drawee).dump());
   drawee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(drawer, drawee).dump());
   drawer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCard(drawer, drawee, true).dump());
-  while(!drawer->isEndChooseCard())
-  {
-
-  }
+  drawer->BusyWaiting();
 }
 void CRandomChooseCard::DrawCard(CPlayer * drawer, CPlayer * drawee)
 {

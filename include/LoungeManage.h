@@ -14,6 +14,7 @@ public:
   uint32_t searchLoungeNumber(CUser * user);
   uint32_t searchLoungeByUserID(uint32_t ID);
   CLounge * searchLounge(CUser * user);
+  CLounge * searchLounge(uint32_t ID);
   void removeUserFromLounge(CUser * user);
   const std::map<uint32_t, CLounge *> & GetLoungeSet();
   ~CLoungeManage();

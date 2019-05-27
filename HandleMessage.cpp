@@ -146,7 +146,6 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
       {
         NSAction::FoldCard(Choosee, Choosee->GetCardInHolding(CardID), UserLounge->getRoom()->GetDiscardPlague());
       }
-      user->GetPlayer()->SetEndChooseCard(true);
       break;
     }
     case 12:
@@ -156,7 +155,6 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     }
     case 13:
     {
-      user->GetPlayer()->SetEndUsingCard(true);
       break;
     }
     case 14:
@@ -192,9 +190,14 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
       CLoungeManage::getInstance()->addUserToNewLounge(user);
       break;
     }
+    case 22:
+    {
+      user->SendMessage("Send Message", NSWrapInfo::WrapLoungeInfo(user->GetID()).dump());
+    }
     default:
     {
 
     }
   }
+  user->SendMessage("Handled Data", "");
 }

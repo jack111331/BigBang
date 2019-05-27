@@ -39,12 +39,11 @@ public:
   bool isAttacked() const;
   bool isDead() const;
   bool isHasMultiAttack() const;
-  bool isEndUsingCard() const;
-  bool isEndChooseCard() const;
   int isRevolt() const;
   int GetAttackRange() const;
   int GetAddRange() const;
   int GetMinusRange() const;
+  void BusyWaiting();
 
   void SetUser(CUser * user);
   void SetCharacter(CCharacter * character);
@@ -60,8 +59,6 @@ public:
   void SetAttacked(bool attacked);
   void SetDead(bool dead);
   void SetMultiAttack(bool HasMultiAttack);
-  void SetEndUsingCard(bool endUsingCard);
-  void SetEndChooseCard(bool endChooseCard);
   void SetRevolt(int state);
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
@@ -79,8 +76,6 @@ private:
   bool Attacked = false; //是否已攻擊
   bool Dead = false; //是否處於死亡狀態
   bool HasMultiAttack = false;
-  bool EndUsingCard = true;
-  bool EndChooseCard = true;
   int Revolt = -1;
   int AttackRange = 1;
   int AddRange = 0; //別人看自己的距離
