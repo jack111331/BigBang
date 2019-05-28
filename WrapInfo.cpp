@@ -21,16 +21,15 @@ json NSWrapInfo::WrapLoungeSetInfo()
   json Buffer;
   Buffer["Action"] = 2;
   std::map<uint32_t, CLounge *> LoungeSet = CLoungeManage::getInstance()->GetLoungeSet();
-  int LoungeCount = 0;
-  Buffer["Lounge Amount"] = static_cast<int>(LoungeSet.size());
+  std::vector<json> LoungeJSONList;
   for(std::map<uint32_t, CLounge *>::iterator it = LoungeSet.begin();it != LoungeSet.end();++it)
   {
     json Lounge;
     Lounge["ID"] = it->first;
     Lounge["User Amount"] = it->second->getLoungeSize();
-    Buffer[std::string("Lounge ") + std::to_string(LoungeCount)] = Lounge;
-    LoungeCount++;
+    LoungeJSONList.push_back(Lounge);
   }
+  Buffer["Lounge"] = LoungeJSONList;
   return Buffer;
 }
 json NSWrapInfo::WrapConfirm(int action)
@@ -87,18 +86,20 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
   Buffer["HP"] = player->GetHP();
   Buffer["Character Name"] = player->GetCharacter()->GetName();
   Buffer["Death"] = player->isDead();
-  Buffer["Holding Card Amount"] = player->GetHoldingAmount();
   std::vector<CCard *> holding = player->GetHolding();
-  json HoldingBuffer;
+  std::vector<json> HoldingJSONList;
   for(int i = 0;i < static_cast<int>(holding.size());++i)
   {
-    HoldingBuffer["Holding Card " + std::to_string(i)] = holding[i]->GetID();
+    json HoldingBuffer;
+    HoldingBuffer["Card ID"] = holding[i]->GetID();
+    HoldingJSONList.push_back(HoldingBuffer);
   }
-  Buffer["Holding"] = HoldingBuffer;
+  Buffer["Holding"] = HoldingJSONList;
   const CCard * Equipment = player->GetEquipment();
   Buffer["Equipment"] = Equipment?Equipment->GetID():NoneMagicNumber;
 
   std::vector<CPlayer *> playerList = room->GetPlayerList();
+  std::vector<json> PlayerJSONList;
   for(int i = 0;i < static_cast<int>(playerList.size());++i)
   {
     json PlayerBuffer;
@@ -109,9 +110,9 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     PlayerBuffer["Death"] = playerList[i]->isDead();
     const CCard * OtherEquipment = playerList[i]->GetEquipment();
     PlayerBuffer["Equipment"] = OtherEquipment?OtherEquipment->GetID():NoneMagicNumber;
-
-    Buffer["Player " + std::to_string(i)] = PlayerBuffer;
+    PlayerJSONList.push_back(PlayerBuffer);
   }
+  Buffer["Player"] = PlayerJSONList;
 
   return Buffer;
 }
@@ -161,13 +162,14 @@ json NSWrapInfo::WrapFriendList(uint32_t ID)
   Buffer["Action"] = 17;
   CDatabase DB;
   std::vector<uint32_t> FriendList = DB.GetFriendList(ID);
-  Buffer["Friend Amount"] = FriendList.size();
-  json FriendBuffer;
+  std::vector<json> FriendJSONList;
   for(int i = 0;i < static_cast<int>(FriendList.size());i++)
   {
-    FriendBuffer["Friend " + std::to_string(i)] = FriendList[i];
+    json FriendBuffer;
+    FriendBuffer["Friend ID"] = FriendList[i];
+    FriendJSONList.push_back(FriendBuffer);
   }
-  Buffer["Friend"] = FriendBuffer;
+  Buffer["Friend"] = FriendJSONList;
   return Buffer;
 }
 json NSWrapInfo::WrapAddFriendMessage(int Result)
