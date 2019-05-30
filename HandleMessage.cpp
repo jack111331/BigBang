@@ -155,7 +155,6 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     }
     case 13:
     {
-      user->SendMessage("Send Message", NSWrapInfo::WrapFriendList(user->GetID()).dump());
       break;
     }
     case 14:
