@@ -1,6 +1,5 @@
 #include "User.h"
 #include "Database.h"
-#include <iostream>
 CUser::CUser(CMessageMediator * mediator) : CColleague(mediator)
 {
   this->mediator = mediator;
@@ -13,7 +12,8 @@ void CUser::RetriveDataFromDB()
 }
 void CUser::ReceiveMessage(std::string message)
 {
-  NSHandleMessage::HandleMessage(message.c_str(), this);
+  std::thread Thread = std::thread(NSHandleMessage::HandleMessage, message, this);
+  Thread.detach();
 }
 void CUser::SetID(uint32_t ID)
 {

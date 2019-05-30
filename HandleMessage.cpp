@@ -46,13 +46,9 @@ std::string RetrieveChooseCharacter(const json & Content)
 {
   return Content["Choose Character Name"];
 }
-void BlockHandleMessage(CUser * User)
+void NSHandleMessage::HandleMessage(std::string Message, CUser * user)
 {
-
-}
-void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
-{
-  printf("Receive:\n%s\n", Message);
+  printf("Receive:\n%s\n", Message.c_str());
   fflush(stdout);
   json Content = json::parse(Message);
   int Action;

@@ -28,7 +28,6 @@ void CPlayer::UseCard(CRoom * room, int cardID, CPlayer * target)
     printf("Use Card %s\n", card->GetName().c_str());
     fflush(stdout);
     card->UseCardEffect(room, this, target);
-    puts("Used Card");
     RemoveHolding(card);
   }
 }

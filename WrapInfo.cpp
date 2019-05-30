@@ -131,6 +131,15 @@ json NSWrapInfo::WrapShowCard(CPlayer * shower, CPlayer * showee)
   Buffer["Action"] = 10;
   Buffer["Shower Position"] = shower->GetPosition();
   Buffer["Showee Position"] = showee->GetPosition();
+  std::vector<json> ShowCardJSONList;
+  std::vector<CCard *> ShoweeHolding = showee->GetHolding();
+  for(std::vector<CCard *>::iterator it = ShoweeHolding.begin();it != ShoweeHolding.end();++it)
+  {
+    json ShowCard;
+    ShowCard["ID"] = (*it)->GetID();
+    ShowCardJSONList.push_back(ShowCard);
+  }
+  Buffer["Card"] = ShowCardJSONList;
   return Buffer;
 }
 json NSWrapInfo::WrapChooseCard(CPlayer * chooser, CPlayer * choosee, bool ChooseOrDiscard)
@@ -140,6 +149,15 @@ json NSWrapInfo::WrapChooseCard(CPlayer * chooser, CPlayer * choosee, bool Choos
   Buffer["Chooser Position"] = chooser->GetPosition();
   Buffer["Choosee Position"] = choosee->GetPosition();
   Buffer["Choose or Discard"] = ChooseOrDiscard;
+  std::vector<json> ChooseCardJSONList;
+  std::vector<CCard *> ChooseeHolding = choosee->GetHolding();
+  for(std::vector<CCard *>::iterator it = ChooseeHolding.begin();it != ChooseeHolding.end();++it)
+  {
+    json ChooseCard;
+    ChooseCard["ID"] = (*it)->GetID();
+    ChooseCardJSONList.push_back(ChooseCard);
+  }
+  Buffer["Card"] = ChooseCardJSONList;
   return Buffer;
 }
 json NSWrapInfo::WrapRevoltCard(CCard * card)
