@@ -12,10 +12,12 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
   CCard * HoldingRevoltCard = attackee->GetCardInHolding(dodgeByCard);
   if(HoldingRevoltCard != nullptr)
   {
+    puts("Stuck here");
     if(!room->GetRoomEvent()->callPreLossBlood(room, attackee))
     {
       return false;
     }
+    puts("No Stuck");
     //invoke player to choose whether he want to use this card
     attackee->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapRevoltCard(HoldingRevoltCard).dump());
     int Revolt = attackee->BusyWaiting(12);

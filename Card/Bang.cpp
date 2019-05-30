@@ -13,6 +13,7 @@ CBang::CBang(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
 void CBang::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   printf("%d to %d\n", room->GetDistance(myself, target), myself->GetAttackRange());
+  fflush(stdout);
   if(room->GetDistance(myself, target) <= myself->GetAttackRange())
   {
     NSAction::Attack(room, myself, target, "Missed!");
