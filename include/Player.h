@@ -39,11 +39,10 @@ public:
   bool isAttacked() const;
   bool isDead() const;
   bool isHasMultiAttack() const;
-  int isRevolt() const;
   int GetAttackRange() const;
   int GetAddRange() const;
   int GetMinusRange() const;
-  void BusyWaiting(int Action);
+  int BusyWaiting(int Action);
 
   void SetUser(CUser * user);
   void SetCharacter(CCharacter * character);
@@ -59,7 +58,6 @@ public:
   void SetAttacked(bool attacked);
   void SetDead(bool dead);
   void SetMultiAttack(bool HasMultiAttack);
-  void SetRevolt(int state);
   void SetAttackRange(int attackRange);
   void SetAddRange(int addRange);
   void SetMinusRange(int minusRange);
@@ -76,7 +74,6 @@ private:
   bool Attacked = false; //是否已攻擊
   bool Dead = false; //是否處於死亡狀態
   bool HasMultiAttack = false;
-  int Revolt = -1;
   int AttackRange = 1;
   int AddRange = 0; //別人看自己的距離
   int MinusRange = 0; //自己看別人的距離

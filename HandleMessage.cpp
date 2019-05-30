@@ -150,7 +150,7 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     }
     case 12:
     {
-      user->GetPlayer()->SetRevolt(Content["Revolt"]);
+      user->SendMessage("Handled Data Result", std::to_string(static_cast<int>(Content["Revolt"])));
       break;
     }
     case 13:

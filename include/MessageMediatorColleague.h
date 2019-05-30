@@ -11,7 +11,10 @@ public:
 
   void SetHandledAction(int Action);
   int GetHandledAction() const;
+  void SetActionResult(int Result);
+  int GetActionResult() const;
 protected:
   CMessageMediator * mediator;
   int HandledAction = -1;
+  int ActionResult;
 };

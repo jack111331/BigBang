@@ -20,6 +20,14 @@ int CColleague::GetHandledAction() const
 {
   return this->HandledAction;
 }
+void CColleague::SetActionResult(int Result)
+{
+  this->ActionResult = Result;
+}
+int CColleague::GetActionResult() const
+{
+  return this->ActionResult;
+}
 CColleague::~CColleague()
 {
 

@@ -47,6 +47,10 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
   {
     actionNumber = 6;
   }
+  else if(action == "Handled Data Result")
+  {
+    actionNumber = 7;
+  }
   switch(actionNumber)
   {
     case 1:
@@ -84,6 +88,12 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     {
       SocketSet[static_cast<CUser *>(colleague)]->SetHandledAction(std::stoi(message));
       colleague->SetHandledAction(std::stoi(message));
+      break;
+    }
+    case 7:
+    {
+      SocketSet[static_cast<CUser *>(colleague)]->SetActionResult(std::stoi(message));
+      colleague->SetActionResult(std::stoi(message));
       break;
     }
     default:

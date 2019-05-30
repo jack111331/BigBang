@@ -86,6 +86,10 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
   Buffer["HP"] = player->GetHP();
   Buffer["Character Name"] = player->GetCharacter()->GetName();
   Buffer["Death"] = player->isDead();
+  Buffer["Attack Range"] = player->GetAttackRange();
+  Buffer["Add Range"] = player->GetAddRange();
+  Buffer["Minus Range"] = player->GetMinusRange();
+  Buffer["Multi Attack"] = player->isHasMultiAttack();
   std::vector<CCard *> holding = player->GetHolding();
   std::vector<json> HoldingJSONList;
   for(int i = 0;i < static_cast<int>(holding.size());++i)
@@ -108,6 +112,11 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     PlayerBuffer["Character Name"] = playerList[i]->GetCharacter()->GetName();
     PlayerBuffer["Holding Card Amount"] = playerList[i]->GetHoldingAmount();
     PlayerBuffer["Death"] = playerList[i]->isDead();
+    PlayerBuffer["Attack Range"] = playerList[i]->GetAttackRange();
+    PlayerBuffer["Add Range"] = playerList[i]->GetAddRange();
+    PlayerBuffer["Minus Range"] = playerList[i]->GetMinusRange();
+    PlayerBuffer["Multi Attack"] = playerList[i]->isHasMultiAttack();
+
     const CCard * OtherEquipment = playerList[i]->GetEquipment();
     PlayerBuffer["Equipment"] = OtherEquipment?OtherEquipment->GetID():NoneMagicNumber;
     PlayerJSONList.push_back(PlayerBuffer);

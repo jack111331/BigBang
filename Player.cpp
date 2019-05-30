@@ -111,10 +111,6 @@ bool CPlayer::isHasMultiAttack() const
 {
   return this->HasMultiAttack;
 }
-int CPlayer::isRevolt() const
-{
-  return this->Revolt;
-}
 
 int CPlayer::GetAttackRange() const
 {
@@ -128,9 +124,10 @@ int CPlayer::GetMinusRange() const
 {
   return this->MinusRange;
 }
-void CPlayer::BusyWaiting(int Action)
+int CPlayer::BusyWaiting(int Action)
 {
   while(this->User->GetHandledAction() != Action);
+  return this->User->GetActionResult();
 }
 
 void CPlayer::SetUser(CUser * user)
@@ -214,10 +211,6 @@ void CPlayer::SetDead(bool dead)
 void CPlayer::SetMultiAttack(bool HasMultiAttack)
 {
   this->HasMultiAttack = HasMultiAttack;
-}
-void CPlayer::SetRevolt(int State)
-{
-  this->Revolt = State;
 }
 void CPlayer::SetAttackRange(int attackRange)
 {
