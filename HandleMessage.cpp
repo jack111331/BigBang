@@ -53,6 +53,7 @@ void BlockHandleMessage(CUser * User)
 void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
 {
   printf("Receive:\n%s\n", Message);
+  fflush(stdout);
   json Content = json::parse(Message);
   int Action;
   Action = Content["Action"];
