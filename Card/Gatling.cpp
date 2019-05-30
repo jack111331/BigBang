@@ -17,7 +17,7 @@ void CGatling::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
   {
     if((*it) != myself)
     {
-      NSAction::Attack(room, myself, target, "Missed!");
+      NSAction::Attack(room, myself, (*it), "Missed!");
     }
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);

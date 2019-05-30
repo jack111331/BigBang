@@ -20,6 +20,13 @@ CJail::CJail(CRoom * room, int number, Suit suit) : CEquipmentCard(room, number,
   GetInRoom()->GetRoomEvent()->registerOnEquip(OnEquip);
   GetInRoom()->GetRoomEvent()->registerOnUnequip(OnUnequip);
 }
+void CJail::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+{
+  if(target->GetIdentity() != Team::Sergeant)
+  {
+    GetInRoom()->GetRoomEvent()->callEquip(this, myself);    
+  }
+}
 void CJail::OnEquip(CCard * card, CPlayer * Equiper)
 {
   //this part of code should reuse
