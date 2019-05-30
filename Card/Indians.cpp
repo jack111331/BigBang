@@ -17,7 +17,7 @@ void CIndians::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
   {
     if((*it) != myself)
     {
-      NSAction::Attack(room, myself, target, "Bang!");
+      NSAction::Attack(room, myself, (*it), "Bang!");
     }
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
