@@ -132,7 +132,6 @@ void CRoom::UpdatePlayerPublicInfo()
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
   {
     //update player's info
-    //bug
     (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapPublicGameInfo(this, *it).dump());
   }
 }
@@ -165,6 +164,10 @@ int CRoom::GetDistance(CPlayer * Watcher, CPlayer * Watchee)
       int distance = 1;
       for(std::vector<CPlayer *>::iterator it_begin = ++it;;)
       {
+        if(it_begin == playerList.end())
+        {
+          it_begin = playerList.begin();
+        }
         if((*it_begin) == Watchee)
         {
           minDistance = std::min(minDistance, distance);
@@ -179,7 +182,7 @@ int CRoom::GetDistance(CPlayer * Watcher, CPlayer * Watchee)
         {
           distance++;
         }
-        it_begin++;
+        ++it_begin;
       }
       break;
     }
@@ -267,14 +270,14 @@ void CRoom::GameLoop(CRoom * room)
     room->UpdatePlayerPublicInfo();
     //inform user that it's his/her turn
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8).dump());
-    CurrentPlayer->BusyWaiting();
+    CurrentPlayer->BusyWaiting(13);//end using card
 
     room->UpdatePlayerPublicInfo();
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(13).dump());
     if(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
     {
       CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapFoldAmount(CurrentPlayer->GetHoldingAmount() - CurrentPlayer->GetHP()).dump());
-      CurrentPlayer->BusyWaiting();
+      CurrentPlayer->BusyWaiting(14);//fold card
       room->UpdatePlayerPublicInfo();
     }
     //init player's state

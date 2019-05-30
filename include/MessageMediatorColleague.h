@@ -9,9 +9,9 @@ public:
   virtual void ReceiveMessage(std::string message);
   virtual ~CColleague();
 
-  void SetState(int State);
-  int GetState() const;
+  void SetHandledAction(int Action);
+  int GetHandledAction() const;
 protected:
   CMessageMediator * mediator;
-  int State = false;
+  int HandledAction = -1;
 };

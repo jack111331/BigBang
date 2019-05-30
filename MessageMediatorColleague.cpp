@@ -12,13 +12,13 @@ void CColleague::ReceiveMessage(std::string message)
 {
 
 }
-void CColleague::SetState(int State)
+void CColleague::SetHandledAction(int HandledAction)
 {
-  this->State = State;
+  this->HandledAction = HandledAction;
 }
-int CColleague::GetState() const
+int CColleague::GetHandledAction() const
 {
-  return this->State;
+  return this->HandledAction;
 }
 CColleague::~CColleague()
 {

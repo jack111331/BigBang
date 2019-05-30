@@ -76,13 +76,14 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     case 5:
     {
       //所以SocketSet還是由這個class來管理好了ww
+      printf("Send To: %u\n", static_cast<CUser *>(colleague)->GetID());
       SocketSet[static_cast<CUser *>(colleague)]->sendMessage(message);
       break;
     }
     case 6:
     {
-      SocketSet[static_cast<CUser *>(colleague)]->SetState(false);
-      colleague->SetState(false);
+      SocketSet[static_cast<CUser *>(colleague)]->SetHandledAction(std::stoi(message));
+      colleague->SetHandledAction(std::stoi(message));
       break;
     }
     default:
@@ -119,25 +120,20 @@ void CConcreteMessageMediator::SocketProcessFunc(CConcreteMessageMediator * myse
     {
       if(FD_ISSET(i->second->GetSocketFD(), &ReadFDSet))
       {
-        if(!i->second->GetState())
+        const char * ReceivedData = i->second->receiveMessage();
+        if(ReceivedData[0] != '\0')
         {
-          const char * ReceivedData = i->second->receiveMessage();
-          if(ReceivedData[0] != '\0')
-          {
-            //receive
-            i->second->SetState(true);
-            i->first->SetState(true);
-            i->first->SendMessage("Receive Message", std::string(ReceivedData));
-          }
-          else
-          {
-            //receive failed, socket disconnect
-            i->first->SendMessage("Remove User", "");
-            delete i->first;//release this user's memory allocation
-            delete i->second;//release this user's client socket memory allocation
-            i = myself->GetSocketSet().erase(i);
-            continue;
-          }
+          //receive
+          i->first->SendMessage("Receive Message", std::string(ReceivedData));
+        }
+        else
+        {
+          //receive failed, socket disconnect
+          i->first->SendMessage("Remove User", "");
+          delete i->first;//release this user's memory allocation
+          delete i->second;//release this user's client socket memory allocation
+          i = myself->GetSocketSet().erase(i);
+          continue;
         }
       }
       ++i;

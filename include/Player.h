@@ -43,7 +43,7 @@ public:
   int GetAttackRange() const;
   int GetAddRange() const;
   int GetMinusRange() const;
-  void BusyWaiting();
+  void BusyWaiting(int Action);
 
   void SetUser(CUser * user);
   void SetCharacter(CCharacter * character);

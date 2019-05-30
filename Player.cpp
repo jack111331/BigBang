@@ -2,7 +2,6 @@
 #include "Action.h"
 #include "Room.h"
 #include "User.h"
-
 void CPlayer::DrawCard(CRoom * room)
 {
   if(Character != nullptr)
@@ -26,7 +25,9 @@ void CPlayer::UseCard(CRoom * room, int cardID, CPlayer * target)
   CCard * card = GetCardInHolding(cardID);
   if(card)
   {
+    puts("Use Card");
     card->UseCardEffect(room, this, target);
+    puts("Used Card");
     RemoveHolding(card);
   }
 }
@@ -127,9 +128,9 @@ int CPlayer::GetMinusRange() const
 {
   return this->MinusRange;
 }
-void CPlayer::BusyWaiting()
+void CPlayer::BusyWaiting(int Action)
 {
-  while(!this->User->GetState());
+  while(this->User->GetHandledAction() != Action);
 }
 
 void CPlayer::SetUser(CUser * user)
@@ -185,11 +186,11 @@ CCard * CPlayer::GetCardInHolding(int cardID)
 }
 void CPlayer::RemoveHolding(const CCard * card)
 {
-  for(int i = 0;i < static_cast<int>(Holding.size());i++)
+  for(std::vector<CCard *>::iterator it = Holding.begin();it != Holding.end();++it)
   {
-    if(Holding[i]->GetID() == card->GetID())
+    if((*it)->GetID() == card->GetID())
     {
-      Holding.erase(Holding.begin() + i);
+      Holding.erase(it);
       break;
     }
   }

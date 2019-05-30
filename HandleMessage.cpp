@@ -155,15 +155,16 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
     }
     case 13:
     {
+      user->SendMessage("Send Message", NSWrapInfo::WrapFriendList(user->GetID()).dump());
       break;
     }
     case 14:
     {
-      int FoldCardAmount = Content["Fold Card Amount"];
       CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
-      for(int i = 0;i < FoldCardAmount;i++)
+      std::vector<json> FoldCardJSONList = Content["Fold Card"];
+      for(int i = 0;i < static_cast<int>(FoldCardJSONList.size());++i)
       {
-        user->GetPlayer()->FoldCard(UserLounge->getRoom(), Content["Fold Card " + std::to_string(i) + " ID"]);
+        user->GetPlayer()->FoldCard(UserLounge->getRoom(), FoldCardJSONList[i]["ID"]);
       }
       break;
     }
@@ -199,5 +200,5 @@ void NSHandleMessage::HandleMessage(const char * Message, CUser * user)
 
     }
   }
-  user->SendMessage("Handled Data", "");
+  user->SendMessage("Handled Data", std::to_string(Action));
 }
