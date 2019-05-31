@@ -23,8 +23,8 @@ public:
   void Attack(CRoom * room, CPlayer * target);
   void UseCard(CRoom * room, int cardID, CPlayer * target);
   void FoldCard(CRoom * room, int cardID);
-  void GetCard(uint32_t cardID);
-  void RemoveCard(uint32_t cardID);
+  void GetCardFromPlayer(CPlayer * Giver, uint32_t cardID);
+  void RemoveCardFromMyself(uint32_t cardID);
 
   CUser * GetUser();
   CCharacter * GetCharacter();

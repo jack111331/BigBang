@@ -39,15 +39,15 @@ void CPlayer::FoldCard(CRoom * room, int cardID)
     NSAction::FoldCard(this, card, room->GetDiscardPlague());
   }
 }
-void CPlayer::GetCard(uint32_t cardID)
+void CPlayer::GetCardFromPlayer(CPlayer * Giver, uint32_t cardID)
 {
-  CCard * card = GetCardInHolding(cardID);
+  CCard * card = Giver->GetCardInHolding(cardID);
   if(card)
   {
     AddHolding(card);
   }
 }
-void CPlayer::RemoveCard(uint32_t cardID)
+void CPlayer::RemoveCardFromMyself(uint32_t cardID)
 {
   CCard * card = GetCardInHolding(cardID);
   if(card)

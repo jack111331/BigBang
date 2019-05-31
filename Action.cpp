@@ -88,8 +88,8 @@ void NSAction::FoldCard(CPlayer * folder, CCard * card, CPlague * DiscardPlague)
 }
 void NSAction::GiveCard(CPlayer * Giver, CPlayer * Given, int GiveCardID)
 {
-  Given->GetCard(GiveCardID);
-  Giver->RemoveCard(GiveCardID);
+  Given->GetCardFromPlayer(Giver, GiveCardID);
+  Giver->RemoveCardFromMyself(GiveCardID);
 }
 void NSAction::EquipItem(CPlayer * equiper, CCard * equipmentCard)
 {
