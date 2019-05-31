@@ -74,15 +74,26 @@ void NSHandleMessage::HandleMessage(std::string Message, CUser * user)
     }
     case 3:
     {
-      CLoungeManage::getInstance()->removeUserFromLounge(user);
       bool JoinMethod = Content["Join Method"];
+
+      CLoungeManage * LoungeManager = CLoungeManage::getInstance();
       if(JoinMethod)
       {
-        CLoungeManage::getInstance()->addUserToLounge(user, RetrieveJoinLoungeID(Content));
+        uint32_t LoungeID = RetrieveJoinLoungeID(Content);
+        if(!LoungeManager->GetLoungeSet().find(LoungeID)->second->searchUserInLounge(user))
+        {
+          LoungeManager->removeUserFromLounge(user);
+          LoungeManager->addUserToLounge(user, LoungeID);
+        }
       }
       else
       {
-        CLoungeManage::getInstance()->addUserToLounge(user, CLoungeManage::getInstance()->searchLoungeByUserID(RetrieveJoinUserID(Content)));
+        uint32_t UserID = RetrieveJoinUserID(Content);
+        if(!LoungeManager->searchLounge(UserID)->searchUserInLounge(user))
+        {
+          LoungeManager->removeUserFromLounge(user);
+          LoungeManager->addUserToLounge(user, LoungeManager->searchLoungeByUserID(UserID));
+        }
       }
       user->SendMessage("Send Message", NSWrapInfo::WrapConfirm(3).dump());
       break;
@@ -190,6 +201,7 @@ void NSHandleMessage::HandleMessage(std::string Message, CUser * user)
     case 22:
     {
       user->SendMessage("Send Message", NSWrapInfo::WrapLoungeInfo(user->GetID()).dump());
+      break;
     }
     default:
     {

@@ -54,14 +54,7 @@ CLounge * CLoungeManage::searchLounge(uint32_t ID)
 }
 CLounge * CLoungeManage::searchLounge(CUser * user)
 {
-  for(std::map<uint32_t, CLounge *>::iterator it = loungeSet.begin();it != loungeSet.end();++it)
-  {
-    if(it->second->searchUserInLounge(user))
-    {
-      return it->second;
-    }
-  }
-  return nullptr;
+  return searchLounge(user->GetID());
 }
 void CLoungeManage::removeUserFromLounge(CUser * user)
 {
