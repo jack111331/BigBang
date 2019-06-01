@@ -15,7 +15,6 @@ void CRoom::PlayerJoin(CUser * user)
   CPlayer * player = new CPlayer;
   player->SetUser(user);
   user->SetPlayer(player);
-  player->SetPosition(static_cast<int>(playerList.size()));
   playerList.push_back(player);
 }
 CPlague * CRoom::GetPlague()
@@ -238,6 +237,11 @@ void CRoom::GameLoop(CRoom * room)
   //let player choose character
   //generate 2 random character, this two can't be identical
   CRandomCharacterPool * CharacterPool = new CRandomCharacterPool;
+  int PlayerCount = 0;
+  for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
+  {
+    (*it)->SetPosition(PlayerCount++);
+  }
   for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
   {
     (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapStartGame(room, 1).dump());
