@@ -84,6 +84,8 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
   Buffer["Action"] = 7;
   Buffer["Max HP"] = player->GetMaxHP();
   Buffer["HP"] = player->GetHP();
+  Buffer["Team"] = static_cast<int>(player->GetIdentity());
+  Buffer["Position"] = player->GetPosition();
   Buffer["Character Name"] = player->GetCharacter()->GetName();
   Buffer["Death"] = player->isDead();
   Buffer["Attack Range"] = player->GetAttackRange();
@@ -111,7 +113,12 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     PlayerBuffer["HP"] = playerList[i]->GetHP();
     PlayerBuffer["Character Name"] = playerList[i]->GetCharacter()->GetName();
     PlayerBuffer["Holding Card Amount"] = playerList[i]->GetHoldingAmount();
+    PlayerBuffer["Position"] = playerList[i]->GetPosition();
     PlayerBuffer["Death"] = playerList[i]->isDead();
+    if(playerList[i]->isDead())
+    {
+      PlayerBuffer["Team"] = static_cast<int>(playerList[i]->GetIdentity());
+    }
     PlayerBuffer["Attack Range"] = playerList[i]->GetAttackRange();
     PlayerBuffer["Add Range"] = playerList[i]->GetAddRange();
     PlayerBuffer["Minus Range"] = playerList[i]->GetMinusRange();
