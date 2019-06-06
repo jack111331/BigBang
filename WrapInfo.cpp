@@ -115,7 +115,7 @@ json NSWrapInfo::WrapPublicGameInfo(CRoom * room, CPlayer * player)
     PlayerBuffer["Holding Card Amount"] = playerList[i]->GetHoldingAmount();
     PlayerBuffer["Position"] = playerList[i]->GetPosition();
     PlayerBuffer["Death"] = playerList[i]->isDead();
-    if(playerList[i]->isDead())
+    if(playerList[i]->isDead() || playerList[i]->GetIdentity() == Team::Sergeant)
     {
       PlayerBuffer["Team"] = static_cast<int>(playerList[i]->GetIdentity());
     }
