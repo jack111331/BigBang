@@ -2,6 +2,7 @@
 #include <string>
 #include <string.h>
 #include <iostream>
+#include <netinet/tcp.h>
 CHandleClientSocket::CHandleClientSocket(CMessageMediator * mediator) : CSocket(), CColleague(mediator)
 {
 
@@ -11,6 +12,11 @@ bool CHandleClientSocket::InitSocket(int SocketFD, int port)
   if(!AcceptConnect(SocketFD))
   {
     return false;
+  }
+  int flags = 1;
+  if(setsockopt(SocketFD, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)))
+  {
+    perror("ERROR: setsocketopt(), TCP_NODELAY");
   }
   SetSocketID(CurrentID++);
   return true;

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <netinet/tcp.h>
+
 int CSocket::CurrentID = 0;
 CSocket::CSocket()
 {
@@ -33,11 +33,6 @@ bool CSocket::BindSocket()
   //bind socket address and port
   //true if success, otherwise failed
   setsockopt(SocketFD, SOL_SOCKET, SO_REUSEADDR, &ServerAddress, sizeof(ServerAddress));
-  int flags = 1;
-  if(setsockopt(SocketFD, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)))
-  {
-    perror("ERROR: setsocketopt(), TCP_NODELAY");
-  }
   return bind(SocketFD, (sockaddr *)&ServerAddress, sizeof(ServerAddress)) != -1;
 }
 int CSocket::GetSocketFD() const
