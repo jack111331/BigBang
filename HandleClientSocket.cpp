@@ -35,7 +35,7 @@ bool CHandleClientSocket::AcceptConnect(int ListenSocketFD)
 const char * CHandleClientSocket::receiveMessage()
 {
   // true if there is some data need to be receive, otherwise the other side's socket has closed
-  int ReceiveLength;
+  int ReceiveLength, CurrentReceive = 0;
   if((ReceiveLength = recv(GetSocketFD(), ReceiveBuffer + CurrentReceive, BufferSize-1, 0)) <= 0)
   {
     ReceiveBuffer[0] = '\0';
@@ -43,15 +43,11 @@ const char * CHandleClientSocket::receiveMessage()
   /*somehow it receive byte string without '\0'*/
   if(ReceiveLength > 0)
   {
-    if(ReceiveBuffer[ReceiveLength-1] == '\0')
+    CurrentReceive += ReceiveLength;
+    while(ReceiveBuffer[CurrentReceive-1] != '\0')
     {
-      CurrentReceive = 0;
-      return ReceiveBuffer;
-    }
-    else
-    {
+      ReceiveLength = recv(GetSocketFD(), ReceiveBuffer + CurrentReceive, BufferSize-1, 0);
       CurrentReceive += ReceiveLength;
-      return nullptr;
     }
   }
   return ReceiveBuffer;
