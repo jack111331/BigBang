@@ -32,9 +32,12 @@ bool CSocket::BindSocket()
 {
   //bind socket address and port
   //true if success, otherwise failed
-  const char ChangeOption = 1;
   setsockopt(SocketFD, SOL_SOCKET, SO_REUSEADDR, &ServerAddress, sizeof(ServerAddress));
-  setsockopt(SocketFD, SOL_TCP, TCP_NODELAY, &ChangeOption, sizeof(ChangeOption));
+  int flags = 1;
+  if(setsockopt(SocketFD, SOL_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)))
+  {
+    perror("ERROR: setsocketopt(), TCP_NODELAY");
+  } 
   return bind(SocketFD, (sockaddr *)&ServerAddress, sizeof(ServerAddress)) != -1;
 }
 int CSocket::GetSocketFD() const
