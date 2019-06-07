@@ -34,7 +34,7 @@ bool CSocket::BindSocket()
   //true if success, otherwise failed
   const char ChangeOption = 1;
   setsockopt(SocketFD, SOL_SOCKET, SO_REUSEADDR, &ServerAddress, sizeof(ServerAddress));
-  setsockopt(SocketFD, IPPROTO_TCP, TCP_NODELAY, &ChangeOption, sizeof(ChangeOption));
+  setsockopt(SocketFD, SOL_TCP, TCP_NODELAY, &ChangeOption, sizeof(ChangeOption));
   return bind(SocketFD, (sockaddr *)&ServerAddress, sizeof(ServerAddress)) != -1;
 }
 int CSocket::GetSocketFD() const
