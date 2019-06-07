@@ -19,16 +19,6 @@ bool CHandleClientSocket::InitSocket(int SocketFD, int port)
   {
     perror("ERROR: setsocketopt(), TCP_NODELAY");
   }
-  if(setsockopt(SocketFD, SOL_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)))
-  {
-    perror("ERROR: setsocketopt(), TCP_NODELAY");
-  }
-  int res;
-  socklen_t res_len = sizeof(res);
-  getsockopt(SocketFD, IPPROTO_TCP, TCP_NODELAY, &res, &res_len);
-  std::cout << "res: " << res << std::endl;
-  getsockopt(SocketFD, SOL_TCP, TCP_NODELAY, &res, &res_len);
-  std::cout << "res: " << res << std::endl;
   SetSocketID(CurrentID++);
   return true;
 }
@@ -73,7 +63,7 @@ bool CHandleClientSocket::sendMessage(const std::string & Buffer)
 {
   // true if successfully send data, otherwise failed
   std::cout << "Send: " << std::endl << Buffer << std::endl;
-  usleep(1000);
+  usleep(50000);
   return send(GetSocketFD(), Buffer.c_str(), Buffer.size()+1, 0) != -1;
 }
 
