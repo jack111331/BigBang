@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 #include <netinet/tcp.h>
+#include <unistd.h>
 CHandleClientSocket::CHandleClientSocket(CMessageMediator * mediator) : CSocket(), CColleague(mediator)
 {
 
@@ -72,6 +73,7 @@ bool CHandleClientSocket::sendMessage(const std::string & Buffer)
 {
   // true if successfully send data, otherwise failed
   std::cout << "Send: " << std::endl << Buffer << std::endl;
+  usleep(1000);
   return send(GetSocketFD(), Buffer.c_str(), Buffer.size()+1, 0) != -1;
 }
 
