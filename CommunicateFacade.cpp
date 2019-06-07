@@ -13,6 +13,7 @@ void CCommunicateFacade::createListenSocket(int port)
   this->ListenSocket = new CListenSocket();
   this->ListenSocket->InitSocket(0, port);
   ListenThread = std::thread(ListenThreadFunc, ListenSocket->GetSocketFD(), this);
+  ListenThread.detach();
   this->SendMessage("Processing Socket", "");
 }
 void CCommunicateFacade::ListenThreadFunc(int ListenSocketFD, CCommunicateFacade * myself)
@@ -27,5 +28,4 @@ void CCommunicateFacade::ListenThreadFunc(int ListenSocketFD, CCommunicateFacade
 CCommunicateFacade::~CCommunicateFacade()
 {
   delete this->ListenSocket;
-  ListenThread.detach();
 }

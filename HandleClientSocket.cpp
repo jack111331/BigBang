@@ -41,20 +41,20 @@ const char * CHandleClientSocket::receiveMessage()
     ReceiveBuffer[0] = '\0';
   }
   /*somehow it receive byte string without '\0'*/
-  if(ReceiveBuffer[ReceiveLength-1] == '}')
+  if(ReceiveLength > 0)
   {
-    ReceiveBuffer[ReceiveLength] = '\0';
-    CurrentReceive = 0;
-    return ReceiveBuffer;
-  }
-  else
-  {
-    if(ReceiveLength > 0)
+    if(ReceiveBuffer[ReceiveLength-1] == '\0')
+    {
+      CurrentReceive = 0;
+      return ReceiveBuffer;
+    }
+    else
     {
       CurrentReceive += ReceiveLength;
+      return nullptr;
     }
   }
-  return nullptr;
+  return ReceiveBuffer;
 }
 bool CHandleClientSocket::sendMessage(const std::string & Buffer)
 {

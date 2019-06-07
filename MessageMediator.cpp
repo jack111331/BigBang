@@ -11,9 +11,9 @@ CMessageMediator::CMessageMediator()
 }
 CMessageMediator::~CMessageMediator()
 {
-  ProcessThread.detach();
   for(std::map<CUser *, CHandleClientSocket *>::iterator it = SocketSet.begin();it != SocketSet.end();++it)
   {
+    delete it->second;
     SocketSet.erase(it);
   }
 }
@@ -63,6 +63,7 @@ void CConcreteMessageMediator::HandleObjectMessage(std::string action, CColleagu
     case 2:
     {
       ProcessThread = std::thread(SocketProcessFunc, this);
+      ProcessThread.detach();
       break;
     }
     case 3:
@@ -131,19 +132,22 @@ void CConcreteMessageMediator::SocketProcessFunc(CConcreteMessageMediator * myse
       if(FD_ISSET(i->second->GetSocketFD(), &ReadFDSet))
       {
         const char * ReceivedData = i->second->receiveMessage();
-        if(ReceivedData && ReceivedData[0] != '\0')
+        if(ReceivedData)
         {
-          //receive
-          i->first->SendMessage("Receive Message", std::string(ReceivedData));
-        }
-        else
-        {
-          //receive failed, socket disconnect
-          i->first->SendMessage("Remove User", "");
-          delete i->first;//release this user's memory allocation
-          delete i->second;//release this user's client socket memory allocation
-          i = myself->GetSocketSet().erase(i);
-          continue;
+          if(ReceivedData[0] != '\0')
+          {
+            //receive
+            i->first->SendMessage("Receive Message", std::string(ReceivedData));
+          }
+          else
+          {
+            //receive failed, socket disconnect
+            i->first->SendMessage("Remove User", "");
+            delete i->first;//release this user's memory allocation
+            delete i->second;//release this user's client socket memory allocation
+            i = myself->GetSocketSet().erase(i);
+            continue;
+          }
         }
       }
       ++i;
