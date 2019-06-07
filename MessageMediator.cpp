@@ -131,7 +131,7 @@ void CConcreteMessageMediator::SocketProcessFunc(CConcreteMessageMediator * myse
       if(FD_ISSET(i->second->GetSocketFD(), &ReadFDSet))
       {
         const char * ReceivedData = i->second->receiveMessage();
-        if(ReceivedData[0] != '\0')
+        if(ReceivedData && ReceivedData[0] != '\0')
         {
           //receive
           i->first->SendMessage("Receive Message", std::string(ReceivedData));

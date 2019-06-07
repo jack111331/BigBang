@@ -19,4 +19,5 @@ private:
   static constexpr int BufferSize = 8192;
   sockaddr_in ClientAddress;
   char ReceiveBuffer[BufferSize];
+  int CurrentReceive = 0;
 };

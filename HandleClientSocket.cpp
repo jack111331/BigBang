@@ -36,13 +36,25 @@ const char * CHandleClientSocket::receiveMessage()
 {
   // true if there is some data need to be receive, otherwise the other side's socket has closed
   int ReceiveLength;
-  if((ReceiveLength = recv(GetSocketFD(), ReceiveBuffer, BufferSize-1, 0)) <= 0)
+  if((ReceiveLength = recv(GetSocketFD(), ReceiveBuffer + CurrentReceive, BufferSize-1, 0)) <= 0)
   {
     ReceiveBuffer[0] = '\0';
   }
   /*somehow it receive byte string without '\0'*/
-  ReceiveBuffer[ReceiveLength] = '\0';
-  return ReceiveBuffer;
+  if(ReceiveBuffer[ReceiveLength-1] == '}')
+  {
+    ReceiveBuffer[ReceiveLength] = '\0';
+    CurrentReceive = 0;
+    return ReceiveBuffer;
+  }
+  else
+  {
+    if(ReceiveLength > 0)
+    {
+      CurrentReceive += ReceiveLength;
+    }
+  }
+  return nullptr;
 }
 bool CHandleClientSocket::sendMessage(const std::string & Buffer)
 {
