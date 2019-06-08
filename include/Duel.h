@@ -6,5 +6,5 @@ class CDuel : public CCard
 {
 public:
   CDuel(CRoom * room, int number, Suit suit);
-  void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
+  bool UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
 };

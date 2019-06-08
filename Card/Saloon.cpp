@@ -23,4 +23,5 @@ void CSaloon::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
     }
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+  return true;
 }

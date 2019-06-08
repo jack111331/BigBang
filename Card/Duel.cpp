@@ -10,7 +10,7 @@ CDuel::CDuel(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
   SetName(Name);
   SetFeature(Feature);
 }
-void CDuel::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CDuel::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   int MyTurn = 0;
   bool isEnd = 0;
@@ -20,4 +20,5 @@ void CDuel::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
     MyTurn ^= 1;
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+  return true;
 }

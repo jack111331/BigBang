@@ -20,18 +20,21 @@ CJail::CJail(CRoom * room, int number, Suit suit) : CEquipmentCard(room, number,
   GetInRoom()->GetRoomEvent()->registerOnEquip(OnEquip);
   GetInRoom()->GetRoomEvent()->registerOnUnequip(OnUnequip);
 }
-void CJail::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CJail::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(target->GetIdentity() != Team::Sergeant)
   {
-    GetInRoom()->GetRoomEvent()->callEquip(this, myself);    
+    GetInRoom()->GetRoomEvent()->callEquip(this, myself);
+    return true;
   }
+  return false;
 }
 void CJail::OnEquip(CCard * card, CPlayer * Equiper)
 {
   //this part of code should reuse
   if(card->GetName() == "Jail")
   {
+    NSAction::EquipItem(Equiper, card);
     card->GetInRoom()->GetRoomEvent()->registerOnDrawCard(OnDrawCard);
   }
 }
@@ -40,13 +43,14 @@ void CJail::OnUnequip(CCard * card, CPlayer * Unequiper)
   //this part of code should reuse
   if(card->GetName() == "Jail")
   {
+    NSAction::UnequipItem(Unequiper, card);
     card->GetInRoom()->GetRoomEvent()->unregisterOnDrawCard(OnDrawCard);
   }
 }
 bool CJail::OnDrawCard(CRoom * room, CPlayer * drawer)
 {
   //this part of code should reuse
-  if(drawer->GetEquipment()->GetName() == "Jail")
+  if(drawer->GetEquipment() && drawer->GetEquipment()->GetName() == "Jail")
   {
     CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room);
     if(DrawedCard->GetSuit() == Suit::Heart)

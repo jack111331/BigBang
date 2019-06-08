@@ -19,7 +19,7 @@ class CCard
 public:
   CCard(CRoom * room, int Number, Suit suit);
   virtual ~CCard();
-  virtual void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
+  virtual bool UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
   std::string GetName() const;
   std::string GetFeature() const;
   int GetNumber() const;

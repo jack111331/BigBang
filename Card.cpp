@@ -8,9 +8,9 @@ CCard::~CCard()
 {
 
 }
-void CCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
-  
+  return false;
 }
 std::string CCard::GetName() const
 {

@@ -29,7 +29,8 @@ void CEquipmentCard::SetMultiAttack(bool multiAttack)
 {
   this->MultiAttack = multiAttack;
 }
-void CEquipmentCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CEquipmentCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   GetInRoom()->GetRoomEvent()->callEquip(this, myself);
+  return true;
 }

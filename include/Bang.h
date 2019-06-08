@@ -6,5 +6,5 @@ class CBang : public CCard
 {
 public:
   CBang(CRoom * room, int number, Suit suit);
-  void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
+  bool UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
 };

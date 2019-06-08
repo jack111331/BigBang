@@ -11,12 +11,14 @@ CPanic::CPanic(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
   SetName(Name);
   SetFeature(Feature);
 }
-void CPanic::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CPanic::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(room->GetDistance(myself, target) <= 1)
   {
     CDrawCardFromPlayer * DrawCard = new CDrawCardFromPlayer(NSDrawCardFactory::DrawCard("Choose Card"));
     DrawCard->DrawCardFromPlayer(myself, target);
     NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+    return true;
   }
+  return false;
 }

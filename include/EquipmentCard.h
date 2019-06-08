@@ -12,7 +12,7 @@ public:
   void SetAttackRange(int attackRange);
   void SetDefendRange(int defendRange);
   void SetMultiAttack(bool multiAttack);
-  void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
+  bool UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
 private:
   int Type;
   int AttackRange;

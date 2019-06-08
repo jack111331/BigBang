@@ -25,6 +25,7 @@ void CDynamite::OnEquip(CCard * card, CPlayer * Equiper)
   //this part of code should reuse
   if(card->GetName() == "Dynamite")
   {
+    NSAction::EquipItem(Equiper, card);
     card->GetInRoom()->GetRoomEvent()->registerOnDrawCard(OnDrawCard);
   }
 }
@@ -33,13 +34,14 @@ void CDynamite::OnUnequip(CCard * card, CPlayer * Unequiper)
   //this part of code should reuse
   if(card->GetName() == "Dynamite")
   {
+    NSAction::UnequipItem(Unequiper, card);
     card->GetInRoom()->GetRoomEvent()->unregisterOnDrawCard(OnDrawCard);
   }
 }
 bool CDynamite::OnDrawCard(CRoom * room, CPlayer * drawer)
 {
   //this part of code should reuse
-  if(drawer->GetEquipment()->GetName() == "Dynamite")
+  if(drawer->GetEquipment() && drawer->GetEquipment()->GetName() == "Dynamite")
   {
     CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room);
     if(DrawedCard->GetSuit() == Suit::Spade && DrawedCard->GetNumber() >= 2 && DrawedCard->GetNumber() <= 9)

@@ -27,8 +27,10 @@ void CPlayer::UseCard(CRoom * room, int cardID, CPlayer * target)
   {
     printf("Use Card %s\n", card->GetName().c_str());
     fflush(stdout);
-    card->UseCardEffect(room, this, target);
-    RemoveHolding(card);
+    if(card->UseCardEffect(room, this, target))
+    {
+      User->SendMessage("Send Message", NSWrapInfo::WrapWhoUseCard(this, cardID).dump());
+    }
   }
 }
 void CPlayer::FoldCard(CRoom * room, int cardID)
@@ -127,6 +129,7 @@ int CPlayer::GetMinusRange() const
 int CPlayer::BusyWaiting(int Action)
 {
   while(this->User->GetHandledAction() != Action);
+  this->User->SetHandledAction(-1);
   return this->User->GetActionResult();
 }
 

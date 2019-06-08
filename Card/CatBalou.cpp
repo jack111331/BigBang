@@ -13,10 +13,11 @@ CCatBalou::CCatBalou(CRoom * room, int number, Suit suit) : CCard(room, number, 
   SetName(Name);
   SetFeature(Feature);
 }
-void CCatBalou::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CCatBalou::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   myself->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(myself, target).dump());
   target->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(myself, target).dump());
   myself->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCard(myself, target, false).dump());
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+  return true;
 }

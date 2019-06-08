@@ -10,7 +10,7 @@ CGatling::CGatling(CRoom * room, int number, Suit suit) : CCard(room, number, su
   SetName(Name);
   SetFeature(Feature);
 }
-void CGatling::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CGatling::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   std::vector<CPlayer *> PlayerList = room->GetPlayerList();
   for(std::vector<CPlayer *>::iterator it = PlayerList.begin();it != PlayerList.end();++it)
@@ -21,4 +21,5 @@ void CGatling::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
     }
   }
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+  return true;
 }

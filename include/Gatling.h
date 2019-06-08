@@ -6,5 +6,5 @@ class CGatling : public CCard
 {
 public:
   CGatling(CRoom * room, int number, Suit suit);
-  void UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
+  bool UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target);
 };

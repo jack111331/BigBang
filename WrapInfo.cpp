@@ -237,3 +237,11 @@ json NSWrapInfo::WrapLoungeInfo(uint32_t ID)
   Buffer["User"] = UserIDList;
   return Buffer;
 }
+json NSWrapInfo::WrapWhoUseCard(CPlayer * User, uint32_t CardID)
+{
+  json Buffer;
+  Buffer["Action"] = 23;
+  Buffer["User Position"] = User->GetPosition();
+  Buffer["Card ID"] = CardID;
+  return Buffer;
+}
