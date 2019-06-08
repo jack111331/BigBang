@@ -64,11 +64,11 @@ WinCondition CRoom::isGameEnd()
   }
   else if(!TeamSurviveAmount[static_cast<int>(Team::Sergeant)])
   {
-    return WinCondition::SergeantWin;
+    return WinCondition::BadAssWin;
   }
   else if(!TeamSurviveAmount[static_cast<int>(Team::BadAss)] && !TeamSurviveAmount[static_cast<int>(Team::Traitor)])
   {
-    return WinCondition::BadAssWin;
+    return WinCondition::SergeantWin;
   }
   return WinCondition::None;
 }
@@ -186,7 +186,7 @@ int CRoom::GetDistance(CPlayer * Watcher, CPlayer * Watchee)
       break;
     }
   }
-  return std::max(0, minDistance + Watcher->GetAddRange() - Watchee->GetMinusRange());
+  return std::max(0, minDistance + Watchee->GetAddRange() - Watcher->GetMinusRange());
 }
 int CRoom::GetAlivePlayer()
 {

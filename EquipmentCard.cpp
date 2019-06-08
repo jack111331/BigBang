@@ -1,6 +1,7 @@
 #include "EquipmentCard.h"
 #include "GameEventObserver.h"
 #include "Room.h"
+#include "Action.h"
 CEquipmentCard::CEquipmentCard(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
 {
 
@@ -32,5 +33,6 @@ void CEquipmentCard::SetMultiAttack(bool multiAttack)
 bool CEquipmentCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   GetInRoom()->GetRoomEvent()->callEquip(this, myself);
+  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   return true;
 }

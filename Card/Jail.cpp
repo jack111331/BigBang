@@ -24,7 +24,8 @@ bool CJail::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(target->GetIdentity() != Team::Sergeant)
   {
-    GetInRoom()->GetRoomEvent()->callEquip(this, myself);
+    GetInRoom()->GetRoomEvent()->callEquip(this, target);
+    NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
     return true;
   }
   return false;
