@@ -10,11 +10,13 @@ CBang::CBang(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
   SetName(Name);
   SetFeature(Feature);
 }
-void CBang::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CBang::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(!target->isDead() && room->GetDistance(myself, target) <= myself->GetAttackRange())
   {
     NSAction::Attack(room, myself, target, "Missed!");
     NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+    return true;
   }
+  return false;
 }

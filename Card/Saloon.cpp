@@ -12,7 +12,7 @@ CSaloon::CSaloon(CRoom * room, int number, Suit suit) : CCard(room, number, suit
   SetName(Name);
   SetFeature(Feature);
 }
-void CSaloon::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
+bool CSaloon::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   std::vector<CPlayer *> PlayerList = room->GetPlayerList();
   for(std::vector<CPlayer *>::iterator it = PlayerList.begin();it != PlayerList.end();++it)

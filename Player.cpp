@@ -2,6 +2,7 @@
 #include "Action.h"
 #include "Room.h"
 #include "User.h"
+#include "WrapInfo.h"
 void CPlayer::DrawCard(CRoom * room)
 {
   if(Character != nullptr)

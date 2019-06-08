@@ -208,25 +208,44 @@ void CRoom::EndGame(WinCondition GameEndState)
 {
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
   {
-    if(((*it)->GetIdentity() == Team::Sergeant || (*it)->GetIdentity() == Team::ChiefSergeant) && GameEndState == WinCondition::SergeantWin)
+    if(GameEndState == WinCondition::SergeantWin)
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
-      (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+      if((*it)->GetIdentity() == Team::Sergeant || (*it)->GetIdentity() == Team::ChiefSergeant)
+      {
+        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
+        (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+      }
+      else
+      {
+        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
+        (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+      }
     }
-    else if((*it)->GetIdentity() == Team::BadAss && GameEndState == WinCondition::BadAssWin)
+    else if(GameEndState == WinCondition::BadAssWin)
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
-      (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+      if((*it)->GetIdentity() == Team::BadAss)
+      {
+        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
+        (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+      }
+      else
+      {
+        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
+        (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+      }
     }
-    else if((*it)->GetIdentity() == Team::Traitor && GameEndState == WinCondition::TraitorWin)
+    else if(GameEndState == WinCondition::TraitorWin)
     {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
-      (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
-    }
-    else
-    {
-      (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
-      (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+      if((*it)->GetIdentity() == Team::Traitor)
+      {
+        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
+        (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+      }
+      else
+      {
+        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
+        (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+      }
     }
   }
   // post process some thing..
@@ -276,8 +295,12 @@ void CRoom::GameLoop(CRoom * room)
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8).dump());
     CurrentPlayer->BusyWaiting(13);//end using card
 
-    room->UpdatePlayerPublicInfo();
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(13).dump());
+    room->UpdatePlayerPublicInfo();
+    if((GameEndState = room->isGameEnd()) != WinCondition::None)
+    {
+      break;
+    }
     if(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
     {
       CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapFoldAmount(CurrentPlayer->GetHoldingAmount() - CurrentPlayer->GetHP()).dump());
