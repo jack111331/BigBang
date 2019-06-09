@@ -36,5 +36,5 @@ void CCharacterGringo::OnLossBlood(CRoom * room, CPlayer * loser, CPlayer * atta
 }
 CCharacterGringo::~CCharacterGringo()
 {
-
+  GetInRoom()->GetRoomEvent()->unregisterOnLossBlood(OnLossBlood);
 }

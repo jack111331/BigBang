@@ -96,9 +96,9 @@ void NSAction::EquipItem(CPlayer * equiper, CCard * equipmentCard)
   CEquipmentCard * EquipCard = static_cast<CEquipmentCard *>(equipmentCard);
   EquipCard->ChangeOwner(equiper);
   equiper->ChangeEquipment(EquipCard);
-  equiper->SetAttackRange(EquipCard->GetAttackRange());
-  equiper->SetMinusRange(EquipCard->GetDefendRange());
-  equiper->SetMultiAttack(EquipCard->isMultiAttack());
+  equiper->SetAttackRange(std::max(equiper->GetCharacter()->GetDefaultAttackRange(), EquipCard->GetAttackRange()));
+  equiper->SetMinusRange(std::max(equiper->GetCharacter()->GetDefaultMinusRange(), EquipCard->GetDefendRange()));
+  equiper->SetMultiAttack(std::max(static_cast<bool>(equiper->GetCharacter()->GetDefaultMultiAttack()), EquipCard->isMultiAttack()));
 }
 void NSAction::UnequipItem(CPlayer * equiper, CCard * equipmentCard)
 {

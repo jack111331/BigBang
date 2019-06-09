@@ -148,7 +148,7 @@ void NSHandleMessage::HandleMessage(std::string Message, CUser * user)
       bool ChooseOrDiscard = Content["Choose or Discard"];
       if(ChooseOrDiscard)
       {
-        NSAction::GiveCard(Chooser, Choosee, CardID);
+        NSAction::GiveCard(Choosee, Chooser, CardID);
       }
       else
       {

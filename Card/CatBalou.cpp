@@ -15,9 +15,9 @@ CCatBalou::CCatBalou(CRoom * room, int number, Suit suit) : CCard(room, number, 
 }
 bool CCatBalou::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
+  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   myself->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(myself, target).dump());
   target->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(myself, target).dump());
   myself->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCard(myself, target, false).dump());
-  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   return true;
 }

@@ -32,7 +32,7 @@ void CEquipmentCard::SetMultiAttack(bool multiAttack)
 }
 bool CEquipmentCard::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
-  GetInRoom()->GetRoomEvent()->callEquip(this, myself);
   NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+  GetInRoom()->GetRoomEvent()->callEquip(this, myself);
   return true;
 }

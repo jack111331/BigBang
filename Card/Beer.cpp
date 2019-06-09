@@ -14,9 +14,9 @@ CBeer::CBeer(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
 }
 bool CBeer::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
+  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   NSAction::RecoverHealth(myself, 1);
   room->GetRoomEvent()->unregisterOnLossBlood(OnLossBlood);
-  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   return true;
 }
 void CBeer::OnLossBlood(CRoom * room, CPlayer * loser, CPlayer * attacker)

@@ -56,9 +56,10 @@ bool CDynamite::OnDrawCard(CRoom * room, CPlayer * drawer)
     else
     {
       CPlayer * NextPlayer = room->GetNextPlayer(drawer);
-      NSAction::GiveCard(drawer, NextPlayer, drawer->GetEquipment()->GetID());
+      NextPlayer->AddHolding(const_cast<CCard *>(drawer->GetEquipment()));
       NextPlayer->UseCard(room, NextPlayer->GetCardInHolding("Dynamite")->GetID(), nullptr);//equip immediately
     }
+    room->GetDiscardPlague()->InsertCardToPlague(DrawedCard);
     drawer->ChangeEquipment(nullptr);
   }
   return true;

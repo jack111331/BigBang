@@ -12,6 +12,7 @@ CDuel::CDuel(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
 }
 bool CDuel::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
+  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   int MyTurn = 0;
   bool isEnd = 0;
   while(!isEnd)
@@ -19,6 +20,5 @@ bool CDuel::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
     isEnd = std::max(isEnd, NSAction::Attack(room, MyTurn?target:myself, MyTurn?myself:target, "Bang!"));
     MyTurn ^= 1;
   }
-  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   return true;
 }

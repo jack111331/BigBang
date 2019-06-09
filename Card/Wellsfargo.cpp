@@ -14,11 +14,11 @@ CWellsfargo::CWellsfargo(CRoom * room, int number, Suit suit) : CCard(room, numb
 }
 bool CWellsfargo::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
+  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   constexpr int DrawCardAmount = 3;
   for(int i = 0;i < DrawCardAmount;i++)
   {
     NSAction::DrawCardFromPlague(room, myself);
   }
-  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   return true;
 }

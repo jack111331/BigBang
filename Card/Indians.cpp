@@ -12,6 +12,7 @@ CIndians::CIndians(CRoom * room, int number, Suit suit) : CCard(room, number, su
 }
 bool CIndians::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
+  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   std::vector<CPlayer *> PlayerList = room->GetPlayerList();
   for(std::vector<CPlayer *>::iterator it = PlayerList.begin();it != PlayerList.end();++it)
   {
@@ -20,6 +21,5 @@ bool CIndians::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
       NSAction::Attack(room, myself, (*it), "Bang!");
     }
   }
-  NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
   return true;
 }

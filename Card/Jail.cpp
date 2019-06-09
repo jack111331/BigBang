@@ -24,8 +24,8 @@ bool CJail::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(target->GetIdentity() != Team::Sergeant)
   {
-    GetInRoom()->GetRoomEvent()->callEquip(this, target);
     NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+    GetInRoom()->GetRoomEvent()->callEquip(this, target);
     return true;
   }
   return false;
@@ -54,10 +54,10 @@ bool CJail::OnDrawCard(CRoom * room, CPlayer * drawer)
   if(drawer->GetEquipment() && drawer->GetEquipment()->GetName() == "Jail")
   {
     CCard * DrawedCard = NSAction::DrawCardFromPlagueForDetermine(room);
-    if(DrawedCard->GetSuit() == Suit::Heart)
+    room->GetDiscardPlague()->InsertCardToPlague(DrawedCard);
+    drawer->ChangeEquipment(nullptr);
+    if(DrawedCard->GetSuit() != Suit::Heart)
     {
-      room->GetDiscardPlague()->InsertCardToPlague(DrawedCard);
-      drawer->ChangeEquipment(nullptr);
       return false;
     }
   }

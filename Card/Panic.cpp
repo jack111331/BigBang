@@ -3,7 +3,6 @@
 #include "Room.h"
 #include "Action.h"
 #include "DrawCardFactory.h"
-
 CPanic::CPanic(CRoom * room, int number, Suit suit) : CCard(room, number, suit)
 {
   const std::string Name("Panic!");
@@ -15,9 +14,10 @@ bool CPanic::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
 {
   if(room->GetDistance(myself, target) <= 1)
   {
+    NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
     CDrawCardFromPlayer * DrawCard = new CDrawCardFromPlayer(NSDrawCardFactory::DrawCard("Choose Card"));
     DrawCard->DrawCardFromPlayer(myself, target);
-    NSAction::RemoveCardToDiscardPlague(room->GetDiscardPlague(), myself, this);
+    delete DrawCard;
     return true;
   }
   return false;
