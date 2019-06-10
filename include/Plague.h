@@ -12,6 +12,7 @@ public:
   CCard * ChooseTopCard();
   void InsertCardToPlague(CCard * card);
   void RemoveCardFromPlague(const CCard * card);
+  void FlushPlague();
   const CCard * GetCardEntrie(int index) const;
   ~CPlague();
 private:

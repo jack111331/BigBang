@@ -50,7 +50,10 @@ bool CDynamite::OnDrawCard(CRoom * room, CPlayer * drawer)
       if(drawer->GetHP() <= 0)
       {
         room->GetRoomEvent()->callDeath(room, drawer, drawer);
-        drawer->SetDead(true);
+        if(drawer->GetHP() <= 0)
+        {
+          drawer->SetDead(true);          
+        }
       }
     }
     else

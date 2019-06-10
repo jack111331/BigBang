@@ -3,6 +3,7 @@
 #include "CharacterGenFactory.h"
 #include "WrapInfo.h"
 #include "Action.h"
+#include "LoungeManage.h"
 CRoom::CRoom()
 {
   this->plague = new CPlague;
@@ -84,6 +85,7 @@ void CRoom::AutoChooseTeam()
     Team::BadAss,
     Team::ChiefSergeant
   };
+  srand(time(0));
   std::random_shuffle(teamDistribute, teamDistribute + static_cast<int>(playerList.size()));
   int currentTeam = 0;
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
@@ -208,47 +210,51 @@ void CRoom::EndGame(WinCondition GameEndState)
 {
   for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
   {
+    CUser * CurrentUser = (*it)->GetUser();
     if(GameEndState == WinCondition::SergeantWin)
     {
       if((*it)->GetIdentity() == Team::Sergeant || (*it)->GetIdentity() == Team::ChiefSergeant)
       {
-        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
-        (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+        CurrentUser->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
+        CurrentUser->SetWin((*it)->GetUser()->GetWin() + 1);
       }
       else
       {
-        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
-        (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+        CurrentUser->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
+        CurrentUser->SetLose(CurrentUser->GetLose() + 1);
       }
     }
     else if(GameEndState == WinCondition::BadAssWin)
     {
       if((*it)->GetIdentity() == Team::BadAss)
       {
-        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
-        (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+        CurrentUser->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
+        CurrentUser->SetWin(CurrentUser->GetWin() + 1);
       }
       else
       {
-        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
-        (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+        CurrentUser->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
+        CurrentUser->SetLose(CurrentUser->GetLose() + 1);
       }
     }
     else if(GameEndState == WinCondition::TraitorWin)
     {
       if((*it)->GetIdentity() == Team::Traitor)
       {
-        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
-        (*it)->GetUser()->SetWin((*it)->GetUser()->GetWin() + 1);
+        CurrentUser->SendMessage("Send Message", NSWrapInfo::WrapEndGame(1).dump());
+        CurrentUser->SetWin(CurrentUser->GetWin() + 1);
       }
       else
       {
-        (*it)->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
-        (*it)->GetUser()->SetLose((*it)->GetUser()->GetLose() + 1);
+        CurrentUser->SendMessage("Send Message", NSWrapInfo::WrapEndGame(0).dump());
+        CurrentUser->SetLose(CurrentUser->GetLose() + 1);
       }
     }
+    delete CurrentUser->GetPlayer();
+    CurrentUser->SetPlayer(nullptr);
+    CLoungeManage::getInstance()->removeUserFromLounge(CurrentUser);
+    CLoungeManage::getInstance()->addUserToNewLounge(CurrentUser);
   }
-  // post process some thing..
 }
 
 void CRoom::GameLoop(CRoom * room)
@@ -292,7 +298,10 @@ void CRoom::GameLoop(CRoom * room)
     CurrentPlayer->DrawCard(room);
     room->UpdatePlayerPublicInfo();
     //inform user that it's his/her turn
-    CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8).dump());
+    if(CurrentPlayer->GetUser()->GetActionResult() != 13)
+    {
+      CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(8).dump());
+    }
     CurrentPlayer->BusyWaiting(13);//end using card
 
     CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapConfirm(13).dump());
@@ -301,7 +310,7 @@ void CRoom::GameLoop(CRoom * room)
     {
       break;
     }
-    if(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
+    while(CurrentPlayer->GetHoldingAmount() > CurrentPlayer->GetHP())
     {
       CurrentPlayer->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapFoldAmount(CurrentPlayer->GetHoldingAmount() - CurrentPlayer->GetHP()).dump());
       CurrentPlayer->BusyWaiting(14);//fold card

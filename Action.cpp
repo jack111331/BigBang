@@ -31,6 +31,10 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
       if(attackee->GetHP() <= 0)
       {
         room->GetRoomEvent()->callDeath(room, attackee, attacker);
+        if(attackee->GetHP() <= 0)
+        {
+          attackee->SetDead(true);
+        }
       }
       return true;
     }
@@ -42,7 +46,10 @@ bool NSAction::Attack(CRoom * room, CPlayer * attacker, CPlayer * attackee, std:
     if(attackee->GetHP() <= 0)
     {
       room->GetRoomEvent()->callDeath(room, attackee, attacker);
-      attackee->SetDead(true);
+      if(attackee->GetHP() <= 0)
+      {
+        attackee->SetDead(true);
+      }
     }
     return true;
   }
@@ -55,7 +62,7 @@ void NSAction::AutoFlushPlague(CRoom * room)
 {
   CPlague * Plague = room->GetPlague();
   CPlague * DiscardPlague = room->GetDiscardPlague();
-  if(Plague->GetPlagueCardAmount())
+  if(!Plague->GetPlagueCardAmount())
   {
     for(int i = 0;i < DiscardPlague->GetPlagueCardAmount();i++)
     {
@@ -63,6 +70,7 @@ void NSAction::AutoFlushPlague(CRoom * room)
       Plague->InsertCardToPlague(TopCard);
       DiscardPlague->RemoveCardFromPlague(TopCard);
     }
+    Plague->FlushPlague();
   }
 }
 void NSAction::DrawCardFromPlague(CRoom * room, CPlayer * drawer)

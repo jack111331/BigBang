@@ -19,5 +19,6 @@ bool CCatBalou::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * target)
   myself->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(myself, target).dump());
   target->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapShowCard(myself, target).dump());
   myself->GetUser()->SendMessage("Send Message", NSWrapInfo::WrapChooseCard(myself, target, false).dump());
+  myself->BusyWaiting(11);
   return true;
 }

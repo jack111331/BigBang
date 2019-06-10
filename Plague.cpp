@@ -50,6 +50,7 @@ void CPlague::InitPlague(CRoom * room)
   Plague.push_back(NSCardGenFactory::createCard("Cat Balou", room, 9, Suit::Club));
   Plague.push_back(NSCardGenFactory::createCard("Dynamite", room, 4, Suit::Diamond));
   Plague.push_back(NSCardGenFactory::createCard("Dynamite", room, 3, Suit::Heart));
+  srand(time(0));
   std::random_shuffle(Plague.begin(), Plague.end());
 }
 int CPlague::GetPlagueCardAmount() const
@@ -97,6 +98,11 @@ void CPlague::RemoveCardFromPlague(const CCard * card)
       break;
     }
   }
+}
+void CPlague::FlushPlague()
+{
+  srand(time(0));
+  std::random_shuffle(Plague.begin(), Plague.end());
 }
 const CCard * CPlague::GetCardEntrie(int index) const
 {

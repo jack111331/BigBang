@@ -1,6 +1,7 @@
 #include "Jail.h"
 #include <string>
 #include "Room.h"
+#include "User.h"
 #include "GameEventObserver.h"
 #include "Action.h"
 
@@ -58,6 +59,7 @@ bool CJail::OnDrawCard(CRoom * room, CPlayer * drawer)
     drawer->ChangeEquipment(nullptr);
     if(DrawedCard->GetSuit() != Suit::Heart)
     {
+      drawer->GetUser()->SendMessage("Handled Data", std::to_string(13));
       return false;
     }
   }
