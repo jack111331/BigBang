@@ -68,7 +68,6 @@ CRandomCharacterPool::CRandomCharacterPool(CRoom * room)
   CCharacterGenComponent * CharacterComponent = new CCharacterGenConcreteComponent();
   if(room->GetLounge()->getEnableExclusiveCard())
   {
-    std::map<uint32_t, bool> ExclusiveCharacter;
     std::map<uint32_t, bool> CharacterCardSet;
     for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
     {

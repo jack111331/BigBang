@@ -9,7 +9,6 @@ CRoom::CRoom(CLounge * lounge)
   this->lounge = lounge;
   this->plague = new CPlague;
   this->RoomEvent = new CGameEventObserver;
-  this->plague->InitPlague(this);
   this->discardPlague = new CPlague;
 }
 void CRoom::PlayerJoin(CUser * user)
@@ -264,6 +263,7 @@ void CRoom::EndGame(WinCondition GameEndState)
 
 void CRoom::GameLoop(CRoom * room)
 {
+  room->GetPlague()->InitPlague(room);
   //let player choose character
   //generate 2 random character, this two can't be identical
   CRandomCharacterPool * CharacterPool = new CRandomCharacterPool(room);

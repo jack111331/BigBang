@@ -1,7 +1,7 @@
 #include "CardGenDecorator.h"
 #include "CardGenFactory.h"
 #include "Room.h"
-std::vector<CCard *> & CCardGenComponent::GetGeneratePlague()
+std::vector<CCard *> CCardGenComponent::GetGeneratePlague()
 {
   return Plague;
 }
@@ -56,12 +56,22 @@ CCardGenDecorator::CCardGenDecorator(CCardGenComponent * Component)
 {
   this->Component = Component;
 }
+std::vector<CCard *> CCardGenDecorator::GetGeneratePlague()
+{
+  std::vector<CCard *> Temp;
+  std::vector<CCard *> CardPlague = this->Component->GetGeneratePlague();
+  for(int i = 0;i < static_cast<int>(CardPlague.size());i++)
+  {
+    Temp.push_back(CardPlague[i]);
+  }
+  for(int i = 0;i < static_cast<int>(Plague.size());i++)
+  {
+    Temp.push_back(Plague[i]);
+  }
+  return Temp;
+}
 CCardGenConcreteDecoratorGeneralStore::CCardGenConcreteDecoratorGeneralStore(CCardGenComponent * Component, CRoom * room) : CCardGenDecorator(Component)
 {
-  this->Component->GetGeneratePlague().push_back(NSCardGenFactory::createCard("General Store", room, 1, Suit::Club));
-  this->Component->GetGeneratePlague().push_back(NSCardGenFactory::createCard("General Store", room, 7, Suit::Spade));
-}
-std::vector<CCard *> & CCardGenDecorator::GetGeneratePlague()
-{
-  return this->Component->GetGeneratePlague();
+  Plague.push_back(NSCardGenFactory::createCard("General Store", room, 1, Suit::Club));
+  Plague.push_back(NSCardGenFactory::createCard("General Store", room, 7, Suit::Spade));
 }

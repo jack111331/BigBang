@@ -1,7 +1,7 @@
 #include "CharacterGenDecorator.h"
 #include "CharacterGenFactory.h"
 #include "Room.h"
-std::map<std::string, bool> & CCharacterGenComponent::GetGenerateCharacter()
+std::map<std::string, bool> CCharacterGenComponent::GetGenerateCharacter()
 {
   return CharacterList;
 }
@@ -20,11 +20,21 @@ CCharacterGenDecorator::CCharacterGenDecorator(CCharacterGenComponent * Componen
 {
   this->Component = Component;
 }
+std::map<std::string, bool> CCharacterGenDecorator::GetGenerateCharacter()
+{
+  std::map<std::string, bool> Temp;
+  std::map<std::string, bool> OriginCharacter = this->Component->GetGenerateCharacter();
+  for(auto it = OriginCharacter.begin();it != OriginCharacter.end();++it)
+  {
+    Temp[it->first] = it->second;
+  }
+  for(auto it = CharacterList.begin();it != CharacterList.end();++it)
+  {
+    Temp[it->first] = it->second;
+  }
+  return Temp;
+}
 CCharacterGenConcreteDecoratorGodDeveloper::CCharacterGenConcreteDecoratorGodDeveloper(CCharacterGenComponent * Component) : CCharacterGenDecorator(Component)
 {
-  this->Component->GetGenerateCharacter()["God Developer"] = 0;
-}
-std::map<std::string, bool> & CCharacterGenDecorator::GetGenerateCharacter()
-{
-  return this->Component->GetGenerateCharacter();
+  CharacterList["God Developer"] = 0;
 }

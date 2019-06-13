@@ -5,7 +5,7 @@
 class CCharacterGenComponent
 {
 public:
-  std::map<std::string, bool> & GetGenerateCharacter();
+  virtual std::map<std::string, bool> GetGenerateCharacter();
 protected:
   std::map<std::string, bool> CharacterList;
 };
@@ -19,7 +19,7 @@ class CCharacterGenDecorator : public CCharacterGenComponent
 {
 public:
   CCharacterGenDecorator(CCharacterGenComponent * Component);
-  std::map<std::string, bool> & GetGenerateCharacter();
+  std::map<std::string, bool> GetGenerateCharacter();
 protected:
   CCharacterGenComponent * Component;
 };

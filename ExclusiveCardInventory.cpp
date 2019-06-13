@@ -20,6 +20,14 @@ void CExclusiveCardInventory::AddExclusiveCard(uint32_t ID, int type)
 {
   CDatabase DB;
   DB.InsertExclusiveCard(User->GetID(), type, ID);
+  if(type == 1)
+  {
+    CharacterCardList.push_back(ID);
+  }
+  else if(type == 2)
+  {
+    EffectAndEquipmentCardList.push_back(ID);
+  }
 }
 CExclusiveCardInventory::~CExclusiveCardInventory()
 {
