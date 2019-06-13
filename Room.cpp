@@ -119,7 +119,7 @@ CPlayer * CRoom::GetNextPlayer(CPlayer * CurrentPlayer)
 }
 CPlayer * CRoom::GetPlayerByPosition(int Position)
 {
-  for(std::vector<CPlayer *>::iterator it = playerList.begin();;++it)
+  for(std::vector<CPlayer *>::iterator it = playerList.begin();it != playerList.end();++it)
   {
     if((*it)->GetPosition() == Position)
     {

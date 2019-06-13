@@ -24,11 +24,11 @@ bool CGeneralStore::UseCardEffect(CRoom * room, CPlayer * myself, CPlayer * targ
     CCard * card;
     if(room->GetPlague()->GetPlagueCardAmount() - i <= 0)
     {
-      card = room->GetDiscardPlague()->ChooseTopCard();
+      card = room->GetPlague()->ChooseTopCard();
     }
     else
     {
-      card = room->GetPlague()->ChooseTopCard();
+      card = room->GetDiscardPlague()->ChooseTopCard();
     }
     ChooseCardList.push_back(card);
   }
