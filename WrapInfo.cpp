@@ -257,6 +257,19 @@ json NSWrapInfo::WrapStoreInfo()
   json Buffer;
   Buffer["Action"] = 25;
   CExclusiveCardStore * CardStore = CExclusiveCardStore::GetInstance();
+  std::map<uint32_t, ExclusiveCard> StoreCharacterCardList = CardStore->GetCharacterCardStore();
+  std::vector<json> ExclusiveCharacterCardList;
+  for(auto it = StoreCharacterCardList.begin();it != StoreCharacterCardList.end();++it)
+  {
+    json CardInfo;
+    CardInfo["ID"] = it->first;
+    CardInfo["Name"] = it->second.Name;
+    CardInfo["Description"] = it->second.Description;
+    CardInfo["Cost"] = it->second.Cost;
+    ExclusiveCharacterCardList.push_back(CardInfo);
+  }
+  //currently lack Character card support...
+  Buffer["Character Card"] = ExclusiveCharacterCardList;
   std::map<uint32_t, ExclusiveCard> StoreCardList = CardStore->GetEffectAndEquipmentCardStore();
   std::vector<json> ExclusiveCardList;
   for(auto it = StoreCardList.begin();it != StoreCardList.end();++it)
