@@ -4,6 +4,7 @@
 #include "GameEventObserver.h"
 #include <vector>
 
+class CLounge;
 class CUser;
 
 enum class WinCondition
@@ -17,8 +18,9 @@ enum class WinCondition
 class CRoom
 {
 public:
-  CRoom();
+  CRoom(CLounge * lounge);
   void PlayerJoin(CUser * user);
+  CLounge * GetLounge() const;
   CPlague * GetPlague();
   CPlague * GetDiscardPlague();
   std::vector<CPlayer *> & GetPlayerList();
@@ -37,6 +39,7 @@ public:
   void EndGame(WinCondition GameEndState);
   ~CRoom();
 private:
+  CLounge * lounge;
   CPlague * plague;
   CPlague * discardPlague;
   std::vector<CPlayer *> playerList;

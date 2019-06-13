@@ -10,6 +10,9 @@
 #include "Action.h"
 #include "Room.h"
 #include "Database.h"
+#include "ExclusiveCardInventory.h"
+#include "ExclusiveCardStore.h"
+#include <map>
 
 using json = nlohmann::json;
 
@@ -201,6 +204,75 @@ void NSHandleMessage::HandleMessage(std::string Message, CUser * user)
     case 22:
     {
       user->SendMessage("Send Message", NSWrapInfo::WrapLoungeInfo(user->GetID()).dump());
+      break;
+    }
+    case 24:
+    {
+      user->SendMessage("Send Message", NSWrapInfo::WrapTalkMessage(user->GetPlayer()->GetPosition(), Content).dump());
+      break;
+    }
+    case 25:
+    {
+      user->SendMessage("Send Message", NSWrapInfo::WrapStoreInfo().dump());
+      break;
+    }
+    case 26:
+    {
+      if(Content["Type"] == 1)
+      {
+        std::map<uint32_t, ExclusiveCard> CharacterCardStore = CExclusiveCardStore::GetInstance()->GetCharacterCardStore();
+        if(user->GetMoney() >= CharacterCardStore[Content["Card ID"]].Cost)
+        {
+          user->SetMoney(user->GetMoney() - CharacterCardStore[Content["Card ID"]].Cost);
+          user->GetExclusiveCardInventory()->AddExclusiveCard(Content["Card ID"], 1);
+          user->SendMessage("Send Message", NSWrapInfo::WrapBuyCardSuccess(true).dump());
+          user->SendMessage("Send Message", NSWrapInfo::WrapUserInfo(user).dump());
+        }
+        else
+        {
+          user->SendMessage("Send Message", NSWrapInfo::WrapBuyCardSuccess(false).dump());
+        }
+      }
+      else if(Content["Type"] == 2)
+      {
+        std::map<uint32_t, ExclusiveCard> CardStore = CExclusiveCardStore::GetInstance()->GetEffectAndEquipmentCardStore();
+        if(user->GetMoney() >= CardStore[Content["Card ID"]].Cost)
+        {
+          user->SetMoney(user->GetMoney() - CardStore[Content["Card ID"]].Cost);
+          user->GetExclusiveCardInventory()->AddExclusiveCard(Content["Card ID"], 2);
+          user->SendMessage("Send Message", NSWrapInfo::WrapBuyCardSuccess(true).dump());
+          user->SendMessage("Send Message", NSWrapInfo::WrapUserInfo(user).dump());
+        }
+        else
+        {
+          user->SendMessage("Send Message", NSWrapInfo::WrapBuyCardSuccess(false).dump());
+        }
+      }
+      break;
+    }
+    case 27:
+    {
+      user->SendMessage("Send Message", NSWrapInfo::WrapUserHaveExclusiveCard(user->GetExclusiveCardInventory()).dump());
+      break;
+    }
+    case 28:
+    {
+      CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
+      bool EnableExclusiveCard = Content["Use Exclusive Card"];
+      UserLounge->setEnableExclusiveCard(EnableExclusiveCard);
+      break;
+    }
+    case 29:
+    {
+      CLounge * UserLounge = CLoungeManage::getInstance()->searchLounge(user);
+      CCard * card = UserLounge->getRoom()->GetPlague()->GetPlagueCardByID(static_cast<int>(Content["Choose Card"]));
+      if(card == nullptr)
+      {
+        card = UserLounge->getRoom()->GetDiscardPlague()->GetPlagueCardByID(static_cast<int>(Content["Choose Card"]));
+      }
+      user->GetPlayer()->AddHolding(card);
+      UserLounge->getRoom()->GetPlague()->RemoveCardFromPlague(card);
+      user->SendMessage("Handled Data Result", std::to_string(static_cast<int>(Content["Choose Card"])));
       break;
     }
     default:

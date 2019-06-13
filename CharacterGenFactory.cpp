@@ -7,9 +7,13 @@
 #include "PaulRegret.h"
 #include "RoseDoolan.h"
 #include "WillyTheKid.h"
+#include "GodDeveloper.h"
+#include "CharacterGenDecorator.h"
 #include <string>
 #include <iterator>
 #include <stdlib.h>
+#include "Lounge.h"
+#include "ExclusiveCardStore.h"
 CCharacter * NSCharacterGenFactory::createCharacter(std::string Charactername, CRoom * room)
 {
   if(Charactername == "Bart Cassidy")
@@ -44,6 +48,10 @@ CCharacter * NSCharacterGenFactory::createCharacter(std::string Charactername, C
   {
     return new CCharacterWilly(room);
   }
+  else if(Charactername == "God Developer")
+  {
+    return new CCharacterGod(room);
+  }
   else
   {
     return nullptr;
@@ -54,17 +62,25 @@ CCharacter * NSCharacterGenFactory::createCharacter(char const * Charactername, 
   return createCharacter(std::string(Charactername), room);
 }
 
-CRandomCharacterPool::CRandomCharacterPool()
+CRandomCharacterPool::CRandomCharacterPool(CRoom * room)
 {
   //init character deck
-  CharacterPool["Bart Cassidy"] = 0;
-  CharacterPool["Black Jack"] = 0;
-  CharacterPool["Suzy Lafayette"] = 0;
-  CharacterPool["El Gringo"] = 0;
-  CharacterPool["Vulture Sam"] = 0;
-  CharacterPool["Paul Regret"] = 0;
-  CharacterPool["Rose Doolan"] = 0;
-  CharacterPool["Willy The Kid"] = 0;
+  CCharacterGenComponent * CharacterComponent = new CCharacterGenConcreteComponent();
+  if(room->GetLounge()->getEnableExclusiveCard())
+  {
+    std::map<uint32_t, bool> ExclusiveCharacter;
+    std::map<uint32_t, bool> CharacterCardSet;
+    for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
+    {
+      std::vector<uint32_t> CardList = (*it)->GetUser()->GetExclusiveCardInventory()->GetCharacterCardList();
+      for(int i = 0;i < static_cast<int>(CardList.size());++i)
+      {
+        CharacterCardSet[CardList[i]] = 1;
+      }
+    }
+    CharacterComponent = CExclusiveCardStore::GetInstance()->GenerateExclusiveCharacter(CharacterCardSet, CharacterComponent);
+  }
+  CharacterPool = CharacterComponent->GetGenerateCharacter();
   //.....
 }
 void CRandomCharacterPool::RemoveChoiceFromPool()

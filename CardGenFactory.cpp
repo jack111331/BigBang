@@ -19,6 +19,7 @@
 #include "Panic.h"
 #include "CatBalou.h"
 #include "Dynamite.h"
+#include "GeneralStore.h"
 #include <string>
 
 CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Number, Suit suit)
@@ -102,6 +103,10 @@ CCard * NSCardGenFactory::createCard(std::string Cardname, CRoom * room, int Num
   else if(Cardname == "Dynamite")
   {
     return new CDynamite(room, Number, suit);
+  }
+  else if(Cardname == "General Store")
+  {
+    return new CGeneralStore(room, Number, suit);
   }
   else
   {

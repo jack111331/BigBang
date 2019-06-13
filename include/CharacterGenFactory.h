@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 #include <vector>
-
+#include "Room.h"
 namespace NSCharacterGenFactory
 {
   CCharacter * createCharacter(std::string Cardname, CRoom * room);
@@ -12,7 +12,7 @@ namespace NSCharacterGenFactory
 class CRandomCharacterPool
 {
 public:
-  CRandomCharacterPool();
+  CRandomCharacterPool(CRoom * room);
   void RemoveChoiceFromPool();
   void FlushChoicePool();
   const std::vector<std::string> & ChoiceCharacterFromPool();

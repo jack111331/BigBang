@@ -25,11 +25,14 @@ public:
   void exitLounge(CUser * user);
   CRoom * getRoom();
   bool startGame();
+  bool getEnableExclusiveCard() const;
+  void setEnableExclusiveCard(bool enable);
   ~CLounge();
 private:
   std::vector<CUser *> userList;
   std::map<CUser *, bool> readyMap;
   CRoom * room;
   std::thread GameLoopThread;
+  bool EnableExclusiveCard = false;
   CUser * RoomOwner; // Owner is for when all user ready, who will decide the game will start
 };

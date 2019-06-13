@@ -88,7 +88,7 @@ bool CLounge::startGame()
     return false;
   }
   //Start game
-  room = new CRoom();
+  room = new CRoom(this);
   for(std::vector<CUser *>::iterator it = userList.begin();it != userList.end();++it)
   {
     room->PlayerJoin(*it);
@@ -97,6 +97,15 @@ bool CLounge::startGame()
   GameLoopThread = std::thread(CRoom::GameLoop, room);
   return true;
 }
+bool CLounge::getEnableExclusiveCard() const
+{
+  return EnableExclusiveCard;
+}
+void CLounge::setEnableExclusiveCard(bool enable)
+{
+  this->EnableExclusiveCard = enable;
+}
+
 CLounge::~CLounge()
 {
   for(std::vector<CUser *>::iterator it = userList.begin();it != userList.end();)

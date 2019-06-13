@@ -4,6 +4,7 @@
 #include "HandleMessage.h"
 #include "MessageMediatorColleague.h"
 #include "Player.h"
+#include "ExclusiveCardInventory.h"
 
 class CUser : public CColleague
 {
@@ -14,6 +15,7 @@ public:
   //user的SendMessage已經有父類別的CColleague幫忙處理了
   void SetID(uint32_t ID);
   CPlayer * GetPlayer();
+  CExclusiveCardInventory * GetExclusiveCardInventory() const;
   std::string GetName();
   int GetMoney();
   int GetWin();
@@ -34,4 +36,5 @@ private:
   int lose;
   uint32_t ID;
   CPlayer * player = nullptr;
+  CExclusiveCardInventory * ExclusiveCardInventory = nullptr;
 };

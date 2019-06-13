@@ -2,54 +2,29 @@
 #include "CardGenFactory.h"
 #include <time.h>
 #include <algorithm>
-
-
+#include "CardGenDecorator.h"
+#include "Room.h"
+#include "Lounge.h"
+#include <map>
+#include "ExclusiveCardStore.h"
 void CPlague::InitPlague(CRoom * room)
 {
-  Plague.push_back(NSCardGenFactory::createCard("Winchester", room, 1, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Winchester", room, 7, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Barrel", room, 5, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Barrel", room, 8, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Carabine", room, 7, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Carabine", room, 2, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Mustang", room, 3, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Mustang", room, 8, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Remington", room, 9, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Remington", room, 4, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Saloon", room, 12, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Saloon", room, 10, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Schofield", room, 13, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Schofield", room, 11, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Volcanic", room, 2, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Volcanic", room, 5, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Stagecoach", room, 8, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Stagecoach", room, 1, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Wells fargo", room, 11, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Wells fargo", room, 7, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Jail", room, 9, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Jail", room, 4, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Bang!", room, 5, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Bang!", room, 6, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Bang!", room, 7, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Bang!", room, 8, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Missed!", room, 9, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Missed!", room, 10, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Missed!", room, 11, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Missed!", room, 12, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Indians!", room, 9, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Indians!", room, 4, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Gatling", room, 9, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Gatling", room, 9, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Duel", room, 3, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Duel", room, 4, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Beer", room, 9, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Beer", room, 10, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Panic!", room, 1, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Panic!", room, 7, Suit::Heart));
-  Plague.push_back(NSCardGenFactory::createCard("Cat Balou", room, 2, Suit::Spade));
-  Plague.push_back(NSCardGenFactory::createCard("Cat Balou", room, 9, Suit::Club));
-  Plague.push_back(NSCardGenFactory::createCard("Dynamite", room, 4, Suit::Diamond));
-  Plague.push_back(NSCardGenFactory::createCard("Dynamite", room, 3, Suit::Heart));
+  CCardGenComponent * CardComponent = new CCardGenConcreteComponent(room);
+  if(room->GetLounge()->getEnableExclusiveCard())
+  {
+    // get all player's exclusive card
+    std::map<uint32_t, bool> EffectAndEquipmentCardSet;
+    for(std::vector<CPlayer *>::iterator it = room->GetPlayerList().begin();it != room->GetPlayerList().end();++it)
+    {
+      std::vector<uint32_t> CardList = (*it)->GetUser()->GetExclusiveCardInventory()->GetEffectAndEquipmentCardList();
+      for(int i = 0;i < static_cast<int>(CardList.size());++i)
+      {
+        EffectAndEquipmentCardSet[CardList[i]] = 1;
+      }
+    }
+    CardComponent = CExclusiveCardStore::GetInstance()->GenerateExclusiveCard(EffectAndEquipmentCardSet, CardComponent, room);
+  }
+  Plague = CardComponent->GetGeneratePlague();
   srand(time(0));
   std::random_shuffle(Plague.begin(), Plague.end());
 }
@@ -98,6 +73,17 @@ void CPlague::RemoveCardFromPlague(const CCard * card)
       break;
     }
   }
+}
+CCard * CPlague::GetPlagueCardByID(int CardID)
+{
+  for(int i = 0;i < static_cast<int>(Plague.size());i++)
+  {
+    if(Plague[i]->GetID() == CardID)
+    {
+      return Plague[i];
+    }
+  }
+  return nullptr;
 }
 void CPlague::FlushPlague()
 {

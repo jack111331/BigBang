@@ -9,6 +9,7 @@ void CUser::RetriveDataFromDB()
 {
   CDatabase DB;
   DB.UpdateUserInfo(this);
+  this->ExclusiveCardInventory = new CExclusiveCardInventory(this);
 }
 void CUser::ReceiveMessage(std::string message)
 {
@@ -22,6 +23,10 @@ void CUser::SetID(uint32_t ID)
 CPlayer * CUser::GetPlayer()
 {
   return this->player;
+}
+CExclusiveCardInventory * CUser::GetExclusiveCardInventory() const
+{
+  return this->ExclusiveCardInventory;
 }
 std::string CUser::GetName()
 {

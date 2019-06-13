@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "Database.h"
 #include <vector>
+#include "ExclusiveCardStore.h"
 
 using json = nlohmann::json;
 static constexpr uint32_t NoneMagicNumber = 0xffffffff;
@@ -243,5 +244,77 @@ json NSWrapInfo::WrapWhoUseCard(CPlayer * User, uint32_t CardID)
   Buffer["Action"] = 23;
   Buffer["User Position"] = User->GetPosition();
   Buffer["Card ID"] = CardID;
+  return Buffer;
+}
+json NSWrapInfo::WrapTalkMessage(int Position, const json & Content)
+{
+  json Buffer = Content;
+  Buffer["User Position"] = Position;
+  return Buffer;
+}
+json NSWrapInfo::WrapStoreInfo()
+{
+  json Buffer;
+  Buffer["Action"] = 25;
+  CExclusiveCardStore * CardStore = CExclusiveCardStore::GetInstance();
+  std::map<uint32_t, ExclusiveCard> StoreCardList = CardStore->GetEffectAndEquipmentCardStore();
+  std::vector<json> ExclusiveCardList;
+  for(auto it = StoreCardList.begin();it != StoreCardList.end();++it)
+  {
+    json CardInfo;
+    CardInfo["ID"] = it->first;
+    CardInfo["Name"] = it->second.Name;
+    CardInfo["Description"] = it->second.Description;
+    CardInfo["Cost"] = it->second.Cost;
+    ExclusiveCardList.push_back(CardInfo);
+  }
+  //currently lack Character card support...
+  Buffer["Effect And Equipment Card"] = ExclusiveCardList;
+  return Buffer;
+}
+json NSWrapInfo::WrapBuyCardSuccess(bool Success)
+{
+  json Buffer;
+  Buffer["Action"] = 26;
+  Buffer["Success"] = Success;
+  return Buffer;
+}
+json NSWrapInfo::WrapUserHaveExclusiveCard(CExclusiveCardInventory * ExclusiveCardInventory)
+{
+  json Buffer;
+  Buffer["Action"] = 27;
+  std::vector<uint32_t> CharacterCardList = ExclusiveCardInventory->GetCharacterCardList();
+  std::vector<json> CharacterCardJSONList;
+  for(auto it = CharacterCardList.begin();it != CharacterCardList.end();++it)
+  {
+    json CardInfo;
+    CardInfo["ID"] = *it;
+    CharacterCardJSONList.push_back(CardInfo);
+  }
+  Buffer["Character Card"] = CharacterCardJSONList;
+
+  std::vector<uint32_t> EffectAndEquipmentCardList = ExclusiveCardInventory->GetEffectAndEquipmentCardList();
+  std::vector<json> EffectAndEquipmentCardJSONList;
+  for(auto it = EffectAndEquipmentCardList.begin();it != EffectAndEquipmentCardList.end();++it)
+  {
+    json CardInfo;
+    CardInfo["ID"] = *it;
+    EffectAndEquipmentCardJSONList.push_back(CardInfo);
+  }
+  Buffer["Effect And Equipment Card"] = EffectAndEquipmentCardJSONList;
+  return Buffer;
+}
+json NSWrapInfo::WrapChooseCardInfo(std::vector<CCard *> & ChooseCardList)
+{
+  json Buffer;
+  Buffer["Action"] = 29;
+  std::vector<json> CardList;
+  for(std::vector<CCard *>::iterator it = ChooseCardList.begin();it != ChooseCardList.end();++it)
+  {
+    json CardInfo;
+    CardInfo["Card ID"] = (*it)->GetID();
+    CardList.push_back(CardInfo);
+  }
+  Buffer["Card Choice"] = CardList;
   return Buffer;
 }

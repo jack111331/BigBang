@@ -3,9 +3,11 @@
 #include "User.h"
 #include "nlohmann/json.hpp"
 #include <string>
+#include <vector>
 class CPlayer;
 class CRoom;
 class CCard;
+class CExclusiveCardInventory;
 namespace NSWrapInfo
 {
   nlohmann::json WrapUserInfo(CUser * user);
@@ -24,4 +26,9 @@ namespace NSWrapInfo
   nlohmann::json WrapDetermineCard(int CardID);
   nlohmann::json WrapLoungeInfo(uint32_t ID);
   nlohmann::json WrapWhoUseCard(CPlayer * User, uint32_t CardID);
+  nlohmann::json WrapTalkMessage(int Position, const nlohmann::json & Content);
+  nlohmann::json WrapStoreInfo();
+  nlohmann::json WrapBuyCardSuccess(bool Success);
+  nlohmann::json WrapUserHaveExclusiveCard(CExclusiveCardInventory * ExclusiveCardInventory);
+  nlohmann::json WrapChooseCardInfo(std::vector<CCard *> & ChooseCardList);
 }
